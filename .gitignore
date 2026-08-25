@@ -1,0 +1,14 @@
+# Dependencies
+node_modules/
+
+# Build outputs
+dist/
+
+# System / IDE files
+.DS_Store
+Thumbs.db
+.idea/
+
+# Playwright artifacts
+test-results/
+playwright-report/
