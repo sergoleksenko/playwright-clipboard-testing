@@ -58,7 +58,7 @@ export class ClipboardHandler {
     try {
       return JSON.parse(text);
     } catch {
-      throw new Error(`Clipboard content is not a valid JSON: ${text}`);
+      throw new Error(`Clipboard content is not a valid JSON: ${JSON.stringify(text)}`);
     }
   }
 }

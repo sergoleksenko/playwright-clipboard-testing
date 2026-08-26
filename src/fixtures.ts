@@ -22,12 +22,6 @@ export const test = base.extend<{
   /**
    * A fixture that provides an instance of the Clipboard utility for interacting with the system clipboard.
    * It allows reading from the clipboard during tests.
-   *
-   * @remarks
-   * To check the clipboard content in the tests, you can use custom matcher.
-   *
-   * @example
-   * `await expect(clipboard).toHaveData('expected text');`
    */
   clipboard: clipboardFixture,
 });
