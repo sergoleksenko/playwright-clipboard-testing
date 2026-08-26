@@ -1,23 +1,9 @@
-import { type BrowserContext, test as base, type Page, type TestFixture } from '@playwright/test';
-import { ClipboardHandler } from './clipboard.js';
+import { expect as baseExpect, test as baseTest } from '@playwright/test';
+import { clipboardFixture } from './fixtures/clipboardFixture.js';
+import { clipboardMatchers } from './matchers/clipboardMatchers.js';
+import type { ClipboardHandler } from './utils/clipboardHandler.js';
 
-export const clipboardFixture: TestFixture<
-  ClipboardHandler,
-  { page: Page; context: BrowserContext; browserName: string }
-> = async ({ page, context, browserName }, use) => {
-  if (browserName !== 'chromium') {
-    throw new Error(
-      `[playwright-clipboard] Browser '${browserName}' is not supported. ` +
-        'Clipboard Permissions API is currently only supported in Chromium-based browsers.' +
-        `Use test.skip(browserName !== 'chromium') in your tests to skip non-Chromium runs.`,
-    );
-  }
-
-  const handler = new ClipboardHandler(page, context);
-  await use(handler);
-};
-
-export const test = base.extend<{
+export const test = baseTest.extend<{
   clipboard: ClipboardHandler;
 }>({
   /**
@@ -27,4 +13,4 @@ export const test = base.extend<{
   clipboard: clipboardFixture,
 });
 
-export { expect } from '@playwright/test';
+export const expect = baseExpect.extend({ ...clipboardMatchers });
