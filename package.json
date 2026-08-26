@@ -2,9 +2,9 @@
   "name": "playwright-clipboard-testing",
   "version": "0.1.0",
   "description": "Playwright fixture and custom matchers for clipboard testing and assertions.",
-  "type": "module",
   "author": "Sergii Oleksenko <serg.oleksenko@gmail.com>",
   "license": "MIT",
+  "type": "module",
   "homepage": "https://github.com/sergoleksenko/playwright-clipboard-testing#readme",
   "bugs": {
     "url": "https://github.com/sergoleksenko/playwright-clipboard-testing/issues"
@@ -39,10 +39,10 @@
   "files": [
     "dist"
   ],
-  "sideEffects": false,
   "engines": {
     "node": ">=18.0.0"
   },
+  "sideEffects": false,
   "scripts": {
     "build": "tsup",
     "dev": "tsup --watch",
