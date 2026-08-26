@@ -1,16 +1,10 @@
 {
   "name": "playwright-clipboard-testing",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "Playwright fixture and custom matchers for clipboard testing and assertions.",
-  "keywords": [
-    "playwright",
-    "clipboard",
-    "testing",
-    "fixture",
-    "matcher",
-    "e2e",
-    "typescript"
-  ],
+  "type": "module",
+  "author": "Sergii Oleksenko <serg.oleksenko@gmail.com>",
+  "license": "MIT",
   "homepage": "https://github.com/sergoleksenko/playwright-clipboard-testing#readme",
   "bugs": {
     "url": "https://github.com/sergoleksenko/playwright-clipboard-testing/issues"
@@ -19,9 +13,16 @@
     "type": "git",
     "url": "git+https://github.com/sergoleksenko/playwright-clipboard-testing.git"
   },
-  "license": "MIT",
-  "author": "Sergii Oleksenko <serg.oleksenko@gmail.com>",
-  "type": "module",
+  "keywords": [
+    "playwright",
+    "typescript",
+    "clipboard",
+    "testing",
+    "fixture",
+    "matcher",
+    "integration",
+    "e2e"
+  ],
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -43,8 +44,8 @@
     "dev": "tsup --watch",
     "lint": "biome check .",
     "lint:fix": "biome check --write .",
-    "format": "biome format --write .",
     "typecheck": "tsc --noEmit",
+    "format": "biome format --write .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {

@@ -1,1 +1,2 @@
-export const version = '1.0.0';
+export { ClipboardHandler } from './clipboard.js';
+export { clipboardFixture, expect, test } from './fixtures.js';
