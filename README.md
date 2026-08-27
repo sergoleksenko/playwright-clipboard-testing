@@ -4,6 +4,8 @@
 
 Custom Playwright fixture and matchers for testing clipboard functionality in your web applications.
 
+[![npm version](https://img.shields.io/npm/v/playwright-clipboard-testing.svg?style=flat&color=blue)](https://www.npmjs.com/package/playwright-clipboard-testing)
+[![npm downloads](https://img.shields.io/npm/dw/playwright-clipboard-testing.svg?color=blue)](https://www.npmjs.com/package/playwright-clipboard-testing)
 [![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg?style=flat&color=blue)](LICENSE)
 
 ## Table of Contents
@@ -98,3 +100,6 @@ Sergii Oleksenko <serg.oleksenko@gmail.com>
 
 ## License
 [MIT](LICENSE)
+
+---
+If you find this project useful, give it a ⭐️ on [GitHub](https://github.com/sergoleksenko/playwright-clipboard-testing)!
