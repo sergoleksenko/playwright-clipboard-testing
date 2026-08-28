@@ -2,13 +2,22 @@
 
 # Playwright Clipboard Testing
 
-Custom Playwright fixture and matchers for testing clipboard functionality in your web applications.
+Effortless clipboard testing for Playwright. Features custom fixtures, smart polling matchers, and auto-managed permissions.
 
 [![npm version](https://img.shields.io/npm/v/playwright-clipboard-testing.svg?style=flat&color=blue)](https://www.npmjs.com/package/playwright-clipboard-testing)
 [![npm downloads](https://img.shields.io/npm/dw/playwright-clipboard-testing.svg?color=blue)](https://www.npmjs.com/package/playwright-clipboard-testing)
 [![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg?style=flat&color=blue)](LICENSE)
 
+## Why?
+Testing the Clipboard API in Playwright usually requires boilerplate code to manually grant `clipboard-read` and `clipboard-write` permissions for every context, write custom page functions, or deal with tricky async polling issues.
+
+**playwright-clipboard-testing** simplifies this with:
+- 🔌 **Zero configuration** — Permissions are granted automatically under the hood.
+- 🔄 **Built-in Auto-retries & Polling** — Uses Playwright's native `expect` polling to wait until the clipboard updates asynchronously.
+- 📦 **TypeScript Ready** — Out-of-the-box support for JSON objects with full type safety (`readJSON<T>()`).
+
 ## Table of Contents
+- [Why?](#why)
 - [Installation](#installation)
 - [Browser Support](#browser-support)
 - [Usage](#usage)
