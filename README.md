@@ -68,13 +68,18 @@ test('should copy text to clipboard', async ({ page, clipboard }) => {
 If you already have a custom test fixture file, extend Playwright's `test` and `expect` with `clipboardFixture` and `clipboardMatchers`:
 ```ts
 import { expect as baseExpect, test as baseTest } from '@playwright/test';
-import { type ClipboardHandler, clipboardFixture, clipboardMatchers } from 'playwright-clipboard-testing';
+import {
+  type ClipboardHandler,
+  clipboardFixture,
+  clipboardMatchers,
+} from 'playwright-clipboard-testing';
 
 export const test = baseTest.extend<{ clipboard: ClipboardHandler }>({
   clipboard: clipboardFixture,
 });
 
 export const expect = baseExpect.extend(clipboardMatchers);
+
 ```
 
 ## API
