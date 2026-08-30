@@ -57,7 +57,7 @@ import { test, expect } from 'playwright-clipboard-testing';
 
 test('should copy text to clipboard', async ({ page, clipboard }) => {
   await page.goto('https://example.com');
-  await page.click('#copy-button');
+  await page.locator('#copy-button').click();
   
   await expect(clipboard).toHaveData('Hello, World!');
 });
