@@ -1,1 +1,1 @@
-export type browserNameType = 'chromium' | 'firefox' | 'webkit';
+export type BrowserName = 'chromium' | 'firefox' | 'webkit';

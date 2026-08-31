@@ -12,7 +12,7 @@ Effortless clipboard testing for Playwright. Features custom fixtures, smart pol
 Testing the Clipboard API in Playwright usually requires boilerplate code to manually grant `clipboard-read` and `clipboard-write` permissions for every context, write custom page functions, or deal with tricky async polling issues.
 
 **playwright-clipboard-testing** simplifies this with:
-- 🔌 **Zero configuration** — Permissions are granted automatically under the hood.
+- 🔌 **Zero configuration** — Chromium permissions are granted automatically under the hood (Firefox requires a 1-line config setup).
 - 🔄 **Built-in Auto-retries & Polling** — Uses Playwright's native `expect` polling to wait until the clipboard updates asynchronously.
 - 📦 **TypeScript Ready** — Out-of-the-box support for JSON objects with full type safety (`readJSON<T>()`).
 
@@ -39,6 +39,9 @@ npm install --save-dev playwright-clipboard-testing
 ![NOTE](https://img.shields.io/badge/NOTE-WebKit%20browser%20does%20not%20support%20the%20Clipboard%20API-yellow)
 
 Clipboard API testing is currently supported in Chromium-based and Firefox browsers.
+
+> **Note:** Permissions are auto-managed out of the box for Chromium. Firefox requires a one-time preference setup in your config.
+
 If your Playwright setup runs tests in WebKit, you can skip clipboard tests for that browser:
 ```ts
 test('should copy text to clipboard', async ({ page, clipboard, browserName }) => {
@@ -47,7 +50,7 @@ test('should copy text to clipboard', async ({ page, clipboard, browserName }) =
   // test logic...
 });
 ```
-If your Playwright setup runs tests in Firefox, you need to manually configure `firefoxUserPrefs` in your Playwright config to allow clipboard access:
+If your Playwright setup runs tests in Firefox, manually configure `firefoxUserPrefs` in your Playwright config:
 ```ts
 import { defineConfig, devices } from '@playwright/test';
 import { firefoxClipboardPrefs } from 'playwright-clipboard-testing';

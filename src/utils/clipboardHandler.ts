@@ -10,23 +10,23 @@
  */
 
 import type { BrowserContext, Page } from '@playwright/test';
-import type { browserNameType } from '../types.js';
+import type { BrowserName } from '../types.js';
 
 export class ClipboardHandler {
-  private readonly browserName: browserNameType;
+  private readonly browserName: BrowserName;
   private isPermissionGranted: boolean;
 
   constructor(
     private readonly page: Page,
     private readonly context: BrowserContext,
-    browserName: browserNameType = 'chromium',
+    browserName: BrowserName = 'chromium',
   ) {
     this.browserName = browserName;
     this.isPermissionGranted = false;
   }
 
   /**
-   * Grants clipboard permissions in the browser context if not already granted.
+   * Grants clipboard permissions to the Chromium browser context if not already granted.
    * @private
    */
   private async grantPermissions() {
