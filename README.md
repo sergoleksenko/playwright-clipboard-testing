@@ -36,10 +36,10 @@ npm install --save-dev playwright-clipboard-testing
 ```
 
 ## Browser Support
-![NOTE](https://img.shields.io/badge/NOTE-Webkit%20browser%20does%20not%20support%20the%20Clipboard%20API-yellow)
+![NOTE](https://img.shields.io/badge/NOTE-WebKit%20browser%20does%20not%20support%20the%20Clipboard%20API-yellow)
 
-The Web Clipboard Permissions API is currently supported in Chromium-based and Firefox browsers.
-If your Playwright setup runs tests in Webkit, you can skip clipboard tests for that browser:
+Clipboard API testing is currently supported in Chromium-based and Firefox browsers.
+If your Playwright setup runs tests in WebKit, you can skip clipboard tests for that browser:
 ```ts
 test('should copy text to clipboard', async ({ page, clipboard, browserName }) => {
   test.skip(browserName === 'webkit', 'Clipboard API is only supported in Chromium and Firefox');
@@ -47,7 +47,7 @@ test('should copy text to clipboard', async ({ page, clipboard, browserName }) =
   // test logic...
 });
 ```
-If your Playwright setup runs tests in Firefox, you need to manually configure the `firefoxUserPrefs` in your Playwright config to allow clipboard access:
+If your Playwright setup runs tests in Firefox, you need to manually configure `firefoxUserPrefs` in your Playwright config to allow clipboard access:
 ```ts
 import { defineConfig, devices } from '@playwright/test';
 import { firefoxClipboardPrefs } from 'playwright-clipboard-testing';
