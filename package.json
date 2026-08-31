@@ -1,6 +1,6 @@
 {
   "name": "playwright-clipboard-testing",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Playwright fixture and custom matchers for clipboard testing and assertions.",
   "author": "Sergii Oleksenko <serg.oleksenko@gmail.com>",
   "license": "MIT",
