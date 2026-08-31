@@ -1,4 +1,5 @@
 import type { BrowserContext, Page, TestFixture } from '@playwright/test';
+import type { browserNameType } from '../types.js';
 import { ClipboardHandler } from '../utils/clipboardHandler.js';
 
 /**
@@ -7,7 +8,7 @@ import { ClipboardHandler } from '../utils/clipboardHandler.js';
  */
 export const clipboardFixture: TestFixture<
   ClipboardHandler,
-  { page: Page; context: BrowserContext; browserName: string }
+  { page: Page; context: BrowserContext; browserName: browserNameType }
 > = async ({ page, context, browserName }, use) => {
   if (browserName === 'webkit') {
     throw new Error(

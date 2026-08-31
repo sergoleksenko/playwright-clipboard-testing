@@ -10,15 +10,16 @@
  */
 
 import type { BrowserContext, Page } from '@playwright/test';
+import type { browserNameType } from '../types.js';
 
 export class ClipboardHandler {
-  private readonly browserName: string;
+  private readonly browserName: browserNameType;
   private isPermissionGranted: boolean;
 
   constructor(
     private readonly page: Page,
     private readonly context: BrowserContext,
-    browserName: string = 'chromium',
+    browserName: browserNameType = 'chromium',
   ) {
     this.browserName = browserName;
     this.isPermissionGranted = false;
