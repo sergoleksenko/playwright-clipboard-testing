@@ -12,12 +12,15 @@
 import type { BrowserContext, Page } from '@playwright/test';
 
 export class ClipboardHandler {
+  private readonly browserName: string;
   private isPermissionGranted: boolean;
 
   constructor(
     private readonly page: Page,
     private readonly context: BrowserContext,
+    browserName: string,
   ) {
+    this.browserName = browserName;
     this.isPermissionGranted = false;
   }
 
@@ -27,9 +30,11 @@ export class ClipboardHandler {
    * @private
    */
   private async grantPermissions() {
-    if (!this.isPermissionGranted) {
-      await this.context.grantPermissions(['clipboard-read', 'clipboard-write']);
-      this.isPermissionGranted = true;
+    if (this.browserName === 'chromium') {
+      if (!this.isPermissionGranted) {
+        await this.context.grantPermissions(['clipboard-read', 'clipboard-write']);
+        this.isPermissionGranted = true;
+      }
     }
   }
 

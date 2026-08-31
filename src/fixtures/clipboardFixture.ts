@@ -9,14 +9,14 @@ export const clipboardFixture: TestFixture<
   ClipboardHandler,
   { page: Page; context: BrowserContext; browserName: string }
 > = async ({ page, context, browserName }, use) => {
-  if (browserName !== 'chromium') {
+  if (browserName === 'webkit') {
     throw new Error(
       `[playwright-clipboard] Browser '${browserName}' is not supported. ` +
-        'Clipboard Permissions API is currently only supported in Chromium-based browsers.\n' +
-        `Use test.skip(browserName !== 'chromium') in your tests to skip non-Chromium runs.`,
+        'Clipboard Permissions API is currently only supported in Chromium-based and Firefox browsers.\n' +
+        `Use test.skip(browserName === 'webkit') in your tests to skip tests that require clipboard access for unsupported browsers.`,
     );
   }
 
-  const handler = new ClipboardHandler(page, context);
+  const handler = new ClipboardHandler(page, context, browserName);
   await use(handler);
 };
