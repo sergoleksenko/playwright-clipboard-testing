@@ -49,7 +49,7 @@ test('should copy text to clipboard', async ({ page, clipboard, browserName }) =
 ```
 If your Playwright setup runs tests in Firefox, you need to manually configure the `firefoxUserPrefs` in your Playwright config to allow clipboard access:
 ```ts
-import { defineConfig } from '@playwright/test';
+import { defineConfig, devices } from '@playwright/test';
 import { firefoxClipboardPrefs } from 'playwright-clipboard-testing';
 
 export default defineConfig({

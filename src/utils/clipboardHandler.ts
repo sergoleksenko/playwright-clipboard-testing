@@ -18,15 +18,14 @@ export class ClipboardHandler {
   constructor(
     private readonly page: Page,
     private readonly context: BrowserContext,
-    browserName: string,
+    browserName: string = 'chromium',
   ) {
     this.browserName = browserName;
     this.isPermissionGranted = false;
   }
 
   /**
-   * Grants the necessary clipboard permissions ('clipboard-read' and 'clipboard-write') to the browser context.
-   * This method is called internally before any clipboard read operation to ensure permissions are set.
+   * Grants clipboard permissions in the browser context if not already granted.
    * @private
    */
   private async grantPermissions() {
