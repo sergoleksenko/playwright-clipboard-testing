@@ -1,4 +1,5 @@
 import type { BrowserContext, Page, TestFixture } from '@playwright/test';
+import type { BrowserName } from '../types.js';
 import { ClipboardHandler } from '../utils/clipboardHandler.js';
 
 /**
@@ -7,16 +8,16 @@ import { ClipboardHandler } from '../utils/clipboardHandler.js';
  */
 export const clipboardFixture: TestFixture<
   ClipboardHandler,
-  { page: Page; context: BrowserContext; browserName: string }
+  { page: Page; context: BrowserContext; browserName: BrowserName }
 > = async ({ page, context, browserName }, use) => {
-  if (browserName !== 'chromium') {
+  if (browserName === 'webkit') {
     throw new Error(
       `[playwright-clipboard] Browser '${browserName}' is not supported. ` +
-        'Clipboard Permissions API is currently only supported in Chromium-based browsers.\n' +
-        `Use test.skip(browserName !== 'chromium') in your tests to skip non-Chromium runs.`,
+        'Clipboard API testing is currently supported only in Chromium-based and Firefox browsers.\n' +
+        `Add test.skip(browserName === 'webkit', 'Clipboard API is only supported in Chromium and Firefox'); to your test body.`,
     );
   }
 
-  const handler = new ClipboardHandler(page, context);
+  const handler = new ClipboardHandler(page, context, browserName);
   await use(handler);
 };
