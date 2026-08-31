@@ -14,7 +14,7 @@ export const clipboardFixture: TestFixture<
     throw new Error(
       `[playwright-clipboard] Browser '${browserName}' is not supported. ` +
         'Clipboard API testing is currently supported only in Chromium-based and Firefox browsers.\n' +
-        `Use test.skip(browserName === 'webkit') in your tests to skip tests that require clipboard access for unsupported browsers.`,
+        `Add "test.skip(browserName === 'webkit', 'Clipboard API is only supported in Chromium and Firefox');" to your test body.`,
     );
   }
 
