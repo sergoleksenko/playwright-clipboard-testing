@@ -6,13 +6,13 @@ import { clipboardMatchers } from '../src/index.js';
 const createFakeClipboard = (
   overrides: { read?: string; readJSON?: unknown } = {},
 ): ClipboardHandler => {
-  const { read = '' } = overrides;
+  const { read = '', readJSON } = overrides;
 
   return {
     read: vi.fn().mockResolvedValue(read),
     readJSON: vi.fn().mockImplementation(<T>() => {
-      if (overrides.readJSON !== undefined) {
-        return overrides.readJSON as T;
+      if (readJSON !== undefined) {
+        return readJSON as T;
       }
 
       try {
@@ -56,9 +56,7 @@ describe('clipboardMatchers', () => {
             matcherState,
             clipboard,
             expected,
-            {
-              timeout: 1000,
-            },
+            { timeout: 1000 },
           );
 
           // then
@@ -86,9 +84,7 @@ describe('clipboardMatchers', () => {
             matcherState,
             clipboard,
             expected,
-            {
-              timeout: 1000,
-            },
+            { timeout: 1000 },
           );
 
           // then
@@ -146,9 +142,7 @@ describe('clipboardMatchers', () => {
             matcherStateNot,
             clipboard,
             expected,
-            {
-              timeout: 1000,
-            },
+            { timeout: 1000 },
           );
 
           // then
@@ -178,15 +172,40 @@ describe('clipboardMatchers', () => {
             matcherState,
             clipboard,
             expected,
-            {
-              timeout: 1000,
-            },
+            { timeout: 1000 },
           );
 
           // then
           expect(result.pass).toBe(false);
           expect(result.message()).toContain(`Received: ${JSON.stringify(actual)}`);
           expect(result.message()).toContain(`Expected: ${JSON.stringify(expected)}`);
+        },
+      );
+    });
+
+    describe('primitive JSON types', () => {
+      it.each([
+        { actual: '', expected: '' },
+        { actual: 123, expected: 123 },
+        { actual: null, expected: null },
+        { actual: true, expected: true },
+        { actual: [1, 2, 3], expected: [1, 2, 3] },
+      ])(
+        'should return pass=true when actual=$actual matches expected=$expected',
+        async ({ actual, expected }) => {
+          // given
+          const clipboard = createFakeClipboard({ readJSON: actual });
+
+          // when
+          const result = await clipboardMatchers.toHaveData.call(
+            matcherState,
+            clipboard,
+            expected,
+            { timeout: 1000 },
+          );
+
+          // then
+          expect(result.pass).toBe(true);
         },
       );
     });
