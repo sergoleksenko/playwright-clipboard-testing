@@ -28,58 +28,167 @@ const createMatcherState = (isNot = false): ExpectMatcherState =>
   ({
     isNot,
     utils: {
-      matcherHint: (name: string) => `matcherHint(${name})`,
-      printExpected: (v: unknown) => `expected:${JSON.stringify(v)}`,
-      printReceived: (v: unknown) => `received:${JSON.stringify(v)}`,
+      matcherHint: (name: string) => `${name}`,
+      printExpected: (v: unknown) => `${JSON.stringify(v)}`,
+      printReceived: (v: unknown) => `${JSON.stringify(v)}`,
     },
   }) as unknown as ExpectMatcherState;
 
 const matcherState = createMatcherState();
+const matcherStateNot = createMatcherState(true);
 
 describe('clipboardMatchers', () => {
   describe('toHaveData', () => {
-    it.each([
-      { expected: 'true fake data', pass: true },
-      { expected: 'false fake data', pass: false },
-    ])(
-      'should return pass=$pass when expected is the string "$expected"',
-      async ({ expected, pass }) => {
-        // given
-        const clipboard = createFakeClipboard({ read: 'true fake data' });
+    describe('when not inverted with .not', () => {
+      it.each([
+        { expected: 'true fake data', pass: true },
+        { expected: 'false fake data', pass: false },
+      ])(
+        'should return pass=$pass when strings matches, and format not inverted error message',
+        async ({ expected, pass }) => {
+          const actual = 'true fake data';
 
-        // when
-        const result = await clipboardMatchers.toHaveData.call(matcherState, clipboard, expected, {
-          timeout: 1000,
-        });
+          // given
+          const clipboard = createFakeClipboard({ read: actual });
 
-        // then
-        expect(result.pass).toBe(pass);
-        expect(result.name).toBe('toHaveData');
-        expect(result.actual).toBe('true fake data');
-        expect(result.expected).toBe(expected);
-      },
-    );
+          // when
+          const result = await clipboardMatchers.toHaveData.call(
+            matcherState,
+            clipboard,
+            expected,
+            {
+              timeout: 1000,
+            },
+          );
 
-    it.each([
-      { expected: { data: 'true fake data' }, pass: true },
-      { expected: { data: 'false fake data' }, pass: false },
-    ])(
-      'should return pass=$pass when expected is the object "$expected"',
-      async ({ expected, pass }) => {
-        // given
-        const clipboard = createFakeClipboard({ readJSON: { data: 'true fake data' } });
+          // then
+          expect(result.pass).toBe(pass);
+          expect(result.name).toBe('toHaveData');
+          expect(result.actual).toBe(actual);
+          expect(result.expected).toBe(expected);
+          expect(result.message()).not.toContain('not');
+        },
+      );
 
-        // when
-        const result = await clipboardMatchers.toHaveData.call(matcherState, clipboard, expected, {
-          timeout: 1000,
-        });
+      it.each([
+        { expected: { data: 'true fake data' }, pass: true },
+        { expected: { data: 'false fake data' }, pass: false },
+      ])(
+        'should return pass=$pass when objects matches, and format not inverted error message',
+        async ({ expected, pass }) => {
+          const actual = { data: 'true fake data' };
 
-        // then
-        expect(result.pass).toBe(pass);
-        expect(result.name).toBe('toHaveData');
-        expect(result.actual).toEqual({ data: 'true fake data' });
-        expect(result.expected).toEqual(expected);
-      },
-    );
+          // given
+          const clipboard = createFakeClipboard({ readJSON: actual });
+
+          // when
+          const result = await clipboardMatchers.toHaveData.call(
+            matcherState,
+            clipboard,
+            expected,
+            {
+              timeout: 1000,
+            },
+          );
+
+          // then
+          expect(result.pass).toBe(pass);
+          expect(result.name).toBe('toHaveData');
+          expect(result.actual).toEqual(actual);
+          expect(result.expected).toEqual(expected);
+          expect(result.message()).not.toContain('not');
+        },
+      );
+    });
+
+    describe('when inverted with .not', () => {
+      it.each([
+        { expected: 'true fake data', pass: true },
+        { expected: 'false fake data', pass: false },
+      ])(
+        'should return pass=$pass when strings match, but format inverted error message',
+        async ({ expected, pass }) => {
+          const actual = 'true fake data';
+
+          // given
+          const clipboard = createFakeClipboard({ read: actual });
+
+          // when
+          const result = await clipboardMatchers.toHaveData.call(
+            matcherStateNot,
+            clipboard,
+            expected,
+            { timeout: 1000 },
+          );
+
+          // then
+          expect(result.pass).toBe(pass);
+          expect(result.name).toBe('toHaveData');
+          expect(result.actual).toBe(actual);
+          expect(result.expected).toBe(expected);
+          expect(result.message()).toContain('not');
+        },
+      );
+
+      it.each([
+        { expected: { data: 'true fake data' }, pass: true },
+        { expected: { data: 'false fake data' }, pass: false },
+      ])(
+        'should return pass=$pass when objects matches, but format inverted error message',
+        async ({ expected, pass }) => {
+          const actual = { data: 'true fake data' };
+
+          // given
+          const clipboard = createFakeClipboard({ readJSON: actual });
+
+          // when
+          const result = await clipboardMatchers.toHaveData.call(
+            matcherStateNot,
+            clipboard,
+            expected,
+            {
+              timeout: 1000,
+            },
+          );
+
+          // then
+          expect(result.pass).toBe(pass);
+          expect(result.name).toBe('toHaveData');
+          expect(result.actual).toEqual(actual);
+          expect(result.expected).toEqual(expected);
+          expect(result.message()).toContain('not');
+        },
+      );
+    });
+
+    describe('when data types mismatch', () => {
+      it.each([
+        { actual: 'string fake data', expected: { data: 'object fake data' } },
+        { actual: { data: 'object fake data' }, expected: 'string fake data' },
+      ])(
+        'should return pass=false when actual=$actual does not match expected=$expected',
+        async ({ actual, expected }) => {
+          // given
+          const clipboard = createFakeClipboard(
+            typeof actual === 'string' ? { read: actual } : { readJSON: actual },
+          );
+
+          // when
+          const result = await clipboardMatchers.toHaveData.call(
+            matcherState,
+            clipboard,
+            expected,
+            {
+              timeout: 1000,
+            },
+          );
+
+          // then
+          expect(result.pass).toBe(false);
+          expect(result.message()).toContain(`Received: ${JSON.stringify(actual)}`);
+          expect(result.message()).toContain(`Expected: ${JSON.stringify(expected)}`);
+        },
+      );
+    });
   });
 });
