@@ -4,6 +4,7 @@
 
 Effortless clipboard testing for Playwright. Features custom fixtures, smart polling matchers, and auto-managed permissions.
 
+[![Tests](https://github.com/sergoleksenko/playwright-clipboard-testing/actions/workflows/tests.yml/badge.svg)](https://github.com/sergoleksenko/playwright-clipboard-testing/actions/workflows/tests.yml)
 [![npm version](https://img.shields.io/npm/v/playwright-clipboard-testing.svg?style=flat&color=blue)](https://www.npmjs.com/package/playwright-clipboard-testing)
 [![npm downloads](https://img.shields.io/npm/dw/playwright-clipboard-testing.svg?color=blue)](https://www.npmjs.com/package/playwright-clipboard-testing)
 [![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg?style=flat&color=blue)](LICENSE)
