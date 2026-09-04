@@ -14,7 +14,7 @@ Testing the Clipboard API in Playwright usually requires boilerplate code to man
 **playwright-clipboard-testing** simplifies this with:
 - 🔌 **Zero configuration** — Permissions are granted automatically under the hood.
 - 🔄 **Built-in Auto-retries & Polling** — Uses Playwright's native `expect` polling to wait until the clipboard updates asynchronously.
-- 📦 **TypeScript Ready** — Out-of-the-box support for JSON objects with full type safety (`readJSON<T>()`).
+- 📦 **TypeScript Ready** — Full type safety for JSON objects with `readJSON<T>()`.
 
 ## Table of Contents
 - [Why?](#why)
@@ -25,6 +25,8 @@ Testing the Clipboard API in Playwright usually requires boilerplate code to man
   - [Extended Usage](#extended-usage)
 - [API](#api)
   - [Clipboard Fixture](#clipboard-fixture)
+  - [toHaveText Matcher](#tohavetext-matcher)
+  - [toHaveJSON Matcher](#tohavejson-matcher)
   - [toHaveData Matcher](#tohavedata-matcher)
 - [Author](#author)
 - [License](#license)
@@ -90,7 +92,38 @@ The `clipboard` fixture provides direct access to the browser clipboard during t
 
 ![NOTE](https://img.shields.io/badge/NOTE-For%20your%20tests%20we%20recommend%20using%20the%20toHaveData%20matcher-yellow)
 
+### toHaveText Matcher
+`expect(clipboard).toHaveText(expected, options?)`
+
+Asserts that the clipboard content matches the expected string. Uses Playwright's smart polling mechanism to wait for the clipboard to update.
+- `expected: string` — Expected text to compare against.
+- `options.timeout: number (optional, default: 10000ms)` — Time in milliseconds to wait for the clipboard content to match.
+```ts
+// assert that the clipboard contains the expected text
+await expect(clipboard).toHaveText('Hello, World!');
+```
+```ts
+// Custom timeout
+await expect(clipboard).toHaveText('Async copied value', { timeout: 5000 });
+```
+
+### toHaveJSON Matcher
+`expect(clipboard).toHaveJSON(expected, options?)`
+Asserts that the clipboard content matches the expected JSON object. Uses Playwright's smart polling mechanism to wait for the clipboard to update.
+- `expected: object` — Expected JSON object to compare against.
+- `options.timeout: number (optional, default: 10000ms)` — Time in milliseconds to wait for the clipboard content to match.
+```ts
+// assert that the clipboard contains the expected JSON data
+await expect(clipboard).toHaveJSON({ message: 'Hello, World!' });
+```
+```ts
+// Custom timeout
+await expect(clipboard).toHaveJSON({ message: 'Async copied value' }, { timeout: 5000 });
+```
+
 ### toHaveData Matcher
+![NOTE](https://img.shields.io/badge/NOTE-Matcher%20is%20deprecated%20in%20favor%20of%20toHaveText%20and%20toHaveJSON-yellow)
+
 `expect(clipboard).toHaveData(expected, options?)`
 
 Asserts that the clipboard content matches the expected string or JSON object. Uses Playwright's smart polling mechanism to wait for the clipboard to update.
