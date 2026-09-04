@@ -12,7 +12,7 @@ Effortless clipboard testing for Playwright. Features custom fixtures, smart pol
 Testing the Clipboard API in Playwright usually requires boilerplate code to manually grant `clipboard-read` and `clipboard-write` permissions for every context, write custom page functions, or deal with tricky async polling issues.
 
 **playwright-clipboard-testing** simplifies this with:
-- 🔌 **Zero configuration** — Permissions are granted automatically under the hood.
+- 🔌 **Zero configuration** — Chromium permissions are granted automatically under the hood (Firefox requires a 1-line config setup).
 - 🔄 **Built-in Auto-retries & Polling** — Uses Playwright's native `expect` polling to wait until the clipboard updates asynchronously.
 - 📦 **TypeScript Ready** — Full type safety for JSON objects with `readJSON<T>()`.
 
@@ -38,15 +38,37 @@ npm install --save-dev playwright-clipboard-testing
 ```
 
 ## Browser Support
-![NOTE](https://img.shields.io/badge/NOTE-Only%20supported%20in%20Chromium%20browsers-yellow)
+![NOTE](https://img.shields.io/badge/NOTE-WebKit%20browser%20does%20not%20support%20the%20Clipboard%20API-yellow)
 
-The Web Clipboard Permissions API is currently only supported in Chromium-based browsers.
-If your Playwright setup runs tests across multiple browsers, skip non-Chromium runs in tests that use the clipboard:
+Clipboard API testing is currently supported in Chromium-based and Firefox browsers.
+
+> **Note:** Permissions are auto-managed out of the box for Chromium. Firefox requires a one-time preference setup in your config.
+
+If your Playwright setup runs tests in WebKit, you can skip clipboard tests for that browser:
 ```ts
 test('should copy text to clipboard', async ({ page, clipboard, browserName }) => {
-  test.skip(browserName !== 'chromium', 'Clipboard API is only supported in Chromium');
+  test.skip(browserName === 'webkit', 'Clipboard API is only supported in Chromium and Firefox');
 
   // test logic...
+});
+```
+If your Playwright setup runs tests in Firefox, manually configure `firefoxUserPrefs` in your Playwright config:
+```ts
+import { defineConfig, devices } from '@playwright/test';
+import { firefoxClipboardPrefs } from 'playwright-clipboard-testing';
+
+export default defineConfig({
+  projects: [
+    {
+      name: 'firefox',
+      use: {
+        ...devices['Desktop Firefox'],
+        launchOptions: {
+          firefoxUserPrefs: firefoxClipboardPrefs,
+        },
+      },
+    },
+  ],
 });
 ```
 

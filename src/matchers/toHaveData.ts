@@ -6,6 +6,9 @@ import type { MatcherOptions } from './types.js';
 
 /**
  * Asserts that the clipboard content matches the expected value.
+ * Uses smart polling to wait for the clipboard to be updated.
+ * If the `expected` value is an object, it attempts to parse the clipboard
+ * content as JSON before comparing.
  *
  * @this ExpectMatcherState
  * @param clipboard The Clipboard utility instance.
