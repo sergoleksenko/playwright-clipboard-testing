@@ -1,6 +1,7 @@
-import { type ExpectMatcherState, expect, type MatcherReturnType } from '@playwright/test';
+import type { ExpectMatcherState, MatcherReturnType } from '@playwright/test';
 import type { ClipboardHandler } from '../utils/clipboardHandler.js';
-import { getErrorMessage } from '../utils/matcherUtils.js';
+import { toHaveJSON } from './toHaveJSON.js';
+import { toHaveText } from './toHaveText.js';
 import type { MatcherOptions } from './types.js';
 
 /**
@@ -19,45 +20,13 @@ export async function toHaveData(
   options: MatcherOptions = {},
 ) {
   const name = 'toHaveData';
-  let pass: boolean;
-  let actual: unknown;
+  let matcherReturn: MatcherReturnType;
 
-  const { timeout = 10_000 } = options;
-
-  const poll = expect.poll(
-    async () => {
-      try {
-        actual = await clipboard.readJSON();
-      } catch {
-        actual = await clipboard.read();
-      }
-
-      if (typeof expected === 'string' && actual !== null && actual !== undefined) {
-        return String(actual);
-      }
-
-      return actual;
-    },
-    { timeout },
-  );
-
-  try {
-    const expectation = this.isNot ? poll.not : poll;
-    await expectation.toEqual(expected);
-    pass = true;
-  } catch {
-    pass = false;
+  if (typeof expected === 'string') {
+    matcherReturn = await toHaveText.call(this, clipboard, expected, options);
+  } else {
+    matcherReturn = await toHaveJSON.call(this, clipboard, expected, options);
   }
 
-  if (this.isNot) pass = !pass;
-
-  const matcherReturn: MatcherReturnType = {
-    message: getErrorMessage.call(this, name, expected, actual),
-    pass,
-    name,
-    expected,
-    actual,
-  };
-
-  return matcherReturn;
+  return { ...matcherReturn, name };
 }
