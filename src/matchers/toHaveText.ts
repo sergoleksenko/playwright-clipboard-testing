@@ -29,11 +29,14 @@ export async function toHaveText(
     async () => {
       try {
         actual = await clipboard.read();
+        errorReason = null;
+        return actual;
       } catch (error) {
         errorReason = error instanceof Error ? error : new Error(String(error));
-      }
+        actual = undefined;
 
-      return actual;
+        throw errorReason;
+      }
     },
     { timeout },
   );

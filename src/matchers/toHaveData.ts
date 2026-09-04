@@ -23,7 +23,7 @@ export async function toHaveData(
   options: MatcherOptions = {},
 ) {
   const name = 'toHaveData';
-  let matcherReturn: MatcherReturnType;
+  let matcherReturn: MatcherReturnType | null = null;
 
   if (typeof expected === 'string') {
     matcherReturn = await toHaveText.call(this, clipboard, expected, options);
@@ -31,5 +31,12 @@ export async function toHaveData(
     matcherReturn = await toHaveJSON.call(this, clipboard, expected, options);
   }
 
-  return { ...matcherReturn, name };
+  return {
+    ...matcherReturn,
+    name,
+    message: () => {
+      const originalMessage = matcherReturn.message();
+      return originalMessage.replace('toHaveText', name).replace('toHaveJSON', name);
+    },
+  };
 }

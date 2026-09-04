@@ -3,6 +3,8 @@ import { describe, expect, it, vi } from 'vitest';
 import type { ClipboardHandler } from '../src/index.js';
 import { clipboardMatchers } from '../src/index.js';
 
+const TEST_TIMEOUT = 50;
+
 const createFakeClipboard = (
   overrides: { read?: string; readJSON?: unknown } = {},
 ): ClipboardHandler => {
@@ -58,7 +60,7 @@ describe('clipboardMatchers', () => {
             matcherState,
             clipboard,
             expected,
-            { timeout: 1000 },
+            { timeout: TEST_TIMEOUT },
           );
 
           // then
@@ -88,7 +90,7 @@ describe('clipboardMatchers', () => {
             matcherStateNot,
             clipboard,
             expected,
-            { timeout: 1000 },
+            { timeout: TEST_TIMEOUT },
           );
 
           // then
@@ -113,7 +115,7 @@ describe('clipboardMatchers', () => {
             matcherState,
             clipboard,
             expected,
-            { timeout: 1000 },
+            { timeout: TEST_TIMEOUT },
           );
 
           // then
@@ -142,7 +144,7 @@ describe('clipboardMatchers', () => {
             matcherState,
             clipboard,
             expected,
-            { timeout: 1000 },
+            { timeout: TEST_TIMEOUT },
           );
 
           // then
@@ -172,7 +174,7 @@ describe('clipboardMatchers', () => {
             matcherStateNot,
             clipboard,
             expected,
-            { timeout: 1000 },
+            { timeout: TEST_TIMEOUT },
           );
 
           // then
@@ -197,7 +199,7 @@ describe('clipboardMatchers', () => {
             matcherState,
             clipboard,
             expected,
-            { timeout: 1000 },
+            { timeout: TEST_TIMEOUT },
           );
 
           // then
@@ -224,7 +226,7 @@ describe('clipboardMatchers', () => {
             matcherState,
             clipboard,
             expected,
-            { timeout: 1000 },
+            { timeout: TEST_TIMEOUT },
           );
 
           // then
@@ -252,7 +254,7 @@ describe('clipboardMatchers', () => {
             matcherState,
             clipboard,
             expected,
-            { timeout: 1000 },
+            { timeout: TEST_TIMEOUT },
           );
 
           // then
@@ -280,7 +282,7 @@ describe('clipboardMatchers', () => {
             matcherState,
             clipboard,
             expected,
-            { timeout: 1000 },
+            { timeout: TEST_TIMEOUT },
           );
 
           // then
@@ -310,7 +312,7 @@ describe('clipboardMatchers', () => {
             matcherStateNot,
             clipboard,
             expected,
-            { timeout: 1000 },
+            { timeout: TEST_TIMEOUT },
           );
 
           // then
@@ -338,7 +340,7 @@ describe('clipboardMatchers', () => {
             matcherStateNot,
             clipboard,
             expected,
-            { timeout: 1000 },
+            { timeout: TEST_TIMEOUT },
           );
 
           // then
@@ -363,7 +365,7 @@ describe('clipboardMatchers', () => {
             matcherState,
             clipboard,
             expected,
-            { timeout: 1000 },
+            { timeout: TEST_TIMEOUT },
           );
 
           // then
@@ -383,7 +385,7 @@ describe('clipboardMatchers', () => {
             matcherState,
             clipboard,
             expected,
-            { timeout: 1000 },
+            { timeout: TEST_TIMEOUT },
           );
 
           // then
@@ -410,7 +412,7 @@ describe('clipboardMatchers', () => {
             matcherState,
             clipboard,
             expected,
-            { timeout: 1000 },
+            { timeout: TEST_TIMEOUT },
           );
 
           // then

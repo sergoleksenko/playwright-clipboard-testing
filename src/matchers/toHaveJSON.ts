@@ -30,11 +30,19 @@ export async function toHaveJSON(
     async () => {
       try {
         actual = await clipboard.readJSON();
+        errorReason = null;
+        return actual;
       } catch (error) {
         errorReason = error instanceof Error ? error : new Error(String(error));
-      }
 
-      return actual;
+        try {
+          actual = await clipboard.read();
+        } catch {
+          actual = undefined;
+        }
+
+        throw errorReason;
+      }
     },
     { timeout },
   );

@@ -112,7 +112,7 @@ The `clipboard` fixture provides direct access to the browser clipboard during t
 - `clipboard.read(): Promise<string>` - reads the current plain text content from the clipboard.
 - `clipboard.readJSON<T>(): Promise<T>` - reads the current clipboard content and parses it as a JSON object of type `T`. Throws an error if the content is not valid JSON.
 
-![NOTE](https://img.shields.io/badge/NOTE-For%20your%20tests%20we%20recommend%20using%20the%20toHaveData%20matcher-yellow)
+![NOTE](https://img.shields.io/badge/NOTE-For%20your%20tests%20we%20recommend%20using%20existing%20matchers%20to%20assert%20clipboard%20content-yellow)
 
 ### toHaveText Matcher
 `expect(clipboard).toHaveText(expected, options?)`
@@ -131,8 +131,8 @@ await expect(clipboard).toHaveText('Async copied value', { timeout: 5000 });
 
 ### toHaveJSON Matcher
 `expect(clipboard).toHaveJSON(expected, options?)`
-Asserts that the clipboard content matches the expected JSON object. Uses Playwright's smart polling mechanism to wait for the clipboard to update.
-- `expected: object` — Expected JSON object to compare against.
+Asserts that the clipboard content matches the expected JSON value. Uses Playwright's smart polling mechanism to wait for the clipboard to update.
+- `expected: unknown` — Expected JSON value to compare against.
 - `options.timeout: number (optional, default: 10000ms)` — Time in milliseconds to wait for the clipboard content to match.
 ```ts
 // assert that the clipboard contains the expected JSON data
