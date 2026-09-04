@@ -40,7 +40,7 @@
     "dist"
   ],
   "engines": {
-    "node": ">=18.0.0"
+    "node": ">=20.0.0"
   },
   "sideEffects": false,
   "scripts": {
@@ -50,13 +50,15 @@
     "lint:fix": "biome check --write .",
     "typecheck": "tsc --noEmit",
     "format": "biome format --write .",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "vitest run",
+    "test:watch": "vitest"
   },
   "devDependencies": {
     "@biomejs/biome": "2.5.10",
     "@playwright/test": "1.62.1",
     "tsup": "^8.5.1",
-    "typescript": "5.8.3"
+    "typescript": "5.8.3",
+    "vitest": "^4.1.11"
   },
   "peerDependencies": {
     "@playwright/test": ">=1.40.0"
