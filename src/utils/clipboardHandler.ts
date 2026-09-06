@@ -22,7 +22,6 @@ export class ClipboardHandler {
    * @returns A promise that resolves to the clipboard string content.
    */
   async read(): Promise<string> {
-    // await this.grantPermissions();
     return await this.page.evaluate(() => navigator.clipboard.readText());
   }
 
