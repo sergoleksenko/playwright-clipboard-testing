@@ -1,5 +1,5 @@
 export { firefoxClipboardPrefs } from './constants.js';
-export { clipboardFixtures } from './fixtures/index.js';
+export { clipboardFixture, clipboardFixtures, contextFixture } from './fixtures/index.js';
 export { expect, test } from './fixtures.js';
-export { clipboardMatchers } from './matchers/clipboardMatchers.js';
-export { ClipboardHandler } from './utils/clipboardHandler.js';
+export { clipboardMatchers } from './matchers/index.js';
+export { ClipboardHandler } from './utils/index.js';
