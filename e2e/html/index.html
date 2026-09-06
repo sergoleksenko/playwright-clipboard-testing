@@ -11,8 +11,12 @@
 <body>
     <h1>Playwright Clipboard Testing</h1>
 
+    <h3>toHaveTextContent</h3>
     <button type="button" id="copy-text-button" data-testid="copy-text-button">Copy Text</button>
     <button type="button" id="copy-uuid-button" data-testid="copy-uuid-button">Copy UUID</button>
+
+    <h3>toHaveJSONContent</h3>
+    <button type="button" id="copy-json-button" data-testid="copy-json-button">Copy JSON</button>
 
     <br>
     <div id="status" data-testid="status">Idle</div>
@@ -29,6 +33,10 @@
 
       document.getElementById('copy-uuid-button')?.addEventListener('click', async () => {
         await copy(crypto.randomUUID());
+      });
+
+      document.getElementById('copy-json-button')?.addEventListener('click', async () => {
+        await copy(JSON.stringify({ message: 'Hello, JSON!' }));
       });
     </script>
 </body>

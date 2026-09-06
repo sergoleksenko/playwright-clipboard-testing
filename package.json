@@ -60,6 +60,7 @@
     "@biomejs/biome": "2.5.10",
     "@playwright/test": "^1.63.0",
     "@types/node": "^26.4.1",
+    "serve": "^14.2.6",
     "tsup": "^8.5.1",
     "typescript": "5.8.3",
     "vitest": "^4.1.11"
