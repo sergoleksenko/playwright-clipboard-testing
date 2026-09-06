@@ -30,7 +30,7 @@ jobs:
           npm run typecheck
           npm run lint
 
-      - name: Run tests
+      - name: Run tests (Unit & E2E)
         run: npm test
 
       - name: Build package
