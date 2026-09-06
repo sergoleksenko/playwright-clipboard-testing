@@ -1,10 +1,10 @@
+import path from 'node:path';
 import { expect, test } from 'playwright-clipboard-testing';
 
 test.describe('Clipboard Matchers Tests', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto(
-      'file:///Users/sergii/GitHub/playwright-clipboard-testing/e2e/fixtures/index.html',
-    );
+    const filePath = path.resolve(process.cwd(), 'e2e/fixtures/index.html');
+    await page.goto(`file://${filePath}`);
     await page.waitForLoadState('domcontentloaded');
 
     await expect(page.getByTestId('status')).toHaveText('Idle');
