@@ -4,8 +4,7 @@ export class ClipboardTestingPage {
   constructor(private readonly page: Page) {}
 
   async visit(): Promise<void> {
-    await this.page.goto('/index.html');
-    await this.page.waitForLoadState('domcontentloaded');
+    await this.page.goto('index.html', { waitUntil: 'domcontentloaded' });
   }
 
   get status(): Locator {
