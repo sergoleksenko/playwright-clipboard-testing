@@ -1,4 +1,4 @@
-import type { BrowserContext, Page, TestFixture } from '@playwright/test';
+import type { Page, TestFixture } from '@playwright/test';
 import type { BrowserName } from '../types.js';
 import { ClipboardHandler } from '../utils/clipboardHandler.js';
 
@@ -8,8 +8,8 @@ import { ClipboardHandler } from '../utils/clipboardHandler.js';
  */
 export const clipboardFixture: TestFixture<
   ClipboardHandler,
-  { page: Page; context: BrowserContext; browserName: BrowserName }
-> = async ({ page, context, browserName }, use) => {
+  { page: Page; browserName: BrowserName }
+> = async ({ page, browserName }, use) => {
   if (browserName === 'webkit') {
     throw new Error(
       `[playwright-clipboard] Browser '${browserName}' is not supported. ` +
@@ -18,6 +18,6 @@ export const clipboardFixture: TestFixture<
     );
   }
 
-  const handler = new ClipboardHandler(page, context, browserName);
+  const handler = new ClipboardHandler(page);
   await use(handler);
 };

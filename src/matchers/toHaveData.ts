@@ -1,7 +1,7 @@
 import type { ExpectMatcherState, MatcherReturnType } from '@playwright/test';
 import type { ClipboardHandler } from '../utils/clipboardHandler.js';
-import { toHaveJSON } from './toHaveJSON.js';
-import { toHaveText } from './toHaveText.js';
+import { toHaveJSONContent } from './toHaveJSONContent.js';
+import { toHaveTextContent } from './toHaveTextContent.js';
 import type { MatcherOptions } from './types.js';
 
 /**
@@ -26,9 +26,9 @@ export async function toHaveData(
   let matcherReturn: MatcherReturnType | null = null;
 
   if (typeof expected === 'string') {
-    matcherReturn = await toHaveText.call(this, clipboard, expected, options);
+    matcherReturn = await toHaveTextContent.call(this, clipboard, expected, options);
   } else {
-    matcherReturn = await toHaveJSON.call(this, clipboard, expected, options);
+    matcherReturn = await toHaveJSONContent.call(this, clipboard, expected, options);
   }
 
   return {

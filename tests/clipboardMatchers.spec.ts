@@ -42,7 +42,7 @@ const matcherState = createMatcherState();
 const matcherStateNot = createMatcherState(true);
 
 describe('clipboardMatchers', () => {
-  describe('toHaveText', () => {
+  describe('toHaveTextContent', () => {
     describe('when not inverted with .not', () => {
       it.each([
         { expected: 'true fake data', pass: true },
@@ -56,7 +56,7 @@ describe('clipboardMatchers', () => {
           const clipboard = createFakeClipboard({ read: actual });
 
           // when
-          const result = await clipboardMatchers.toHaveText.call(
+          const result = await clipboardMatchers.toHaveTextContent.call(
             matcherState,
             clipboard,
             expected,
@@ -65,7 +65,7 @@ describe('clipboardMatchers', () => {
 
           // then
           expect(result.pass).toBe(pass);
-          expect(result.name).toBe('toHaveText');
+          expect(result.name).toBe('toHaveTextContent');
           expect(result.actual).toBe(actual);
           expect(result.expected).toBe(expected);
           expect(result.message()).not.toContain('not');
@@ -86,7 +86,7 @@ describe('clipboardMatchers', () => {
           const clipboard = createFakeClipboard({ read: actual });
 
           // when
-          const result = await clipboardMatchers.toHaveText.call(
+          const result = await clipboardMatchers.toHaveTextContent.call(
             matcherStateNot,
             clipboard,
             expected,
@@ -95,7 +95,7 @@ describe('clipboardMatchers', () => {
 
           // then
           expect(result.pass).toBe(pass);
-          expect(result.name).toBe('toHaveText');
+          expect(result.name).toBe('toHaveTextContent');
           expect(result.actual).toBe(actual);
           expect(result.expected).toBe(expected);
           expect(result.message()).toContain('not');
@@ -111,7 +111,7 @@ describe('clipboardMatchers', () => {
           const clipboard = createFakeClipboard({ readJSON: actual });
 
           // when
-          const result = await clipboardMatchers.toHaveText.call(
+          const result = await clipboardMatchers.toHaveTextContent.call(
             matcherState,
             clipboard,
             expected,
@@ -126,7 +126,7 @@ describe('clipboardMatchers', () => {
     });
   });
 
-  describe('toHaveJSON', () => {
+  describe('toHaveJSONContent', () => {
     describe('when not inverted with .not', () => {
       it.each([
         { expected: { data: 'true fake data' }, pass: true },
@@ -140,7 +140,7 @@ describe('clipboardMatchers', () => {
           const clipboard = createFakeClipboard({ readJSON: actual });
 
           // when
-          const result = await clipboardMatchers.toHaveJSON.call(
+          const result = await clipboardMatchers.toHaveJSONContent.call(
             matcherState,
             clipboard,
             expected,
@@ -149,7 +149,7 @@ describe('clipboardMatchers', () => {
 
           // then
           expect(result.pass).toBe(pass);
-          expect(result.name).toBe('toHaveJSON');
+          expect(result.name).toBe('toHaveJSONContent');
           expect(result.actual).toEqual(actual);
           expect(result.expected).toEqual(expected);
           expect(result.message()).not.toContain('not');
@@ -170,7 +170,7 @@ describe('clipboardMatchers', () => {
           const clipboard = createFakeClipboard({ readJSON: actual });
 
           // when
-          const result = await clipboardMatchers.toHaveJSON.call(
+          const result = await clipboardMatchers.toHaveJSONContent.call(
             matcherStateNot,
             clipboard,
             expected,
@@ -179,7 +179,7 @@ describe('clipboardMatchers', () => {
 
           // then
           expect(result.pass).toBe(pass);
-          expect(result.name).toBe('toHaveJSON');
+          expect(result.name).toBe('toHaveJSONContent');
           expect(result.actual).toEqual(actual);
           expect(result.expected).toEqual(expected);
           expect(result.message()).toContain('not');
@@ -195,7 +195,7 @@ describe('clipboardMatchers', () => {
           const clipboard = createFakeClipboard({ read: actual });
 
           // when
-          const result = await clipboardMatchers.toHaveJSON.call(
+          const result = await clipboardMatchers.toHaveJSONContent.call(
             matcherState,
             clipboard,
             expected,
@@ -222,7 +222,7 @@ describe('clipboardMatchers', () => {
           const clipboard = createFakeClipboard({ readJSON: actual });
 
           // when
-          const result = await clipboardMatchers.toHaveJSON.call(
+          const result = await clipboardMatchers.toHaveJSONContent.call(
             matcherState,
             clipboard,
             expected,

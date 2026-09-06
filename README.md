@@ -25,9 +25,9 @@ Testing the Clipboard API in Playwright usually requires boilerplate code to man
   - [Direct Usage](#direct-usage) 
   - [Extended Usage](#extended-usage)
 - [API](#api)
-  - [Clipboard Fixture](#clipboard-fixture)
-  - [toHaveText Matcher](#tohavetext-matcher)
-  - [toHaveJSON Matcher](#tohavejson-matcher)
+  - [Clipboard Fixtures](#clipboard-fixtures)
+  - [toHaveTextContent Matcher](#tohavetextcontent-matcher)
+  - [toHaveJSONContent Matcher](#tohavejsoncontent-matcher)
   - [toHaveData Matcher](#tohavedata-matcher)
 - [Author](#author)
 - [License](#license)
@@ -84,68 +84,69 @@ test('should copy text to clipboard', async ({ page, clipboard }) => {
   await page.goto('https://example.com');
   await page.locator('#copy-button').click();
   
-  await expect(clipboard).toHaveData('Hello, World!');
+  await expect(clipboard).toHaveTextContent('Hello, World!');
 });
 ```
 
 ### Extended Usage
 
-If you already have a custom test fixture file, extend Playwright's `test` and `expect` with `clipboardFixture` and `clipboardMatchers`:
+If you already have a custom test fixture file, extend Playwright's `test` and `expect` with `clipboardFixtures` and `clipboardMatchers`:
 ```ts
 import { expect as baseExpect, test as baseTest } from '@playwright/test';
 import {
   type ClipboardHandler,
-  clipboardFixture,
+  clipboardFixtures,
   clipboardMatchers,
 } from 'playwright-clipboard-testing';
 
-export const test = baseTest.extend<{ clipboard: ClipboardHandler }>({
-  clipboard: clipboardFixture,
-});
+export const test = baseTest.extend<{ clipboard: ClipboardHandler }>(clipboardFixtures);
 
 export const expect = baseExpect.extend(clipboardMatchers);
-
 ```
 
 ## API
-### Clipboard Fixture
-The `clipboard` fixture provides direct access to the browser clipboard during tests:
-- `clipboard.read(): Promise<string>` - reads the current plain text content from the clipboard.
-- `clipboard.readJSON<T>(): Promise<T>` - reads the current clipboard content and parses it as a JSON object of type `T`. Throws an error if the content is not valid JSON.
+### Clipboard Fixtures
+The package exports `clipboardFixtures` (containing `context` and `clipboard` fixtures) as well as individual fixtures `clipboardFixture` and `contextFixture`:
+
+- `clipboardFixtures` — Object containing both `context` and `clipboard` fixtures for simple fixture extension.
+- `contextFixture` (`context`) — Automatically grants `clipboard-read` and `clipboard-write` permissions to Chromium browser contexts.
+- `clipboardFixture` (`clipboard`) — Provides direct access to the `ClipboardHandler` instance during tests:
+  - `clipboard.read(): Promise<string>` — reads the current plain text content from the clipboard.
+  - `clipboard.readJSON<T>(): Promise<T>` — reads the current clipboard content and parses it as a JSON object of type `T`. Throws an error if the content is not valid JSON.
 
 ![NOTE](https://img.shields.io/badge/NOTE-For%20your%20tests%20we%20recommend%20using%20existing%20matchers%20to%20assert%20clipboard%20content-yellow)
 
-### toHaveText Matcher
-`expect(clipboard).toHaveText(expected, options?)`
+### toHaveTextContent Matcher
+`expect(clipboard).toHaveTextContent(expected, options?)`
 
 Asserts that the clipboard content matches the expected string. Uses Playwright's smart polling mechanism to wait for the clipboard to update.
 - `expected: string` — Expected text to compare against.
 - `options.timeout: number (optional, default: 10000ms)` — Time in milliseconds to wait for the clipboard content to match.
 ```ts
 // assert that the clipboard contains the expected text
-await expect(clipboard).toHaveText('Hello, World!');
+await expect(clipboard).toHaveTextContent('Hello, World!');
 ```
 ```ts
 // Custom timeout
-await expect(clipboard).toHaveText('Async copied value', { timeout: 5000 });
+await expect(clipboard).toHaveTextContent('Async copied value', { timeout: 5000 });
 ```
 
-### toHaveJSON Matcher
-`expect(clipboard).toHaveJSON(expected, options?)`
+### toHaveJSONContent Matcher
+`expect(clipboard).toHaveJSONContent(expected, options?)`
 Asserts that the clipboard content matches the expected JSON value. Uses Playwright's smart polling mechanism to wait for the clipboard to update.
 - `expected: unknown` — Expected JSON value to compare against.
 - `options.timeout: number (optional, default: 10000ms)` — Time in milliseconds to wait for the clipboard content to match.
 ```ts
 // assert that the clipboard contains the expected JSON data
-await expect(clipboard).toHaveJSON({ message: 'Hello, World!' });
+await expect(clipboard).toHaveJSONContent({ message: 'Hello, World!' });
 ```
 ```ts
 // Custom timeout
-await expect(clipboard).toHaveJSON({ message: 'Async copied value' }, { timeout: 5000 });
+await expect(clipboard).toHaveJSONContent({ message: 'Async copied value' }, { timeout: 5000 });
 ```
 
 ### toHaveData Matcher
-![NOTE](https://img.shields.io/badge/NOTE-Matcher%20is%20deprecated%20in%20favor%20of%20toHaveText%20and%20toHaveJSON-yellow)
+![NOTE](https://img.shields.io/badge/NOTE-Matcher%20is%20deprecated%20in%20favor%20of%20toHaveTextContent%20and%20toHaveJSONContent-yellow)
 
 `expect(clipboard).toHaveData(expected, options?)`
 

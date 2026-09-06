@@ -9,34 +9,10 @@
  * to be granted in the browser context.
  */
 
-import type { BrowserContext, Page } from '@playwright/test';
-import type { BrowserName } from '../types.js';
+import type { Page } from '@playwright/test';
 
 export class ClipboardHandler {
-  private readonly browserName: BrowserName;
-  private isPermissionGranted: boolean;
-
-  constructor(
-    private readonly page: Page,
-    private readonly context: BrowserContext,
-    browserName: BrowserName = 'chromium',
-  ) {
-    this.browserName = browserName;
-    this.isPermissionGranted = false;
-  }
-
-  /**
-   * Grants clipboard permissions to the Chromium browser context if not already granted.
-   * @private
-   */
-  private async grantPermissions() {
-    if (this.browserName === 'chromium') {
-      if (!this.isPermissionGranted) {
-        await this.context.grantPermissions(['clipboard-read', 'clipboard-write']);
-        this.isPermissionGranted = true;
-      }
-    }
-  }
+  constructor(private readonly page: Page) {}
 
   /**
    * Reads the current text content from the browser clipboard.
@@ -46,7 +22,7 @@ export class ClipboardHandler {
    * @returns A promise that resolves to the clipboard string content.
    */
   async read(): Promise<string> {
-    await this.grantPermissions();
+    // await this.grantPermissions();
     return await this.page.evaluate(() => navigator.clipboard.readText());
   }
 

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Clipboard Test Fixture</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; display: flex; flex-direction: column; gap: 10px; max-width: 500px; }
+        button { padding: 8px 12px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <h1>Playwright Clipboard Testing</h1>
+
+    <button type="button" id="copy-text-button" data-testid="copy-text-button">Copy Text</button>
+    <button type="button" id="copy-uuid-button" data-testid="copy-uuid-button">Copy UUID</button>
+
+    <br>
+    <div id="status" data-testid="status">Idle</div>
+
+    <script>
+      async function copy(text) {
+        await navigator.clipboard.writeText(text);
+        document.getElementById('status').textContent = `Copied: ${text}`;
+      }
+
+      document.getElementById('copy-text-button')?.addEventListener('click', async () => {
+        await copy('Hello, World!');
+      });
+
+      document.getElementById('copy-uuid-button')?.addEventListener('click', async () => {
+        await copy(crypto.randomUUID());
+      });
+    </script>
+</body>
+</html>

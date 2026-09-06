@@ -14,7 +14,7 @@ declare global {
        * @example
        * await expect(clipboard).toHaveText('Copied value');
        */
-      toHaveText(expected: string, options?: MatcherOptions): Promise<R>;
+      toHaveTextContent(expected: string, options?: MatcherOptions): Promise<R>;
 
       /**
        * Asserts that the clipboard content matches the expected JSON value.
@@ -27,7 +27,7 @@ declare global {
        * @example
        * await expect(clipboard).toHaveJSON({ id: 123, status: 'success' });
        */
-      toHaveJSON(expected: unknown, options?: MatcherOptions): Promise<R>;
+      toHaveJSONContent(expected: unknown, options?: MatcherOptions): Promise<R>;
 
       /**
        * Asserts that the clipboard content matches the expected value.
