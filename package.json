@@ -50,12 +50,16 @@
     "lint:fix": "biome check --write .",
     "typecheck": "tsc --noEmit",
     "format": "biome format --write .",
-    "test": "vitest run",
+    "test:unit": "vitest run",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
+    "test": "npm run test:unit && npm run test:e2e",
     "test:watch": "vitest"
   },
   "devDependencies": {
     "@biomejs/biome": "2.5.10",
-    "@playwright/test": "1.62.1",
+    "@playwright/test": "^1.63.0",
+    "@types/node": "^26.4.1",
     "tsup": "^8.5.1",
     "typescript": "5.8.3",
     "vitest": "^4.1.11"

@@ -12,6 +12,11 @@
     "outDir": "./dist",
     "rootDir": ".",
 
+    "baseUrl": ".",
+    "paths": {
+      "playwright-clipboard-testing": ["./src/index.ts"]
+    },
+
     "strict": true,
     "noImplicitAny": true,
     "strictNullChecks": true,
@@ -23,6 +28,6 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true
   },
-  "include": ["src/**/*", "tests/**/*"],
+  "include": ["src/**/*", "tests/**/*", "e2e/**/*"],
   "exclude": ["node_modules", "dist"]
 }

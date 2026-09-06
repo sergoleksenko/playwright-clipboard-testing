@@ -1,25 +1,24 @@
-import type { ExpectMatcherState, MatcherReturnType } from '@playwright/test';
-import { expect } from '@playwright/test';
+import { type ExpectMatcherState, expect, type MatcherReturnType } from '@playwright/test';
 import type { ClipboardHandler } from '../utils/clipboardHandler.js';
 import { getErrorMessage } from '../utils/matcherUtils.js';
 import type { MatcherOptions } from './types.js';
 
 /**
- * Asserts that the clipboard content matches the expected JSON value.
+ * Asserts that the clipboard content matches the expected text value.
  *
  * @this ExpectMatcherState
  * @param clipboard The Clipboard utility instance.
- * @param expected The expected JSON value.
+ * @param expected The expected text value.
  * @param options Matcher options.
  * @returns A Promise that resolves to a MatcherReturnType object.
  */
-export async function toHaveJSON(
+export async function toHaveTextContent(
   this: ExpectMatcherState,
   clipboard: ClipboardHandler,
-  expected: unknown,
+  expected: string,
   options: MatcherOptions = {},
 ) {
-  const name = 'toHaveJSON';
+  const name = 'toHaveTextContent';
   let pass: boolean;
   let actual: unknown;
   let errorReason: Error | null = null;
@@ -29,17 +28,12 @@ export async function toHaveJSON(
   const poll = expect.poll(
     async () => {
       try {
-        actual = await clipboard.readJSON();
+        actual = await clipboard.read();
         errorReason = null;
         return actual;
       } catch (error) {
         errorReason = error instanceof Error ? error : new Error(String(error));
-
-        try {
-          actual = await clipboard.read();
-        } catch {
-          actual = undefined;
-        }
+        actual = undefined;
 
         throw errorReason;
       }
