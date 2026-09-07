@@ -1,9 +1,25 @@
 import { expect, test } from './fixtures/baseFixtures.js';
 
 test.describe('ClipboardHandler', () => {
-  test.beforeEach(async ({ clipboardTestingPage }) => {
+  test.beforeEach(async ({ clipboard, clipboardTestingPage }) => {
     await clipboardTestingPage.visit();
     await expect(clipboardTestingPage.status).toHaveText('Idle');
+
+    await clipboard.clear();
+  });
+
+  test.describe('clear method', () => {
+    test('should clear clipboard', async ({ clipboard }) => {
+      // given
+      await clipboard.write('Hello from clear test');
+
+      // when
+      await clipboard.clear();
+
+      // then
+      const content = await clipboard.read();
+      expect(content).toBe('');
+    });
   });
 
   test.describe('write method', () => {
@@ -15,6 +31,49 @@ test.describe('ClipboardHandler', () => {
       await clipboardTestingPage.readClipboardButton.click();
       await expect(clipboardTestingPage.output).toHaveText(
         'Read from clipboard: Hello from write test',
+      );
+    });
+  });
+
+  test.describe('writeJSON method', () => {
+    test('should write JSON to clipboard', async ({ clipboard, clipboardTestingPage }) => {
+      // when
+      await clipboard.writeJSON({ message: 'Hello from writeJSON test' });
+
+      // then
+      await clipboardTestingPage.readClipboardButton.click();
+      await expect(clipboardTestingPage.output).toHaveText(
+        'Read from clipboard: {"message":"Hello from writeJSON test"}',
+      );
+    });
+
+    test('should write primitive value to clipboard', async ({
+      clipboard,
+      clipboardTestingPage,
+    }) => {
+      // when
+      await clipboard.writeJSON(12345);
+
+      await clipboardTestingPage.readClipboardButton.click();
+      await expect(clipboardTestingPage.output).toHaveText('Read from clipboard: 12345');
+    });
+
+    test('should throw an error when trying to write undefined', async ({ clipboard }) => {
+      // when
+      await expect(clipboard.writeJSON(undefined)).rejects.toThrow(
+        '[playwright-clipboard] Provided data cannot be stringified to valid JSON (received undefined).',
+      );
+    });
+
+    test('should throw an error when trying to write circular JSON', async ({ clipboard }) => {
+      // when
+      // biome-ignore lint/suspicious/noExplicitAny: any type is used here to create a circular object for testing purposes
+      const circularObject: any = {};
+      circularObject.self = circularObject;
+
+      // then
+      await expect(clipboard.writeJSON(circularObject)).rejects.toThrow(
+        '[playwright-clipboard] Provided data cannot be stringified to valid JSON: TypeError: Converting circular structure to JSON',
       );
     });
   });
@@ -49,7 +108,7 @@ test.describe('ClipboardHandler', () => {
 
       // then
       await expect(clipboard.readJSON()).rejects.toThrow(
-        'Clipboard content is not a valid JSON: "Hello, World!"',
+        '[playwright-clipboard] Clipboard content is not a valid JSON: "Hello, World!"',
       );
     });
   });

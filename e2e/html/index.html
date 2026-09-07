@@ -179,6 +179,11 @@
     document.getElementById('status').textContent = `Copied: ${text}`;
   }
 
+  document.getElementById('read-clipboard-button')?.addEventListener('click', async () => {
+    const text = await navigator.clipboard.readText();
+    document.getElementById('output').textContent = `Read from clipboard: ${text}`;
+  });
+
   document.getElementById('copy-text-button')?.addEventListener('click', async () => {
     await copy('Hello, World!');
   });
@@ -189,11 +194,6 @@
 
   document.getElementById('copy-json-button')?.addEventListener('click', async () => {
     await copy(JSON.stringify({ message: 'Hello, JSON!' }));
-  });
-
-  document.getElementById('read-clipboard-button')?.addEventListener('click', async () => {
-    const text = await navigator.clipboard.readText();
-    document.getElementById('output').textContent = `Read from clipboard: ${text}`;
   });
 </script>
 </body>

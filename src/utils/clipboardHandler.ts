@@ -38,7 +38,9 @@ export class ClipboardHandler {
     try {
       return JSON.parse(text);
     } catch {
-      throw new Error(`Clipboard content is not a valid JSON: ${JSON.stringify(text)}`);
+      throw new Error(
+        `[playwright-clipboard] Clipboard content is not a valid JSON: ${JSON.stringify(text)}`,
+      );
     }
   }
 
@@ -48,5 +50,38 @@ export class ClipboardHandler {
    */
   async write(data: string): Promise<void> {
     await this.page.evaluate((value) => navigator.clipboard.writeText(value), data);
+  }
+
+  /**
+   * Writes the provided data to the browser clipboard as a JSON string.
+   * @param data The data to write to the clipboard. It will be stringified as JSON.
+   */
+  async writeJSON<T = unknown>(data: T): Promise<void> {
+    let jsonString: string | undefined;
+
+    try {
+      jsonString = JSON.stringify(data);
+    } catch (error) {
+      const message = error instanceof Error ? error : String(error);
+      throw new Error(
+        `[playwright-clipboard] Provided data cannot be stringified to valid JSON: ${message}`,
+      );
+    }
+
+    if (jsonString === undefined) {
+      throw new Error(
+        '[playwright-clipboard] Provided data cannot be stringified to valid JSON (received undefined).',
+      );
+    }
+
+    await this.page.evaluate((value) => navigator.clipboard.writeText(value), jsonString);
+  }
+
+  /**
+   * Clears the browser clipboard by writing an empty string to it.
+   * This effectively removes any existing content from the clipboard.
+   */
+  async clear(): Promise<void> {
+    await this.write('');
   }
 }

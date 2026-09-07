@@ -1,9 +1,11 @@
 import { expect, test } from './fixtures/baseFixtures.js';
 
 test.describe('clipboardMatchers', () => {
-  test.beforeEach(async ({ clipboardTestingPage }) => {
+  test.beforeEach(async ({ clipboard, clipboardTestingPage }) => {
     await clipboardTestingPage.visit();
     await expect(clipboardTestingPage.status).toHaveText('Idle');
+
+    await clipboard.clear();
   });
 
   test.describe('toBeBlank', () => {
