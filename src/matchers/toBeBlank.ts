@@ -43,7 +43,7 @@ export async function toBeBlank(
 
   try {
     const expectation = this.isNot ? poll.not : poll;
-    await expectation.toBe(expected);
+    await expectation.toEqual(expected);
     pass = true;
   } catch {
     pass = false;
