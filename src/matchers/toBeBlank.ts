@@ -4,23 +4,22 @@ import { getErrorMessage } from '../utils/matcherUtils.js';
 import type { TimeoutMatcherOptions } from './types.js';
 
 /**
- * Asserts that the clipboard content matches the expected text value.
+ * Asserts that the clipboard content is blank (empty string).
  *
  * @this ExpectMatcherState
  * @param clipboard The Clipboard utility instance.
- * @param expected The expected text value.
  * @param options Matcher options.
  * @returns A Promise that resolves to a MatcherReturnType object.
  */
-export async function toHaveTextContent(
+export async function toBeBlank(
   this: ExpectMatcherState,
   clipboard: ClipboardHandler,
-  expected: string,
   options: TimeoutMatcherOptions = {},
 ) {
-  const name = 'toHaveTextContent';
+  const name = 'toBeBlank';
   let pass: boolean;
   let actual: unknown;
+  const expected: string = '';
   let errorReason: Error | null = null;
 
   const { timeout = 10_000 } = options;

@@ -2,7 +2,7 @@ import type { ExpectMatcherState, MatcherReturnType } from '@playwright/test';
 import { expect } from '@playwright/test';
 import type { ClipboardHandler } from '../utils/clipboardHandler.js';
 import { getErrorMessage } from '../utils/matcherUtils.js';
-import type { MatcherOptions } from './types.js';
+import type { TimeoutMatcherOptions } from './types.js';
 
 /**
  * Asserts that the clipboard content matches the expected JSON value.
@@ -17,7 +17,7 @@ export async function toHaveJSONContent(
   this: ExpectMatcherState,
   clipboard: ClipboardHandler,
   expected: unknown,
-  options: MatcherOptions = {},
+  options: TimeoutMatcherOptions = {},
 ) {
   const name = 'toHaveJSONContent';
   let pass: boolean;

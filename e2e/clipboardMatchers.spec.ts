@@ -6,6 +6,18 @@ test.describe('Clipboard Matchers Tests', () => {
     await expect(clipboardTestingPage.status).toHaveText('Idle');
   });
 
+  test.describe('toBeBlank', () => {
+    test('clipboard should be empty', async ({ clipboard }) => {
+      await expect(clipboard).toBeBlank();
+    });
+
+    test('clipboard should not be empty', async ({ clipboard, clipboardTestingPage }) => {
+      await clipboardTestingPage.copyTextButton.click();
+
+      await expect(clipboard).not.toBeBlank();
+    });
+  });
+
   test.describe('toHaveTextContent', () => {
     test('should copy text and verify it matches expected data', async ({
       clipboard,
