@@ -57,21 +57,18 @@ export class ClipboardHandler {
    * @param data The data to write to the clipboard. It will be stringified as JSON.
    */
   async writeJSON<T = unknown>(data: T): Promise<void> {
+    const errorMessage = '[playwright-clipboard] Provided data cannot be stringified to valid JSON';
     let jsonString: string | undefined;
 
     try {
       jsonString = JSON.stringify(data);
     } catch (error) {
       const message = error instanceof Error ? error : String(error);
-      throw new Error(
-        `[playwright-clipboard] Provided data cannot be stringified to valid JSON: ${message}`,
-      );
+      throw new Error(`${errorMessage}: ${message}`);
     }
 
     if (jsonString === undefined) {
-      throw new Error(
-        '[playwright-clipboard] Provided data cannot be stringified to valid JSON (received undefined).',
-      );
+      throw new Error(`${errorMessage} (received undefined).`);
     }
 
     await this.page.evaluate((value) => navigator.clipboard.writeText(value), jsonString);
