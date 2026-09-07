@@ -1,4 +1,3 @@
-import { toHaveData } from './toHaveData.js';
 import { toHaveJSONContent } from './toHaveJSONContent.js';
 import { toHaveTextContent } from './toHaveTextContent.js';
 
@@ -8,5 +7,4 @@ import { toHaveTextContent } from './toHaveTextContent.js';
 export const clipboardMatchers = {
   toHaveTextContent,
   toHaveJSONContent,
-  toHaveData,
 };

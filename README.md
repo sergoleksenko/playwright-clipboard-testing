@@ -28,7 +28,6 @@ Testing the Clipboard API in Playwright usually requires boilerplate code to man
   - [Clipboard Fixtures](#clipboard-fixtures)
   - [toHaveTextContent Matcher](#tohavetextcontent-matcher)
   - [toHaveJSONContent Matcher](#tohavejsoncontent-matcher)
-  - [toHaveData Matcher](#tohavedata-matcher)
 - [Author](#author)
 - [License](#license)
 
@@ -143,27 +142,6 @@ await expect(clipboard).toHaveJSONContent({ message: 'Hello, World!' });
 ```ts
 // Custom timeout
 await expect(clipboard).toHaveJSONContent({ message: 'Async copied value' }, { timeout: 5000 });
-```
-
-### toHaveData Matcher
-![NOTE](https://img.shields.io/badge/NOTE-Matcher%20is%20deprecated%20in%20favor%20of%20toHaveTextContent%20and%20toHaveJSONContent-yellow)
-
-`expect(clipboard).toHaveData(expected, options?)`
-
-Asserts that the clipboard content matches the expected string or JSON object. Uses Playwright's smart polling mechanism to wait for the clipboard to update.
-- `expected: unknown` — Expected text or object to compare against.
-- `options.timeout: number (optional, default: 10000ms)` — Time in milliseconds to wait for the clipboard data to match.
-```ts
-// assert that the clipboard contains the expected text
-await expect(clipboard).toHaveData('Hello, World!');
-```
-```ts
-// assert that the clipboard contains the expected JSON data
-await expect(clipboard).toHaveData({ message: 'Hello, World!' });
-```
-```ts
-// Custom timeout
-await expect(clipboard).toHaveData('Async copied value', { timeout: 5000 });
 ```
 
 ## Author
