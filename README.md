@@ -26,6 +26,7 @@ Testing the Clipboard API in Playwright usually requires boilerplate code to man
   - [Extended Usage](#extended-usage)
 - [API](#api)
   - [Clipboard Fixtures](#clipboard-fixtures)
+  - [toBeBlank Matcher](#tobeblank-matcher)
   - [toHaveTextContent Matcher](#tohavetextcontent-matcher)
   - [toHaveJSONContent Matcher](#tohavejsoncontent-matcher)
 - [Author](#author)
@@ -115,6 +116,19 @@ The package exports `clipboardFixtures` (containing `context` and `clipboard` fi
 
 ![NOTE](https://img.shields.io/badge/NOTE-For%20your%20tests%20we%20recommend%20using%20existing%20matchers%20to%20assert%20clipboard%20content-yellow)
 
+### toBeBlank Matcher
+`expect(clipboard).toBeBlank(options?)`
+Asserts that the clipboard is empty. Uses Playwright's smart polling mechanism to wait for the clipboard to update.
+- `options.timeout: number (optional, default: 10000ms)`
+```ts
+// assert that the clipboard is empty
+await expect(clipboard).toBeBlank();
+```
+```ts
+// assert that the clipboard is not empty with a custom timeout
+await expect(clipboard).not.toBeBlank({ timeout: 5000 });
+```
+
 ### toHaveTextContent Matcher
 `expect(clipboard).toHaveTextContent(expected, options?)`
 
@@ -126,8 +140,8 @@ Asserts that the clipboard content matches the expected string. Uses Playwright'
 await expect(clipboard).toHaveTextContent('Hello, World!');
 ```
 ```ts
-// Custom timeout
-await expect(clipboard).toHaveTextContent('Async copied value', { timeout: 5000 });
+// assert that the clipboard is not containing the expected text with a custom timeout
+await expect(clipboard).not.toHaveTextContent('Async copied value', { timeout: 5000 });
 ```
 
 ### toHaveJSONContent Matcher
@@ -140,8 +154,8 @@ Asserts that the clipboard content matches the expected JSON value. Uses Playwri
 await expect(clipboard).toHaveJSONContent({ message: 'Hello, World!' });
 ```
 ```ts
-// Custom timeout
-await expect(clipboard).toHaveJSONContent({ message: 'Async copied value' }, { timeout: 5000 });
+// assert that the clipboard is not containing the expected JSON data with a custom timeout
+await expect(clipboard).not.toHaveJSONContent({ message: 'Async copied value' }, { timeout: 5000 });
 ```
 
 ## Author
