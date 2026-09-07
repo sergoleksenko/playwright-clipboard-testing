@@ -1,26 +1,17 @@
 import { type ExpectMatcherState, expect, type MatcherReturnType } from '@playwright/test';
-import type { ClipboardHandler } from '../utils/clipboardHandler.js';
+import type { ClipboardHandler } from 'playwright-clipboard-testing';
 import { getErrorMessage } from '../utils/matcherUtils.js';
 import type { TimeoutMatcherOptions } from './types.js';
 
-/**
- * Asserts that the clipboard content matches the expected text value.
- *
- * @this ExpectMatcherState
- * @param clipboard The Clipboard utility instance.
- * @param expected The expected text value.
- * @param options Matcher options.
- * @returns A Promise that resolves to a MatcherReturnType object.
- */
-export async function toHaveTextContent(
+export async function toBeBlank(
   this: ExpectMatcherState,
   clipboard: ClipboardHandler,
-  expected: string,
   options: TimeoutMatcherOptions = {},
 ) {
-  const name = 'toHaveTextContent';
+  const name = 'toBeBlank';
   let pass: boolean;
   let actual: unknown;
+  const expected: string = '';
   let errorReason: Error | null = null;
 
   const { timeout = 10_000 } = options;
@@ -30,6 +21,7 @@ export async function toHaveTextContent(
       try {
         actual = await clipboard.read();
         errorReason = null;
+
         return actual;
       } catch (error) {
         errorReason = error instanceof Error ? error : new Error(String(error));
@@ -43,7 +35,7 @@ export async function toHaveTextContent(
 
   try {
     const expectation = this.isNot ? poll.not : poll;
-    await expectation.toEqual(expected);
+    await expectation.toBe(expected);
     pass = true;
   } catch {
     pass = false;

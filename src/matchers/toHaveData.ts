@@ -2,7 +2,7 @@ import type { ExpectMatcherState, MatcherReturnType } from '@playwright/test';
 import type { ClipboardHandler } from '../utils/clipboardHandler.js';
 import { toHaveJSONContent } from './toHaveJSONContent.js';
 import { toHaveTextContent } from './toHaveTextContent.js';
-import type { MatcherOptions } from './types.js';
+import type { TimeoutMatcherOptions } from './types.js';
 
 /**
  * Asserts that the clipboard content matches the expected value.
@@ -20,7 +20,7 @@ export async function toHaveData(
   this: ExpectMatcherState,
   clipboard: ClipboardHandler,
   expected: unknown,
-  options: MatcherOptions = {},
+  options: TimeoutMatcherOptions = {},
 ) {
   const name = 'toHaveData';
   let matcherReturn: MatcherReturnType | null = null;
