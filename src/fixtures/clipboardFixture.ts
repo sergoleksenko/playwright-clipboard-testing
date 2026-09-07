@@ -1,6 +1,6 @@
 import type { Page, TestFixture } from '@playwright/test';
-import type { BrowserName } from '../types.js';
 import { ClipboardHandler } from '../utils/index.js';
+import type { BrowserName } from './types.js';
 
 /**
  * A fixture that provides an instance of the Clipboard utility for interacting with the system clipboard.

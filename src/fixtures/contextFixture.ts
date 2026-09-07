@@ -1,5 +1,5 @@
 import type { BrowserContext, TestFixture } from '@playwright/test';
-import type { BrowserName } from '../types.js';
+import type { BrowserName } from './types.js';
 
 /**
  * A fixture that provides a BrowserContext with clipboard permissions granted for Chromium browsers.
