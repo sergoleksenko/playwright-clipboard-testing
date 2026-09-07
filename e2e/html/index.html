@@ -2,42 +2,199 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Clipboard Test Fixture</title>
     <style>
-        body { font-family: sans-serif; padding: 20px; display: flex; flex-direction: column; gap: 10px; max-width: 500px; }
-        button { padding: 8px 12px; cursor: pointer; }
+        :root {
+            --bg: #090d16;
+            --card-bg: #151d2a;
+            --accent: #38bdf8;
+            --text: #f1f5f9;
+            --text-muted: #94a3b8;
+            --border: #263345;
+            --button-bg: #1e293b;
+            --button-hover: #334155;
+            --button-border: #334155;
+            --status-bg: #0369a1;
+            --code-bg: #0b111a;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            padding: 2rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 900px;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        header {
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 1rem;
+        }
+
+        h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .grid-2-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .grid-2-col {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .section {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.25rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.85rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        h3 {
+            font-size: 0.85rem;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .button-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        button {
+            background-color: var(--button-bg);
+            color: var(--text);
+            border: 1px solid var(--button-border);
+            padding: 0.6rem 1rem;
+            border-radius: 6px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        button:hover {
+            background-color: var(--button-hover);
+            border-color: var(--accent);
+            color: #fff;
+        }
+
+        button:active {
+            transform: translateY(1px);
+        }
+
+        .output-box {
+            background-color: var(--code-bg);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 0.75rem 1rem;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+            font-size: 0.875rem;
+            color: var(--accent);
+            word-break: break-all;
+            min-height: 42px;
+        }
+
+        .status-badge {
+            display: inline-block;
+            background-color: var(--status-bg);
+            color: #f0f9ff;
+            font-size: 0.75rem;
+            padding: 0.3rem 0.6rem;
+            border-radius: 4px;
+            font-weight: 600;
+            align-self: flex-start;
+            letter-spacing: 0.02em;
+        }
     </style>
 </head>
 <body>
-    <h1>Playwright Clipboard Testing</h1>
+<div class="container">
+    <header>
+        <h1>📋 Playwright Clipboard Test Bench</h1>
+    </header>
 
-    <h3>toHaveTextContent</h3>
-    <button type="button" id="copy-text-button" data-testid="copy-text-button">Copy Text</button>
-    <button type="button" id="copy-uuid-button" data-testid="copy-uuid-button">Copy UUID</button>
+    <div class="grid-2-col">
+        <div id="clipboard-matchers" class="section">
+            <h3>toHaveTextContent</h3>
+            <div class="button-group">
+                <button type="button" id="copy-text-button" data-testid="copy-text-button">Copy Text</button>
+                <button type="button" id="copy-uuid-button" data-testid="copy-uuid-button">Copy UUID</button>
+            </div>
 
-    <h3>toHaveJSONContent</h3>
-    <button type="button" id="copy-json-button" data-testid="copy-json-button">Copy JSON</button>
+            <h3 style="margin-top: 0.5rem;">toHaveJSONContent</h3>
+            <div class="button-group">
+                <button type="button" id="copy-json-button" data-testid="copy-json-button">Copy JSON</button>
+            </div>
 
-    <br>
-    <div id="status" data-testid="status">Idle</div>
+            <div id="status" data-testid="status" class="status-badge">Idle</div>
+        </div>
 
-    <script>
-      async function copy(text) {
-        await navigator.clipboard.writeText(text);
-        document.getElementById('status').textContent = `Copied: ${text}`;
-      }
+        <div id="clipboard-handler" class="section">
+            <h3>Clipboard Handler API</h3>
+            <div class="button-group">
+                <button type="button" id="read-clipboard-button" data-testid="read-clipboard-button">Read Clipboard</button>
+            </div>
+            <div id="output" data-testid="output" class="output-box">Read from clipboard: </div>
+        </div>
+    </div>
+</div>
 
-      document.getElementById('copy-text-button')?.addEventListener('click', async () => {
-        await copy('Hello, World!');
-      });
+<script>
+  async function copy(text) {
+    await navigator.clipboard.writeText(text);
+    document.getElementById('status').textContent = `Copied: ${text}`;
+  }
 
-      document.getElementById('copy-uuid-button')?.addEventListener('click', async () => {
-        await copy(crypto.randomUUID());
-      });
+  document.getElementById('copy-text-button')?.addEventListener('click', async () => {
+    await copy('Hello, World!');
+  });
 
-      document.getElementById('copy-json-button')?.addEventListener('click', async () => {
-        await copy(JSON.stringify({ message: 'Hello, JSON!' }));
-      });
-    </script>
+  document.getElementById('copy-uuid-button')?.addEventListener('click', async () => {
+    await copy(crypto.randomUUID());
+  });
+
+  document.getElementById('copy-json-button')?.addEventListener('click', async () => {
+    await copy(JSON.stringify({ message: 'Hello, JSON!' }));
+  });
+
+  document.getElementById('read-clipboard-button')?.addEventListener('click', async () => {
+    const text = await navigator.clipboard.readText();
+    document.getElementById('output').textContent = `Read from clipboard: ${text}`;
+  });
+</script>
 </body>
 </html>

@@ -41,4 +41,12 @@ export class ClipboardHandler {
       throw new Error(`Clipboard content is not a valid JSON: ${JSON.stringify(text)}`);
     }
   }
+
+  /**
+   * Writes the provided string data to the browser clipboard.
+   * @param data The data to write to the clipboard.
+   */
+  async write(data: string): Promise<void> {
+    await this.page.evaluate((value) => navigator.clipboard.writeText(value), data);
+  }
 }

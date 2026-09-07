@@ -11,6 +11,14 @@ export class ClipboardTestingPage {
     return this.page.getByTestId('status');
   }
 
+  get output(): Locator {
+    return this.page.getByTestId('output');
+  }
+
+  get readClipboardButton(): Locator {
+    return this.page.getByTestId('read-clipboard-button');
+  }
+
   get copyTextButton(): Locator {
     return this.page.getByTestId('copy-text-button');
   }
