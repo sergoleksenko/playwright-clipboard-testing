@@ -12,7 +12,7 @@ declare global {
        * @returns A Promise that resolves when the assertion completes.
        *
        * @example
-       * await expect(clipboard).toHaveText('Copied value');
+       * await expect(clipboard).toHaveTextContent('Copied value');
        */
       toHaveTextContent(expected: string, options?: MatcherOptions): Promise<R>;
 
@@ -25,7 +25,7 @@ declare global {
        * @returns A Promise that resolves when the assertion completes.
        *
        * @example
-       * await expect(clipboard).toHaveJSON({ id: 123, status: 'success' });
+       * await expect(clipboard).toHaveJSONContent({ id: 123, status: 'success' });
        */
       toHaveJSONContent(expected: unknown, options?: MatcherOptions): Promise<R>;
     }

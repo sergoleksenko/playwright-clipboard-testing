@@ -30,6 +30,7 @@ export async function toHaveTextContent(
       try {
         actual = await clipboard.read();
         errorReason = null;
+
         return actual;
       } catch (error) {
         errorReason = error instanceof Error ? error : new Error(String(error));
