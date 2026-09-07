@@ -1,5 +1,4 @@
 import { toBeBlank } from './toBeBlank.js';
-import { toHaveData } from './toHaveData.js';
 import { toHaveJSONContent } from './toHaveJSONContent.js';
 import { toHaveTextContent } from './toHaveTextContent.js';
 
@@ -8,7 +7,6 @@ import { toHaveTextContent } from './toHaveTextContent.js';
  */
 export const clipboardMatchers = {
   toBeBlank,
-  toHaveData,
   toHaveJSONContent,
   toHaveTextContent,
 };

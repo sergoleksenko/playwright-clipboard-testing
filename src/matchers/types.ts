@@ -24,7 +24,7 @@ declare global {
        * @returns A Promise that resolves when the assertion completes.
        *
        * @example
-       * await expect(clipboard).toHaveText('Copied value');
+       * await expect(clipboard).toHaveTextContent('Copied value');
        */
       toHaveTextContent(expected: string, options?: TimeoutMatcherOptions): Promise<R>;
 
@@ -37,27 +37,9 @@ declare global {
        * @returns A Promise that resolves when the assertion completes.
        *
        * @example
-       * await expect(clipboard).toHaveJSON({ id: 123, status: 'success' });
+       * await expect(clipboard).toHaveJSONContent({ id: 123, status: 'success' });
        */
       toHaveJSONContent(expected: unknown, options?: TimeoutMatcherOptions): Promise<R>;
-
-      /**
-       * Asserts that the clipboard content matches the expected value.
-       * Uses smart polling to wait for the clipboard to be updated.
-       * If the `expected` value is an object, it attempts to parse the clipboard
-       * content as JSON before comparing.
-       *
-       * @deprecated Use `toHaveText` or `toHaveJSON` instead. This matcher will be removed in future versions.
-       *
-       * @param expected The string or object to compare against the clipboard content.
-       * @param options Optional settings for the matcher, such as timeout.
-       * @returns A Promise that resolves when the assertion completes.
-       *
-       * @example
-       * await expect(clipboard).toHaveData('Copied value');
-       * await expect(clipboard).toHaveData({ id: 123, status: 'success' });
-       */
-      toHaveData(expected: unknown, options?: TimeoutMatcherOptions): Promise<R>;
     }
   }
 }
