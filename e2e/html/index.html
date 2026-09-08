@@ -166,9 +166,10 @@
         <div id="clipboard-handler" class="section">
             <h3>Clipboard Handler API</h3>
             <div class="button-group">
-                <button type="button" id="read-clipboard-button" data-testid="read-clipboard-button">Read Clipboard</button>
+                <button type="button" id="read-clipboard-button" data-testid="read-clipboard-button">Read from Clipboard</button>
             </div>
-            <div id="output" data-testid="output" class="output-box">Read from clipboard: </div>
+            <h5>Clipboard content:</h5>
+            <div id="output" data-testid="output" class="output-box"></div>
         </div>
     </div>
 </div>
@@ -181,7 +182,7 @@
 
   document.getElementById('read-clipboard-button')?.addEventListener('click', async () => {
     const text = await navigator.clipboard.readText();
-    document.getElementById('output').textContent = `Read from clipboard: ${text}`;
+    document.getElementById('output').textContent = `${text}`;
   });
 
   document.getElementById('copy-text-button')?.addEventListener('click', async () => {

@@ -29,9 +29,7 @@ test.describe('ClipboardHandler', () => {
 
       // then
       await clipboardTestingPage.readClipboardButton.click();
-      await expect(clipboardTestingPage.output).toHaveText(
-        'Read from clipboard: Hello from write test',
-      );
+      await expect(clipboardTestingPage.output).toHaveText('Hello from write test');
     });
   });
 
@@ -43,7 +41,7 @@ test.describe('ClipboardHandler', () => {
       // then
       await clipboardTestingPage.readClipboardButton.click();
       await expect(clipboardTestingPage.output).toHaveText(
-        'Read from clipboard: {"message":"Hello from writeJSON test"}',
+        '{"message":"Hello from writeJSON test"}',
       );
     });
 
@@ -55,7 +53,7 @@ test.describe('ClipboardHandler', () => {
       await clipboard.writeJSON(12345);
 
       await clipboardTestingPage.readClipboardButton.click();
-      await expect(clipboardTestingPage.output).toHaveText('Read from clipboard: 12345');
+      await expect(clipboardTestingPage.output).toHaveText('12345');
     });
 
     test('should throw an error when trying to write undefined', async ({ clipboard }) => {
