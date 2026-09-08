@@ -45,6 +45,28 @@ test.describe('clipboardMatchers', () => {
       // then
       await expect(clipboard).not.toHaveTextContent('Goodbye, World!');
     });
+
+    test('should copy text and verify it matches expected data with trim option', async ({
+      clipboard,
+      clipboardTestingPage,
+    }) => {
+      // when
+      await clipboardTestingPage.copyTextButton.click();
+
+      // then
+      await expect(clipboard).toHaveTextContent('   Hello, World!   ', { trim: true });
+    });
+
+    test('should copy text and verify it matches expected data with ignoreCase option', async ({
+      clipboard,
+      clipboardTestingPage,
+    }) => {
+      // when
+      await clipboardTestingPage.copyTextButton.click();
+
+      // then
+      await expect(clipboard).toHaveTextContent('HELLO, WORLD!', { ignoreCase: true });
+    });
   });
 
   test.describe('toHaveJSONContent', () => {

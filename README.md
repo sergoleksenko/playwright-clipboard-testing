@@ -138,6 +138,8 @@ await expect(clipboard).not.toBeBlank({ timeout: 5000 });
 Asserts that the clipboard content matches the expected string. Uses Playwright's smart polling mechanism to wait for the clipboard to update.
 - `expected: string` — Expected text to compare against.
 - `options.timeout: number (optional, default: 10000ms)` — Time in milliseconds to wait for the clipboard content to match.
+- `options.ignoreCase: boolean (optional, default: false)` — Ignores case when comparing strings.
+- `options.trim: boolean (optional, default: false)` — Trims whitespace from both expected and actual string before comparison.
 ```ts
 // assert that the clipboard contains the expected text
 await expect(clipboard).toHaveTextContent('Hello, World!');

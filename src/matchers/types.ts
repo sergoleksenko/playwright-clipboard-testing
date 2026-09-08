@@ -1,5 +1,9 @@
 export type TimeoutMatcherOptions = { timeout?: number };
 
+export type IgnoreCaseMatcherOptions = { ignoreCase?: boolean };
+
+export type TrimMatcherOptions = { trim?: boolean };
+
 declare global {
   namespace PlaywrightTest {
     interface Matchers<R> {
@@ -26,7 +30,10 @@ declare global {
        * @example
        * await expect(clipboard).toHaveTextContent('Copied value');
        */
-      toHaveTextContent(expected: string, options?: TimeoutMatcherOptions): Promise<R>;
+      toHaveTextContent(
+        expected: string,
+        options?: TimeoutMatcherOptions & IgnoreCaseMatcherOptions & TrimMatcherOptions,
+      ): Promise<R>;
 
       /**
        * Asserts that the clipboard content matches the expected JSON value.
