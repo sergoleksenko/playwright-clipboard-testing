@@ -17,7 +17,7 @@ declare global {
        * @example
        * await expect(clipboard).toBeBlank();
        */
-      toBeBlank(options?: TimeoutMatcherOptions): Promise<R>;
+      toBeBlank(options?: TimeoutMatcherOptions & TrimMatcherOptions): Promise<R>;
 
       /**
        * Asserts that the clipboard content matches the expected text.

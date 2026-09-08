@@ -21,6 +21,16 @@ test.describe('clipboardMatchers', () => {
       // then
       await expect(clipboard).not.toBeBlank();
     });
+
+    test('clipboard should be empty with trim option when containing whitespace', async ({
+      clipboard,
+    }) => {
+      // when
+      await clipboard.write('   ');
+
+      // then
+      await expect(clipboard).toBeBlank({ trim: true });
+    });
   });
 
   test.describe('toHaveTextContent', () => {

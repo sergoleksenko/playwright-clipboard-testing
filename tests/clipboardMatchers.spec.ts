@@ -83,6 +83,45 @@ describe('clipboardMatchers', () => {
         expect(result.expected).toBe(expected);
         expect(result.message()).not.toContain('not');
       });
+
+      it.each([
+        {
+          actual: '     ',
+          pass: true,
+          options: { trim: true },
+        },
+        {
+          actual: '   \n\t  ',
+          pass: true,
+          options: { trim: true },
+        },
+        {
+          actual: '   \n\t  ',
+          pass: false,
+          options: { trim: false },
+        },
+      ])(
+        'should return pass=$pass when clipboard is $actual with options=$options',
+        async ({ actual, pass, options }) => {
+          const expected = '';
+
+          // given
+          const clipboard = createFakeClipboard({ read: actual });
+
+          // when
+          const result = await clipboardMatchers.toBeBlank.call(matcherState, clipboard, {
+            timeout: TEST_TIMEOUT,
+            ...options,
+          });
+
+          // then
+          expect(result.pass).toBe(pass);
+          expect(result.name).toBe('toBeBlank');
+          expect(result.actual).toBe(actual);
+          expect(result.expected).toBe(expected);
+          expect(result.message()).not.toContain('not');
+        },
+      );
     });
 
     describe('when inverted with .not', () => {

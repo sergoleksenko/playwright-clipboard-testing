@@ -123,6 +123,7 @@ The package exports `clipboardFixtures` (containing `context` and `clipboard` fi
 `expect(clipboard).toBeBlank(options?)`
 Asserts that the clipboard is empty. Uses Playwright's smart polling mechanism to wait for the clipboard to update.
 - `options.timeout: number (optional, default: 10000ms)`
+- `options.trim: boolean (optional, default: false)` — Trims whitespace from the clipboard content before checking if it's blank.
 ```ts
 // assert that the clipboard is empty
 await expect(clipboard).toBeBlank();

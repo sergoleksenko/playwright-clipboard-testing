@@ -1,7 +1,7 @@
 import { type ExpectMatcherState, expect, type MatcherReturnType } from '@playwright/test';
 import type { ClipboardHandler } from '../utils/clipboardHandler.js';
 import { getErrorMessage } from '../utils/matcherUtils.js';
-import type { TimeoutMatcherOptions } from './types.js';
+import type { TimeoutMatcherOptions, TrimMatcherOptions } from './types.js';
 
 /**
  * Asserts that the clipboard content is blank (empty string).
@@ -14,26 +14,33 @@ import type { TimeoutMatcherOptions } from './types.js';
 export async function toBeBlank(
   this: ExpectMatcherState,
   clipboard: ClipboardHandler,
-  options: TimeoutMatcherOptions = {},
+  options: TimeoutMatcherOptions & TrimMatcherOptions = {},
 ) {
   const name = 'toBeBlank';
   let pass: boolean;
   let actual: unknown;
+  let normalizedActual: unknown;
   const expected: string = '';
   let errorReason: Error | null = null;
 
-  const { timeout = 10_000 } = options;
+  const { timeout = 10_000, trim = false } = options;
 
   const poll = expect.poll(
     async () => {
       try {
         actual = await clipboard.read();
+        normalizedActual = actual;
         errorReason = null;
 
-        return actual;
+        if (trim && typeof normalizedActual === 'string') {
+          normalizedActual = normalizedActual.trim();
+        }
+
+        return normalizedActual;
       } catch (error) {
         errorReason = error instanceof Error ? error : new Error(String(error));
         actual = undefined;
+        normalizedActual = undefined;
 
         throw errorReason;
       }
