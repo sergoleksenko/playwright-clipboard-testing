@@ -71,7 +71,7 @@ export class ClipboardHandler {
       throw new Error(`${errorMessage} (received undefined).`);
     }
 
-    await this.page.evaluate((value) => navigator.clipboard.writeText(value), jsonString);
+    await this.write(jsonString);
   }
 
   /**
