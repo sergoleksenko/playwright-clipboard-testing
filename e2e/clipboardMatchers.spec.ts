@@ -1,19 +1,24 @@
 import { expect, test } from './fixtures/baseFixtures.js';
 
-test.describe('Clipboard Matchers Tests', () => {
-  test.beforeEach(async ({ clipboardTestingPage }) => {
+test.describe('clipboardMatchers', () => {
+  test.beforeEach(async ({ clipboard, clipboardTestingPage }) => {
     await clipboardTestingPage.visit();
     await expect(clipboardTestingPage.status).toHaveText('Idle');
+
+    await clipboard.clear();
   });
 
   test.describe('toBeBlank', () => {
     test('clipboard should be empty', async ({ clipboard }) => {
+      // then
       await expect(clipboard).toBeBlank();
     });
 
     test('clipboard should not be empty', async ({ clipboard, clipboardTestingPage }) => {
+      // when
       await clipboardTestingPage.copyTextButton.click();
 
+      // then
       await expect(clipboard).not.toBeBlank();
     });
   });
@@ -23,8 +28,10 @@ test.describe('Clipboard Matchers Tests', () => {
       clipboard,
       clipboardTestingPage,
     }) => {
+      // when
       await clipboardTestingPage.copyTextButton.click();
 
+      // then
       await expect(clipboard).toHaveTextContent('Hello, World!');
     });
 
@@ -32,8 +39,10 @@ test.describe('Clipboard Matchers Tests', () => {
       clipboard,
       clipboardTestingPage,
     }) => {
+      // when
       await clipboardTestingPage.copyTextButton.click();
 
+      // then
       await expect(clipboard).not.toHaveTextContent('Goodbye, World!');
     });
   });
@@ -43,8 +52,10 @@ test.describe('Clipboard Matchers Tests', () => {
       clipboard,
       clipboardTestingPage,
     }) => {
+      // when
       await clipboardTestingPage.copyJSONButton.click();
 
+      // then
       await expect(clipboard).toHaveJSONContent({ message: 'Hello, JSON!' });
     });
 
@@ -52,8 +63,10 @@ test.describe('Clipboard Matchers Tests', () => {
       clipboard,
       clipboardTestingPage,
     }) => {
+      // when
       await clipboardTestingPage.copyJSONButton.click();
 
+      // then
       await expect(clipboard).not.toHaveJSONContent({ message: 'Goodbye, JSON!' });
     });
   });
