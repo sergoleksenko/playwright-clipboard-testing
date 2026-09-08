@@ -1,6 +1,6 @@
 import { type ExpectMatcherState, expect, type MatcherReturnType } from '@playwright/test';
 import type { ClipboardHandler } from '../utils/clipboardHandler.js';
-import { getErrorMessage } from '../utils/matcherUtils.js';
+import { getErrorMessage, normalizeText } from '../utils/matcherUtils.js';
 import type { TimeoutMatcherOptions, TrimMatcherOptions } from './types.js';
 
 /**
@@ -32,9 +32,7 @@ export async function toBeBlank(
         normalizedActual = actual;
         errorReason = null;
 
-        if (trim && typeof normalizedActual === 'string') {
-          normalizedActual = normalizedActual.trim();
-        }
+        normalizedActual = normalizeText(normalizedActual, { trim });
 
         return normalizedActual;
       } catch (error) {

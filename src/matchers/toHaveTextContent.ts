@@ -1,6 +1,6 @@
 import { type ExpectMatcherState, expect, type MatcherReturnType } from '@playwright/test';
 import type { ClipboardHandler } from '../utils/clipboardHandler.js';
-import { getErrorMessage } from '../utils/matcherUtils.js';
+import { getErrorMessage, normalizeText } from '../utils/matcherUtils.js';
 import type {
   IgnoreCaseMatcherOptions,
   TimeoutMatcherOptions,
@@ -38,13 +38,7 @@ export async function toHaveTextContent(
         normalizedActual = actual;
         errorReason = null;
 
-        if (trim && typeof normalizedActual === 'string') {
-          normalizedActual = normalizedActual.trim();
-        }
-
-        if (ignoreCase && typeof normalizedActual === 'string') {
-          normalizedActual = normalizedActual.toLowerCase();
-        }
+        normalizedActual = normalizeText(normalizedActual, { ignoreCase, trim });
 
         return normalizedActual;
       } catch (error) {
@@ -61,13 +55,7 @@ export async function toHaveTextContent(
   try {
     normalizedExpected = expected;
 
-    if (trim && typeof normalizedExpected === 'string') {
-      normalizedExpected = normalizedExpected.trim();
-    }
-
-    if (ignoreCase && typeof normalizedExpected === 'string') {
-      normalizedExpected = normalizedExpected.toLowerCase();
-    }
+    normalizedExpected = normalizeText(normalizedExpected, { ignoreCase, trim });
 
     const expectation = this.isNot ? poll.not : poll;
     await expectation.toEqual(normalizedExpected);
