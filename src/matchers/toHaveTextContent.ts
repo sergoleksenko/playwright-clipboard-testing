@@ -36,9 +36,8 @@ export async function toHaveTextContent(
       try {
         actual = await clipboard.read();
         normalizedActual = actual;
-        errorReason = null;
-
         normalizedActual = normalizeText(normalizedActual, { ignoreCase, trim });
+        errorReason = null;
 
         return normalizedActual;
       } catch (error) {
@@ -54,7 +53,6 @@ export async function toHaveTextContent(
 
   try {
     normalizedExpected = expected;
-
     normalizedExpected = normalizeText(normalizedExpected, { ignoreCase, trim });
 
     const expectation = this.isNot ? poll.not : poll;

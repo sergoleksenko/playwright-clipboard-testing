@@ -30,9 +30,8 @@ export async function toBeBlank(
       try {
         actual = await clipboard.read();
         normalizedActual = actual;
-        errorReason = null;
-
         normalizedActual = normalizeText(normalizedActual, { trim });
+        errorReason = null;
 
         return normalizedActual;
       } catch (error) {
