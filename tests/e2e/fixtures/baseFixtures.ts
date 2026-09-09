@@ -1,4 +1,4 @@
-import { test as baseTest, expect } from '../../../src/index';
+import { test as baseTest, expect } from '../../../src';
 import { ClipboardTestingPage } from '../pages/clipboardTesting.page';
 
 export const test = baseTest.extend<{
