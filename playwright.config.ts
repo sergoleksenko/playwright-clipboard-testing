@@ -13,7 +13,7 @@ import { firefoxClipboardPrefs } from 'playwright-clipboard-testing';
  * See https://playwright.dev/docs/test-configuration.
  */
 export default defineConfig({
-  testDir: './e2e',
+  testDir: './tests/e2e',
   /* Run tests in files in parallel */
   fullyParallel: true,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
@@ -78,7 +78,7 @@ export default defineConfig({
 
   /* Run your local dev server before starting the tests */
   webServer: {
-    command: 'npx serve e2e/html -l 3000',
+    command: 'npx serve tests/e2e/html -l 3000',
     port: 3000,
     reuseExistingServer: !process.env.CI,
   },
