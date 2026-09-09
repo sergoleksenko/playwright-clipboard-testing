@@ -1,10 +1,5 @@
 import type { ExpectMatcherState } from '@playwright/test';
 
-interface NormalizeTextOptions {
-  ignoreCase?: boolean;
-  trim?: boolean;
-}
-
 /**
  * Generates an error message for a custom matcher.
  *
@@ -40,15 +35,21 @@ export function getErrorMessage(
     `Received: ${this.utils.printReceived(actual)}`;
 }
 
-export function normalizeText<T = unknown>(data: T, options: NormalizeTextOptions = {}): T {
+export function normalizeText<T = unknown>(
+  data: T,
+  options: {
+    ignoreCase?: boolean;
+    trim?: boolean;
+  } = {},
+): T {
   if (typeof data === 'string') {
-    let normalizeText: string = data;
+    let result: string = data;
 
-    if (options.trim) normalizeText = normalizeText.trim();
+    if (options.trim) result = result.trim();
 
-    if (options.ignoreCase) normalizeText = normalizeText.toLowerCase();
+    if (options.ignoreCase) result = result.toLowerCase();
 
-    return normalizeText as T;
+    return result as T;
   }
 
   return data;
