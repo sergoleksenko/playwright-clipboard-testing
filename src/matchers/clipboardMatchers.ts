@@ -1,6 +1,6 @@
-import { toBeBlank } from './toBeBlank.js';
-import { toHaveJSONContent } from './toHaveJSONContent.js';
-import { toHaveTextContent } from './toHaveTextContent.js';
+import { toBeBlank } from './toBeBlank';
+import { toHaveJSONContent } from './toHaveJSONContent';
+import { toHaveTextContent } from './toHaveTextContent';
 
 /**
  * Export an object containing all the custom clipboard matchers for Playwright.

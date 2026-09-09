@@ -1,4 +1,4 @@
-import { expect, test } from './fixtures/baseFixtures.js';
+import { expect, test } from './fixtures/baseFixtures';
 
 test.describe('clipboardMatchers', () => {
   test.beforeEach(async ({ clipboard, clipboardTestingPage }) => {
@@ -20,6 +20,16 @@ test.describe('clipboardMatchers', () => {
 
       // then
       await expect(clipboard).not.toBeBlank();
+    });
+
+    test('clipboard should be empty with trim option when containing whitespace', async ({
+      clipboard,
+    }) => {
+      // when
+      await clipboard.write('   ');
+
+      // then
+      await expect(clipboard).toBeBlank({ trim: true });
     });
   });
 
@@ -44,6 +54,28 @@ test.describe('clipboardMatchers', () => {
 
       // then
       await expect(clipboard).not.toHaveTextContent('Goodbye, World!');
+    });
+
+    test('should copy text and verify it matches expected data with trim option', async ({
+      clipboard,
+      clipboardTestingPage,
+    }) => {
+      // when
+      await clipboardTestingPage.copyTextButton.click();
+
+      // then
+      await expect(clipboard).toHaveTextContent('   Hello, World!   ', { trim: true });
+    });
+
+    test('should copy text and verify it matches expected data with ignoreCase option', async ({
+      clipboard,
+      clipboardTestingPage,
+    }) => {
+      // when
+      await clipboardTestingPage.copyTextButton.click();
+
+      // then
+      await expect(clipboard).toHaveTextContent('HELLO, WORLD!', { ignoreCase: true });
     });
   });
 

@@ -34,3 +34,23 @@ export function getErrorMessage(
     `Expected: ${this.isNot ? 'not ' : ''}${this.utils.printExpected(expected)}\n` +
     `Received: ${this.utils.printReceived(actual)}`;
 }
+
+export function normalizeText<T = unknown>(
+  data: T,
+  options: {
+    ignoreCase?: boolean;
+    trim?: boolean;
+  } = {},
+): T {
+  if (typeof data === 'string') {
+    let result: string = data;
+
+    if (options.trim) result = result.trim();
+
+    if (options.ignoreCase) result = result.toLowerCase();
+
+    return result as T;
+  }
+
+  return data;
+}

@@ -1,7 +1,7 @@
 import { type ExpectMatcherState, expect, type MatcherReturnType } from '@playwright/test';
-import type { ClipboardHandler } from '../utils/clipboardHandler.js';
-import { getErrorMessage } from '../utils/matcherUtils.js';
-import type { TimeoutMatcherOptions } from './types.js';
+import type { ClipboardHandler } from '../utils';
+import { getErrorMessage, normalizeText } from '../utils/matcherUtils';
+import type { IgnoreCaseMatcherOptions, TimeoutMatcherOptions, TrimMatcherOptions } from './types';
 
 /**
  * Asserts that the clipboard content matches the expected text value.
@@ -16,25 +16,30 @@ export async function toHaveTextContent(
   this: ExpectMatcherState,
   clipboard: ClipboardHandler,
   expected: string,
-  options: TimeoutMatcherOptions = {},
+  options: TimeoutMatcherOptions & IgnoreCaseMatcherOptions & TrimMatcherOptions = {},
 ) {
   const name = 'toHaveTextContent';
   let pass: boolean;
   let actual: unknown;
+  let normalizedActual: unknown;
+  let normalizedExpected: unknown;
   let errorReason: Error | null = null;
 
-  const { timeout = 10_000 } = options;
+  const { timeout = 10_000, ignoreCase = false, trim = false } = options;
 
   const poll = expect.poll(
     async () => {
       try {
         actual = await clipboard.read();
+        normalizedActual = actual;
+        normalizedActual = normalizeText(normalizedActual, { ignoreCase, trim });
         errorReason = null;
 
-        return actual;
+        return normalizedActual;
       } catch (error) {
         errorReason = error instanceof Error ? error : new Error(String(error));
         actual = undefined;
+        normalizedActual = undefined;
 
         throw errorReason;
       }
@@ -43,8 +48,11 @@ export async function toHaveTextContent(
   );
 
   try {
+    normalizedExpected = expected;
+    normalizedExpected = normalizeText(normalizedExpected, { ignoreCase, trim });
+
     const expectation = this.isNot ? poll.not : poll;
-    await expectation.toEqual(expected);
+    await expectation.toEqual(normalizedExpected);
     pass = true;
   } catch {
     pass = false;

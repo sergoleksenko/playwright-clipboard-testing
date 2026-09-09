@@ -1,5 +1,5 @@
-import { clipboardFixture } from './clipboardFixture.js';
-import { contextFixture } from './contextFixture.js';
+import { clipboardFixture } from './clipboardFixture';
+import { contextFixture } from './contextFixture';
 
 /**
  * A collection of fixtures related to clipboard testing, including the clipboard fixture and context fixture.

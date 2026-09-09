@@ -1,5 +1,5 @@
-import { test as baseTest, expect } from 'playwright-clipboard-testing';
-import { ClipboardTestingPage } from '../pages/clipboardTesting.page.js';
+import { test as baseTest, expect } from '../../../src/index';
+import { ClipboardTestingPage } from '../pages/clipboardTesting.page';
 
 export const test = baseTest.extend<{
   clipboardTestingPage: ClipboardTestingPage;

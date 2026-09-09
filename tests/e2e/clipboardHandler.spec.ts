@@ -1,4 +1,4 @@
-import { expect, test } from './fixtures/baseFixtures.js';
+import { expect, test } from './fixtures/baseFixtures';
 
 test.describe('ClipboardHandler', () => {
   test.beforeEach(async ({ clipboard, clipboardTestingPage }) => {

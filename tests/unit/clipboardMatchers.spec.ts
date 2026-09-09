@@ -1,7 +1,6 @@
 import type { ExpectMatcherState } from '@playwright/test';
 import { describe, expect, it, vi } from 'vitest';
-import type { ClipboardHandler } from '../src/index.js';
-import { clipboardMatchers } from '../src/index.js';
+import { type ClipboardHandler, clipboardMatchers } from '../../src';
 
 const TEST_TIMEOUT = 50;
 
@@ -83,6 +82,45 @@ describe('clipboardMatchers', () => {
         expect(result.expected).toBe(expected);
         expect(result.message()).not.toContain('not');
       });
+
+      it.each([
+        {
+          actual: '     ',
+          pass: true,
+          options: { trim: true },
+        },
+        {
+          actual: '   \n\t  ',
+          pass: true,
+          options: { trim: true },
+        },
+        {
+          actual: '   \n\t  ',
+          pass: false,
+          options: { trim: false },
+        },
+      ])(
+        'should return pass=$pass when clipboard is $actual with options=$options',
+        async ({ actual, pass, options }) => {
+          const expected = '';
+
+          // given
+          const clipboard = createFakeClipboard({ read: actual });
+
+          // when
+          const result = await clipboardMatchers.toBeBlank.call(matcherState, clipboard, {
+            timeout: TEST_TIMEOUT,
+            ...options,
+          });
+
+          // then
+          expect(result.pass).toBe(pass);
+          expect(result.name).toBe('toBeBlank');
+          expect(result.actual).toBe(actual);
+          expect(result.expected).toBe(expected);
+          expect(result.message()).not.toContain('not');
+        },
+      );
     });
 
     describe('when inverted with .not', () => {
@@ -131,13 +169,11 @@ describe('clipboardMatchers', () => {
   describe('toHaveTextContent', () => {
     describe('when not inverted with .not', () => {
       it.each([
-        { expected: 'true fake data', pass: true },
-        { expected: 'false fake data', pass: false },
+        { actual: 'true fake data', expected: 'true fake data', pass: true },
+        { actual: 'true fake data', expected: 'false fake data', pass: false },
       ])(
-        'should return pass=$pass when strings matches, and format not inverted error message',
-        async ({ expected, pass }) => {
-          const actual = 'true fake data';
-
+        'should return pass=$pass when actual=$actual and expected=$expected',
+        async ({ actual, expected, pass }) => {
           // given
           const clipboard = createFakeClipboard({ read: actual });
 
@@ -157,17 +193,75 @@ describe('clipboardMatchers', () => {
           expect(result.message()).not.toContain('not');
         },
       );
+
+      it.each([
+        {
+          actual: 'true fake data',
+          expected: '   true fake data   ',
+          pass: false,
+          options: { trim: false },
+        },
+        {
+          actual: 'true fake data',
+          expected: '   true fake data   ',
+          pass: true,
+          options: { trim: true },
+        },
+        {
+          actual: '  true fake data  ',
+          expected: '   true fake data   ',
+          pass: true,
+          options: { trim: true },
+        },
+        {
+          actual: 'true fake data',
+          expected: 'TRUE FAKE DATA',
+          pass: false,
+          options: { ignoreCase: false },
+        },
+        {
+          actual: 'true fake data',
+          expected: 'TRUE FAKE DATA',
+          pass: true,
+          options: { ignoreCase: true },
+        },
+        {
+          actual: '  True Fake Data  ',
+          expected: 'true fake data',
+          pass: true,
+          options: { trim: true, ignoreCase: true },
+        },
+      ])(
+        `should return pass=$pass when actual=$actual and expected=$expected with options=$options`,
+        async ({ actual, expected, pass, options }) => {
+          // given
+          const clipboard = createFakeClipboard({ read: actual });
+
+          // when
+          const result = await clipboardMatchers.toHaveTextContent.call(
+            matcherState,
+            clipboard,
+            expected,
+            { timeout: TEST_TIMEOUT, ...options },
+          );
+
+          // then
+          expect(result.pass).toBe(pass);
+          expect(result.name).toBe('toHaveTextContent');
+          expect(result.actual).toBe(actual);
+          expect(result.expected).toBe(expected);
+          expect(result.message()).not.toContain('not');
+        },
+      );
     });
 
     describe('when inverted with .not', () => {
       it.each([
-        { expected: 'true fake data', pass: true },
-        { expected: 'false fake data', pass: false },
+        { actual: 'true fake data', expected: 'true fake data', pass: true },
+        { actual: 'true fake data', expected: 'false fake data', pass: false },
       ])(
-        'should return pass=$pass when strings match, but format inverted error message',
-        async ({ expected, pass }) => {
-          const actual = 'true fake data';
-
+        'should return pass=$pass when actual=$actual and expected=$expected',
+        async ({ actual, expected, pass }) => {
           // given
           const clipboard = createFakeClipboard({ read: actual });
 

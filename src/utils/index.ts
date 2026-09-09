@@ -1,3 +1,3 @@
-import { ClipboardHandler } from './clipboardHandler.js';
+import { ClipboardHandler } from './clipboardHandler';
 
 export { ClipboardHandler };
