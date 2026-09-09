@@ -1,5 +1,5 @@
 import { defineConfig, devices } from '@playwright/test';
-import { firefoxClipboardPrefs } from './src/index.js';
+import { firefoxClipboardPrefs } from './src';
 
 /**
  * Read environment variables from file.

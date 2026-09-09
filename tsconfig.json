@@ -1,8 +1,9 @@
 {
   "compilerOptions": {
     "target": "es2022",
-    "module": "nodenext",
-    "moduleResolution": "nodenext",
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
     "lib": ["ES2022", "DOM"],
 
     "declaration": true,
@@ -13,9 +14,6 @@
     "rootDir": ".",
 
     "baseUrl": ".",
-    "paths": {
-      "playwright-clipboard-testing": ["./src/index.ts"]
-    },
 
     "strict": true,
     "noImplicitAny": true,

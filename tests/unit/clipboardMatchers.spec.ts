@@ -1,6 +1,6 @@
 import type { ExpectMatcherState } from '@playwright/test';
 import { describe, expect, it, vi } from 'vitest';
-import { type ClipboardHandler, clipboardMatchers } from '../../src/index.js';
+import { type ClipboardHandler, clipboardMatchers } from '../../src';
 
 const TEST_TIMEOUT = 50;
 

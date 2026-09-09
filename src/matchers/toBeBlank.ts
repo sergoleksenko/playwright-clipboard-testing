@@ -1,7 +1,7 @@
 import { type ExpectMatcherState, expect, type MatcherReturnType } from '@playwright/test';
-import type { ClipboardHandler } from '../utils/clipboardHandler.js';
-import { getErrorMessage, normalizeText } from '../utils/matcherUtils.js';
-import type { TimeoutMatcherOptions, TrimMatcherOptions } from './types.js';
+import type { ClipboardHandler } from '../utils';
+import { getErrorMessage, normalizeText } from '../utils/matcherUtils';
+import type { TimeoutMatcherOptions, TrimMatcherOptions } from './types';
 
 /**
  * Asserts that the clipboard content is blank (empty string).
