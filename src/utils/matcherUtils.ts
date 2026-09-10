@@ -35,21 +35,27 @@ export function getErrorMessage(
     `Received: ${this.utils.printReceived(actual)}`;
 }
 
-export function normalizeText<T = unknown>(
+export function normalizeText<T extends string | RegExp>(
   data: T,
-  options: {
-    ignoreCase?: boolean;
-    trim?: boolean;
-  } = {},
+  options: { ignoreCase?: boolean; trim?: boolean } = {},
 ): T {
+  const { ignoreCase, trim } = options;
+
   if (typeof data === 'string') {
     let result: string = data;
 
-    if (options.trim) result = result.trim();
+    if (trim) result = result.trim();
 
-    if (options.ignoreCase) result = result.toLowerCase();
+    if (ignoreCase) result = result.toLowerCase();
 
     return result as T;
+  }
+
+  if (data instanceof RegExp) {
+    if (ignoreCase && !data.flags.includes('i')) {
+      return new RegExp(data.source, `${data.flags}i`) as T;
+    }
+    return data;
   }
 
   return data;

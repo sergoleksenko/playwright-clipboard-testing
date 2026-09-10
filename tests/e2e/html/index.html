@@ -60,7 +60,7 @@
 
         .grid-2-col {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
             gap: 1.5rem;
         }
 
@@ -138,6 +138,8 @@
             font-weight: 600;
             align-self: flex-start;
             letter-spacing: 0.02em;
+            max-width: 100%;
+            word-break: break-all;
         }
     </style>
 </head>
@@ -153,6 +155,12 @@
             <div class="button-group">
                 <button type="button" id="copy-text-button" data-testid="copy-text-button">Copy Text</button>
                 <button type="button" id="copy-uuid-button" data-testid="copy-uuid-button">Copy UUID</button>
+                <button type="button" id="copy-ipv4-button" data-testid="copy-ipv4-button">Copy IP Address</button>
+                <button type="button" id="copy-ipv6-button" data-testid="copy-ipv6-button">Copy IP Address</button>
+                <button type="button" id="copy-hex-button" data-testid="copy-hex-button">Copy Hex Color</button>
+                <button type="button" id="copy-jwt-button" data-testid="copy-jwt-button">Copy JWT</button>
+                <button type="button" id="copy-bearer-button" data-testid="copy-bearer-button">Copy Bearer Token</button>
+                <button type="button" id="copy-email-button" data-testid="copy-email-button">Copy Email</button>
             </div>
 
             <h3 style="margin-top: 0.5rem;">toHaveJSONContent</h3>
@@ -191,6 +199,36 @@
 
   document.getElementById('copy-uuid-button')?.addEventListener('click', async () => {
     await copy(crypto.randomUUID());
+  });
+
+  document.getElementById('copy-ipv4-button')?.addEventListener('click', async () => {
+    await copy(Array.from({ length: 4 }, () => Math.floor(Math.random() * 256)).join('.'));
+  });
+
+  document.getElementById('copy-ipv6-button')?.addEventListener('click', async () => {
+    await copy(Array.from({ length: 8 }, () => Math.floor(Math.random() * 65536).toString(16)).join(':'));
+  });
+
+  document.getElementById('copy-hex-button')?.addEventListener('click', async () => {
+    await copy(`#${Math.floor(Math.random()*16777215).toString(16).padStart(6, '0')}`);
+  });
+
+  document.getElementById('copy-jwt-button')?.addEventListener('click', async () => {
+    const toBase64Url = (str) => btoa(str).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+
+    const header = toBase64Url(JSON.stringify({ alg: 'HS256', typ: 'JWT' }));
+    const payload = toBase64Url(JSON.stringify({ sub: '1234567890', name: 'John Doe', iat: Math.floor(Date.now() / 1000) }));
+    const signature = toBase64Url('signature');
+
+    await copy(`${header}.${payload}.${signature}`);
+  });
+
+  document.getElementById('copy-bearer-button')?.addEventListener('click', async () => {
+    await copy(`Bearer ${crypto.randomUUID()}`);
+  });
+
+  document.getElementById('copy-email-button')?.addEventListener('click', async () => {
+    await copy(`user${Math.floor(Math.random() * 1000)}@example.com`);
   });
 
   document.getElementById('copy-json-button')?.addEventListener('click', async () => {

@@ -29,6 +29,7 @@ Testing the Clipboard API in Playwright usually requires boilerplate code to man
   - [toBeBlank Matcher](#tobeblank-matcher)
   - [toHaveTextContent Matcher](#tohavetextcontent-matcher)
   - [toHaveJSONContent Matcher](#tohavejsoncontent-matcher)
+  - [PATTERNS](#patterns)
 - [Author](#author)
 - [License](#license)
 
@@ -136,14 +137,18 @@ await expect(clipboard).not.toBeBlank({ timeout: 5000 });
 ### toHaveTextContent Matcher
 `expect(clipboard).toHaveTextContent(expected, options?)`
 
-Asserts that the clipboard content matches the expected string. Uses Playwright's smart polling mechanism to wait for the clipboard to update.
-- `expected: string` — Expected text to compare against.
+Asserts that the clipboard content matches the expected string or regular expression. Uses Playwright's smart polling mechanism to wait for the clipboard to update.
+- `expected: string | RegExp` — Expected text string or regular expression to match against.
 - `options.timeout: number (optional, default: 10000ms)` — Time in milliseconds to wait for the clipboard content to match.
-- `options.ignoreCase: boolean (optional, default: false)` — Ignores case when comparing strings.
+- `options.ignoreCase: boolean (optional, default: false)` — Ignores case when comparing strings or matching regular expressions.
 - `options.trim: boolean (optional, default: false)` — Trims whitespace from both expected and actual string before comparison.
 ```ts
 // assert that the clipboard contains the expected text
 await expect(clipboard).toHaveTextContent('Hello, World!');
+```
+```ts
+// assert that the clipboard text matches a regular expression
+await expect(clipboard).toHaveTextContent(/Hello, World!/i);
 ```
 ```ts
 // assert that the clipboard is not containing the expected text with a custom timeout
@@ -162,6 +167,29 @@ await expect(clipboard).toHaveJSONContent({ message: 'Hello, World!' });
 ```ts
 // assert that the clipboard is not containing the expected JSON data with a custom timeout
 await expect(clipboard).not.toHaveJSONContent({ message: 'Async copied value' }, { timeout: 5000 });
+```
+
+### PATTERNS
+The package exports pre-defined regular expression patterns for common data formats (`PATTERNS`), which can be passed directly to `toHaveTextContent`:
+
+- `PATTERNS.UUID` — UUID v1–v5 format (e.g., `123e4567-e89b-12d3-a456-426614174000`)
+- `PATTERNS.EMAIL` — Email address format (e.g., `user@example.com`)
+- `PATTERNS.JWT` — JWT token format (e.g., `header.payload.signature`)
+- `PATTERNS.BEARER` — Bearer authentication token format (e.g., `Bearer token123`)
+- `PATTERNS.HEX_COLOR` — HEX color format (e.g., `#FFF`, `#FFFFFF`, `#FFFFFFFF`)
+- `PATTERNS.IP.V4` — IPv4 address format (e.g., `192.168.1.1`)
+- `PATTERNS.IP.V6` — IPv6 address format (e.g., `2001:0db8:85a3:0000:0000:8a2e:0370:7334`)
+- `PATTERNS.IP.ANY` — Any IP address format (IPv4 or IPv6)
+
+```ts
+import { test, expect, PATTERNS } from 'playwright-clipboard-testing';
+
+test('should copy UUID to clipboard', async ({ page, clipboard }) => {
+  await page.goto('https://example.com');
+  await page.locator('#copy-uuid-button').click();
+
+  await expect(clipboard).toHaveTextContent(PATTERNS.UUID);
+});
 ```
 
 ## Author

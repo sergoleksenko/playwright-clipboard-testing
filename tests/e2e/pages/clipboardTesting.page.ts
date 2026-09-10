@@ -23,6 +23,34 @@ export class ClipboardTestingPage {
     return this.page.getByTestId('copy-text-button');
   }
 
+  get copyUUIDButton(): Locator {
+    return this.page.getByTestId('copy-uuid-button');
+  }
+
+  get copyIPV4Button(): Locator {
+    return this.page.getByTestId('copy-ipv4-button');
+  }
+
+  get copyIPV6Button(): Locator {
+    return this.page.getByTestId('copy-ipv6-button');
+  }
+
+  get copyHexButton(): Locator {
+    return this.page.getByTestId('copy-hex-button');
+  }
+
+  get copyJWTButton(): Locator {
+    return this.page.getByTestId('copy-jwt-button');
+  }
+
+  get copyBearerButton(): Locator {
+    return this.page.getByTestId('copy-bearer-button');
+  }
+
+  get copyEmailButton(): Locator {
+    return this.page.getByTestId('copy-email-button');
+  }
+
   get copyJSONButton(): Locator {
     return this.page.getByTestId('copy-json-button');
   }
