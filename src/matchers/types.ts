@@ -23,7 +23,7 @@ declare global {
        * Asserts that the clipboard content matches the expected text.
        * Uses smart polling to wait for the clipboard to be updated.
        *
-       * @param expected The string to compare against the clipboard content.
+       * @param expected The string or regular expression to compare against the clipboard content.
        * @param options Matcher options.
        * @returns A Promise that resolves when the assertion completes.
        *
@@ -31,7 +31,7 @@ declare global {
        * await expect(clipboard).toHaveTextContent('Copied value');
        */
       toHaveTextContent(
-        expected: string,
+        expected: string | RegExp,
         options?: TimeoutMatcherOptions & IgnoreCaseMatcherOptions & TrimMatcherOptions,
       ): Promise<R>;
 

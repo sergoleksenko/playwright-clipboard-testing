@@ -118,13 +118,13 @@ The package exports the following fixtures for Playwright test configuration:
 ### ClipboardHandler
 The `clipboard` fixture provides direct access to the `ClipboardHandler` instance for managing clipboard state:
 
-| Method | Return Type | Description |
-| :--- | :--- | :--- |
-| `clipboard.read()` | `Promise<string>` | Reads plain text content from the clipboard. |
-| `clipboard.write(text)` | `Promise<void>` | Writes the specified plain text to the clipboard. |
-| `clipboard.readJSON<T>()` | `Promise<T>` | Reads clipboard content and parses it as a JSON object of type `T`. Throws an error if invalid JSON. |
-| `clipboard.writeJSON<T>(data)` | `Promise<void>` | Serializes an object of type `T` to JSON and writes it to the clipboard. Throws an error if object cannot be serialized. |
-| `clipboard.clear()` | `Promise<void>` | Clears all clipboard content. |
+| Method                         | Return Type       | Description                                                                                                              |
+|:-------------------------------|:------------------|:-------------------------------------------------------------------------------------------------------------------------|
+| `clipboard.read()`             | `Promise<string>` | Reads plain text content from the clipboard.                                                                             |
+| `clipboard.write(text)`        | `Promise<void>`   | Writes the specified plain text to the clipboard.                                                                        |
+| `clipboard.readJSON<T>()`      | `Promise<T>`      | Reads clipboard content and parses it as a JSON object of type `T`. Throws an error if invalid JSON.                     |
+| `clipboard.writeJSON<T>(data)` | `Promise<void>`   | Serializes an object of type `T` to JSON and writes it to the clipboard. Throws an error if object cannot be serialized. |
+| `clipboard.clear()`            | `Promise<void>`   | Clears all clipboard content.                                                                                            |
 
 > **Note:** For verifying clipboard content in tests, we recommend using custom matchers (`toBeBlank`, `toHaveTextContent`, `toHaveJSONContent`), which include built-in smart polling.
 
@@ -180,16 +180,16 @@ await expect(clipboard).not.toHaveJSONContent({ message: 'Async copied value' },
 ### PATTERNS
 The package exports pre-defined regular expression patterns for common data formats (`PATTERNS`), which can be passed directly to `toHaveTextContent`:
 
-| Pattern | Description | Example Match |
-| :--- | :--- | :--- |
-| `PATTERNS.UUID` | UUID v1–v5 format | `123e4567-e89b-12d3-a456-426614174000` |
-| `PATTERNS.EMAIL` | Email address format | `user@example.com` |
-| `PATTERNS.JWT` | JWT token format | `header.payload.signature` |
-| `PATTERNS.BEARER` | Bearer authentication token format | `Bearer token123` |
-| `PATTERNS.HEX_COLOR` | HEX color format | `#FFF`, `#FFFFFF`, `#FFFFFFFF` |
-| `PATTERNS.IP.V4` | IPv4 address format | `192.168.1.1` |
-| `PATTERNS.IP.V6` | IPv6 address format | `2001:0db8:85a3:0000:0000:8a2e:0370:7334` |
-| `PATTERNS.IP.ANY` | Any IP address format (IPv4 or IPv6) | `192.168.1.1` or `2001:db8::1` |
+| Pattern              | Description                          | Example Match                             |
+|:---------------------|:-------------------------------------|:------------------------------------------|
+| `PATTERNS.UUID`      | UUID v1–v5 format                    | `123e4567-e89b-12d3-a456-426614174000`    |
+| `PATTERNS.EMAIL`     | Email address format                 | `user@example.com`                        |
+| `PATTERNS.JWT`       | JWT token format                     | `header.payload.signature`                |
+| `PATTERNS.BEARER`    | Bearer authentication token format   | `Bearer token123`                         |
+| `PATTERNS.HEX_COLOR` | HEX color format                     | `#FFF`, `#FFFFFF`, `#FFFFFFFF`            |
+| `PATTERNS.IP.V4`     | IPv4 address format                  | `192.168.1.1`                             |
+| `PATTERNS.IP.V6`     | IPv6 address format                  | `2001:0db8:85a3:0000:0000:8a2e:0370:7334` |
+| `PATTERNS.IP.ANY`    | Any IP address format (IPv4 or IPv6) | `192.168.1.1` or `2001:db8::1`            |
 
 ```ts
 import { test, expect, PATTERNS } from 'playwright-clipboard-testing';

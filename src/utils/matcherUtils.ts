@@ -52,10 +52,10 @@ export function normalizeText<T extends string | RegExp>(
   }
 
   if (data instanceof RegExp) {
-    if (ignoreCase && !data.flags.includes('i')) {
-      return new RegExp(data.source, `${data.flags}i`) as T;
-    }
-    return data;
+    const flags = data.flags.replace(/[gy]/g, '');
+    const clearFlags = ignoreCase && !flags.includes('i') ? `${flags}i` : flags;
+
+    return new RegExp(data.source, clearFlags) as T;
   }
 
   return data;

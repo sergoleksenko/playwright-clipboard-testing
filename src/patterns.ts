@@ -16,7 +16,7 @@ export const PATTERNS = {
   /**
    * JWT tokens (example: header.payload.signature).
    */
-  JWT: /^eyJ[a-zA-Z0-9_-]+\.eyJ[a-zA-Z0-9_-]+\.[a-zA-Z0-9_-]+$/,
+  JWT: /^[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+$/,
 
   /**
    * Authorization Bearer tokens (example: Bearer <token>).
