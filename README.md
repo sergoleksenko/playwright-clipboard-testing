@@ -180,14 +180,16 @@ await expect(clipboard).not.toHaveJSONContent({ message: 'Async copied value' },
 ### PATTERNS
 The package exports pre-defined regular expression patterns for common data formats (`PATTERNS`), which can be passed directly to `toHaveTextContent`:
 
-- `PATTERNS.UUID` — UUID v1–v5 format (e.g., `123e4567-e89b-12d3-a456-426614174000`)
-- `PATTERNS.EMAIL` — Email address format (e.g., `user@example.com`)
-- `PATTERNS.JWT` — JWT token format (e.g., `header.payload.signature`)
-- `PATTERNS.BEARER` — Bearer authentication token format (e.g., `Bearer token123`)
-- `PATTERNS.HEX_COLOR` — HEX color format (e.g., `#FFF`, `#FFFFFF`, `#FFFFFFFF`)
-- `PATTERNS.IP.V4` — IPv4 address format (e.g., `192.168.1.1`)
-- `PATTERNS.IP.V6` — IPv6 address format (e.g., `2001:0db8:85a3:0000:0000:8a2e:0370:7334`)
-- `PATTERNS.IP.ANY` — Any IP address format (IPv4 or IPv6)
+| Pattern | Description | Example Match |
+| :--- | :--- | :--- |
+| `PATTERNS.UUID` | UUID v1–v5 format | `123e4567-e89b-12d3-a456-426614174000` |
+| `PATTERNS.EMAIL` | Email address format | `user@example.com` |
+| `PATTERNS.JWT` | JWT token format | `header.payload.signature` |
+| `PATTERNS.BEARER` | Bearer authentication token format | `Bearer token123` |
+| `PATTERNS.HEX_COLOR` | HEX color format | `#FFF`, `#FFFFFF`, `#FFFFFFFF` |
+| `PATTERNS.IP.V4` | IPv4 address format | `192.168.1.1` |
+| `PATTERNS.IP.V6` | IPv6 address format | `2001:0db8:85a3:0000:0000:8a2e:0370:7334` |
+| `PATTERNS.IP.ANY` | Any IP address format (IPv4 or IPv6) | `192.168.1.1` or `2001:db8::1` |
 
 ```ts
 import { test, expect, PATTERNS } from 'playwright-clipboard-testing';
