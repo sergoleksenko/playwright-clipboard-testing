@@ -118,13 +118,15 @@ The package exports the following fixtures for Playwright test configuration:
 ### ClipboardHandler
 The `clipboard` fixture provides direct access to the `ClipboardHandler` instance for managing clipboard state:
 
-- `clipboard.read(): Promise<string>` — Reads plain text content from the clipboard.
-- `clipboard.write(text: string): Promise<void>` — Writes the specified plain text to the clipboard.
-- `clipboard.readJSON<T>(): Promise<T>` — Reads clipboard content and parses it as a JSON object of type `T`. Throws an error if the content is invalid JSON.
-- `clipboard.writeJSON<T>(data: T): Promise<void>` — Serializes an object of type `T` to JSON and writes it to the clipboard. Throws an error if the object cannot be serialized.
-- `clipboard.clear(): Promise<void>` — Clears all clipboard content.
+| Method | Return Type | Description |
+| :--- | :--- | :--- |
+| `clipboard.read()` | `Promise<string>` | Reads plain text content from the clipboard. |
+| `clipboard.write(text)` | `Promise<void>` | Writes the specified plain text to the clipboard. |
+| `clipboard.readJSON<T>()` | `Promise<T>` | Reads clipboard content and parses it as a JSON object of type `T`. Throws an error if invalid JSON. |
+| `clipboard.writeJSON<T>(data)` | `Promise<void>` | Serializes an object of type `T` to JSON and writes it to the clipboard. Throws an error if object cannot be serialized. |
+| `clipboard.clear()` | `Promise<void>` | Clears all clipboard content. |
 
-> **Note:** For verifying clipboard content in tests, we recommend using custom matchers (`toHaveTextContent`, `toBeBlank`, `toHaveJSONContent`), which include built-in smart polling.
+> **Note:** For verifying clipboard content in tests, we recommend using custom matchers (`toBeBlank`, `toHaveTextContent`, `toHaveJSONContent`), which include built-in smart polling.
 
 ### toBeBlank Matcher
 `expect(clipboard).toBeBlank(options?)`
