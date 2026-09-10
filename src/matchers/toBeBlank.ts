@@ -18,8 +18,8 @@ export async function toBeBlank(
 ) {
   const name = 'toBeBlank';
   let pass: boolean;
-  let actual: unknown;
-  let normalizedActual: unknown;
+  let actual: string | undefined;
+  let normalizedActual: string | undefined;
   const expected: string = '';
   let errorReason: Error | null = null;
 

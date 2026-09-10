@@ -25,10 +25,12 @@ Testing the Clipboard API in Playwright usually requires boilerplate code to man
   - [Direct Usage](#direct-usage) 
   - [Extended Usage](#extended-usage)
 - [API](#api)
-  - [Clipboard Fixtures](#clipboard-fixtures)
+  - [Fixtures](#fixtures)
+  - [ClipboardHandler](#clipboardhandler)
   - [toBeBlank Matcher](#tobeblank-matcher)
   - [toHaveTextContent Matcher](#tohavetextcontent-matcher)
   - [toHaveJSONContent Matcher](#tohavejsoncontent-matcher)
+  - [PATTERNS](#patterns)
 - [Author](#author)
 - [License](#license)
 
@@ -105,19 +107,26 @@ export const expect = baseExpect.extend(clipboardMatchers);
 ```
 
 ## API
-### Clipboard Fixtures
-The package exports `clipboardFixtures` (containing `context` and `clipboard` fixtures) as well as individual fixtures `clipboardFixture` and `contextFixture`:
 
-- `contextFixture` (`context`) — Automatically grants `clipboard-read` and `clipboard-write` permissions to Chromium browser contexts.
-- `clipboardFixtures` — Object containing both `context` and `clipboard` fixtures for simple fixture extension.
-- `clipboardFixture` (`clipboard`) — Provides direct access to the `ClipboardHandler` instance during tests:
-  - `clipboard.write(text: string): Promise<void>` — writes the given plain text to the clipboard.
-  - `clipboard.writeJSON<T>(data: T): Promise<void>` — serializes the given object of type `T` to JSON and writes it to the clipboard. Throws an error if the object cannot be serialized to JSON.
-  - `clipboard.read(): Promise<string>` — reads the current plain text content from the clipboard.
-  - `clipboard.readJSON<T>(): Promise<T>` — reads the current clipboard content and parses it as a JSON object of type `T`. Throws an error if the content is not valid JSON.
-  - `clipboard.clear(): Promise<void>` — clears the clipboard content.
+### Fixtures
+The package exports the following fixtures for Playwright test configuration:
 
-![NOTE](https://img.shields.io/badge/NOTE-For%20your%20tests%20we%20recommend%20using%20existing%20matchers%20to%20assert%20clipboard%20content-yellow)
+- `clipboardFixtures` — Object containing both `context` and `clipboard` fixtures. Recommended for extending test fixtures.
+- `contextFixture` (`context`) — Playwright context fixture that automatically grants `clipboard-read` and `clipboard-write` permissions in Chromium.
+- `clipboardFixture` (`clipboard`) — Playwright test fixture that provides access to the `ClipboardHandler` instance in your tests.
+
+### ClipboardHandler
+The `clipboard` fixture provides direct access to the `ClipboardHandler` instance for managing clipboard state:
+
+| Method                         | Return Type       | Description                                                                                                              |
+|:-------------------------------|:------------------|:-------------------------------------------------------------------------------------------------------------------------|
+| `clipboard.read()`             | `Promise<string>` | Reads plain text content from the clipboard.                                                                             |
+| `clipboard.write(text)`        | `Promise<void>`   | Writes the specified plain text to the clipboard.                                                                        |
+| `clipboard.readJSON<T>()`      | `Promise<T>`      | Reads clipboard content and parses it as a JSON object of type `T`. Throws an error if invalid JSON.                     |
+| `clipboard.writeJSON<T>(data)` | `Promise<void>`   | Serializes an object of type `T` to JSON and writes it to the clipboard. Throws an error if object cannot be serialized. |
+| `clipboard.clear()`            | `Promise<void>`   | Clears all clipboard content.                                                                                            |
+
+> **Note:** For verifying clipboard content in tests, we recommend using custom matchers (`toBeBlank`, `toHaveTextContent`, `toHaveJSONContent`), which include built-in smart polling.
 
 ### toBeBlank Matcher
 `expect(clipboard).toBeBlank(options?)`
@@ -136,14 +145,18 @@ await expect(clipboard).not.toBeBlank({ timeout: 5000 });
 ### toHaveTextContent Matcher
 `expect(clipboard).toHaveTextContent(expected, options?)`
 
-Asserts that the clipboard content matches the expected string. Uses Playwright's smart polling mechanism to wait for the clipboard to update.
-- `expected: string` — Expected text to compare against.
+Asserts that the clipboard content matches the expected string or regular expression. Uses Playwright's smart polling mechanism to wait for the clipboard to update.
+- `expected: string | RegExp` — Expected text string or regular expression to match against.
 - `options.timeout: number (optional, default: 10000ms)` — Time in milliseconds to wait for the clipboard content to match.
-- `options.ignoreCase: boolean (optional, default: false)` — Ignores case when comparing strings.
+- `options.ignoreCase: boolean (optional, default: false)` — Ignores case when comparing strings or matching regular expressions.
 - `options.trim: boolean (optional, default: false)` — Trims whitespace from both expected and actual string before comparison.
 ```ts
 // assert that the clipboard contains the expected text
 await expect(clipboard).toHaveTextContent('Hello, World!');
+```
+```ts
+// assert that the clipboard text matches a regular expression
+await expect(clipboard).toHaveTextContent(/Hello, World!/i);
 ```
 ```ts
 // assert that the clipboard is not containing the expected text with a custom timeout
@@ -162,6 +175,31 @@ await expect(clipboard).toHaveJSONContent({ message: 'Hello, World!' });
 ```ts
 // assert that the clipboard is not containing the expected JSON data with a custom timeout
 await expect(clipboard).not.toHaveJSONContent({ message: 'Async copied value' }, { timeout: 5000 });
+```
+
+### PATTERNS
+The package exports pre-defined regular expression patterns for common data formats (`PATTERNS`), which can be passed directly to `toHaveTextContent`:
+
+| Pattern              | Description                          | Example Match                             |
+|:---------------------|:-------------------------------------|:------------------------------------------|
+| `PATTERNS.UUID`      | UUID v1–v5 format                    | `123e4567-e89b-12d3-a456-426614174000`    |
+| `PATTERNS.EMAIL`     | Email address format                 | `user@example.com`                        |
+| `PATTERNS.JWT`       | JWT token format                     | `header.payload.signature`                |
+| `PATTERNS.BEARER`    | Bearer authentication token format   | `Bearer token123`                         |
+| `PATTERNS.HEX_COLOR` | HEX color format                     | `#FFF`, `#FFFFFF`, `#FFFFFFFF`            |
+| `PATTERNS.IP.V4`     | IPv4 address format                  | `192.168.1.1`                             |
+| `PATTERNS.IP.V6`     | IPv6 address format                  | `2001:0db8:85a3:0000:0000:8a2e:0370:7334` |
+| `PATTERNS.IP.ANY`    | Any IP address format (IPv4 or IPv6) | `192.168.1.1` or `2001:db8::1`            |
+
+```ts
+import { test, expect, PATTERNS } from 'playwright-clipboard-testing';
+
+test('should copy UUID to clipboard', async ({ page, clipboard }) => {
+  await page.goto('https://example.com');
+  await page.locator('#copy-uuid-button').click();
+
+  await expect(clipboard).toHaveTextContent(PATTERNS.UUID);
+});
 ```
 
 ## Author

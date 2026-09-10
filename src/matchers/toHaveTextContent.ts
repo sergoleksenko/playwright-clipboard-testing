@@ -15,22 +15,24 @@ import type { IgnoreCaseMatcherOptions, TimeoutMatcherOptions, TrimMatcherOption
 export async function toHaveTextContent(
   this: ExpectMatcherState,
   clipboard: ClipboardHandler,
-  expected: string,
+  expected: string | RegExp,
   options: TimeoutMatcherOptions & IgnoreCaseMatcherOptions & TrimMatcherOptions = {},
 ) {
   const name = 'toHaveTextContent';
   let pass: boolean;
-  let actual: unknown;
-  let normalizedActual: unknown;
-  let normalizedExpected: unknown;
+  let actual: string | undefined;
+  let normalizedActual: string | undefined;
   let errorReason: Error | null = null;
 
   const { timeout = 10_000, ignoreCase = false, trim = false } = options;
+
+  const normalizedExpected = normalizeText(expected, { ignoreCase, trim });
 
   const poll = expect.poll(
     async () => {
       try {
         actual = await clipboard.read();
+
         normalizedActual = actual;
         normalizedActual = normalizeText(normalizedActual, { ignoreCase, trim });
         errorReason = null;
@@ -48,11 +50,14 @@ export async function toHaveTextContent(
   );
 
   try {
-    normalizedExpected = expected;
-    normalizedExpected = normalizeText(normalizedExpected, { ignoreCase, trim });
-
     const expectation = this.isNot ? poll.not : poll;
-    await expectation.toEqual(normalizedExpected);
+
+    if (expected instanceof RegExp) {
+      await expectation.toMatch(normalizedExpected as RegExp);
+    } else {
+      await expectation.toEqual(normalizedExpected);
+    }
+
     pass = true;
   } catch {
     pass = false;
