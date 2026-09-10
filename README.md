@@ -25,7 +25,8 @@ Testing the Clipboard API in Playwright usually requires boilerplate code to man
   - [Direct Usage](#direct-usage) 
   - [Extended Usage](#extended-usage)
 - [API](#api)
-  - [Clipboard Fixtures](#clipboard-fixtures)
+  - [Fixtures](#fixtures)
+  - [ClipboardHandler](#clipboardhandler)
   - [toBeBlank Matcher](#tobeblank-matcher)
   - [toHaveTextContent Matcher](#tohavetextcontent-matcher)
   - [toHaveJSONContent Matcher](#tohavejsoncontent-matcher)
@@ -106,19 +107,24 @@ export const expect = baseExpect.extend(clipboardMatchers);
 ```
 
 ## API
-### Clipboard Fixtures
-The package exports `clipboardFixtures` (containing `context` and `clipboard` fixtures) as well as individual fixtures `clipboardFixture` and `contextFixture`:
 
-- `contextFixture` (`context`) — Automatically grants `clipboard-read` and `clipboard-write` permissions to Chromium browser contexts.
-- `clipboardFixtures` — Object containing both `context` and `clipboard` fixtures for simple fixture extension.
-- `clipboardFixture` (`clipboard`) — Provides direct access to the `ClipboardHandler` instance during tests:
-  - `clipboard.write(text: string): Promise<void>` — writes the given plain text to the clipboard.
-  - `clipboard.writeJSON<T>(data: T): Promise<void>` — serializes the given object of type `T` to JSON and writes it to the clipboard. Throws an error if the object cannot be serialized to JSON.
-  - `clipboard.read(): Promise<string>` — reads the current plain text content from the clipboard.
-  - `clipboard.readJSON<T>(): Promise<T>` — reads the current clipboard content and parses it as a JSON object of type `T`. Throws an error if the content is not valid JSON.
-  - `clipboard.clear(): Promise<void>` — clears the clipboard content.
+### Fixtures
+The package exports the following fixtures for Playwright test configuration:
 
-![NOTE](https://img.shields.io/badge/NOTE-For%20your%20tests%20we%20recommend%20using%20existing%20matchers%20to%20assert%20clipboard%20content-yellow)
+- `clipboardFixtures` — Object containing both `context` and `clipboard` fixtures. Recommended for extending test fixtures.
+- `contextFixture` (`context`) — Playwright context fixture that automatically grants `clipboard-read` and `clipboard-write` permissions in Chromium.
+- `clipboardFixture` (`clipboard`) — Playwright test fixture that provides access to the `ClipboardHandler` instance in your tests.
+
+### ClipboardHandler
+The `clipboard` fixture provides direct access to the `ClipboardHandler` instance for managing clipboard state:
+
+- `clipboard.read(): Promise<string>` — Reads plain text content from the clipboard.
+- `clipboard.write(text: string): Promise<void>` — Writes the specified plain text to the clipboard.
+- `clipboard.readJSON<T>(): Promise<T>` — Reads clipboard content and parses it as a JSON object of type `T`. Throws an error if the content is invalid JSON.
+- `clipboard.writeJSON<T>(data: T): Promise<void>` — Serializes an object of type `T` to JSON and writes it to the clipboard. Throws an error if the object cannot be serialized.
+- `clipboard.clear(): Promise<void>` — Clears all clipboard content.
+
+> **Note:** For verifying clipboard content in tests, we recommend using custom matchers (`toHaveTextContent`, `toBeBlank`, `toHaveJSONContent`), which include built-in smart polling.
 
 ### toBeBlank Matcher
 `expect(clipboard).toBeBlank(options?)`
