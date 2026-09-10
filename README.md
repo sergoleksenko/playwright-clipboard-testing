@@ -126,7 +126,7 @@ The `clipboard` fixture provides direct access to the `ClipboardHandler` instanc
 | `clipboard.writeJSON<T>(data)` | `Promise<void>`   | Serializes an object of type `T` to JSON and writes it to the clipboard. Throws an error if object cannot be serialized. |
 | `clipboard.clear()`            | `Promise<void>`   | Clears all clipboard content.                                                                                            |
 
-> **Note:** For verifying clipboard content in tests, we recommend using custom matchers (`toBeBlank`, `toHaveTextContent`, `toHaveJSONContent`), which include built-in smart polling.
+![NOTE](https://img.shields.io/badge/NOTE-For%20your%20tests%20we%20recommend%20using%20existing%20matchers%20to%20assert%20clipboard%20content-yellow)
 
 ### toBeBlank Matcher
 `expect(clipboard).toBeBlank(options?)`
