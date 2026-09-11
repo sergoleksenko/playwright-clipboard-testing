@@ -10,4 +10,5 @@ export const clipboardFixtures = {
   clipboard: clipboardFixture,
 };
 
+export { ClipboardHandler } from '../utils/index';
 export { clipboardFixture, contextFixture };

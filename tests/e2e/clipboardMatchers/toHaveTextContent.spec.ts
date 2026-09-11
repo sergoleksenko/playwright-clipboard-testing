@@ -1,4 +1,4 @@
-import { PATTERNS } from '../../../src';
+import { PATTERNS } from '../../../src/patterns.ts';
 import { expect, test } from '../fixtures/baseFixtures.ts';
 
 test.describe('toHaveTextContent', () => {

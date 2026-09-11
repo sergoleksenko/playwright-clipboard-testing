@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { clipboardMatchers } from '../../src';
+import { clipboardMatchers } from '../../src/matchers/clipboardMatchers.ts';
 import { createFakeClipboard } from '../utils/createFakeClipboard.ts';
 import { createMatcherState } from '../utils/createMatcherState.ts';
 

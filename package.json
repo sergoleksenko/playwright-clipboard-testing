@@ -34,6 +34,30 @@
       },
       "import": "./dist/index.js",
       "require": "./dist/index.cjs"
+    },
+    "./constants": {
+      "types": {
+        "import": "./dist/constants.d.ts",
+        "require": "./dist/constants.d.cts"
+      },
+      "import": "./dist/constants.js",
+      "require": "./dist/constants.cjs"
+    },
+    "./fixtures": {
+      "types": {
+        "import": "./dist/fixtures/index.d.ts",
+        "require": "./dist/fixtures/index.d.cts"
+      },
+      "import": "./dist/fixtures/index.js",
+      "require": "./dist/fixtures/index.cjs"
+    },
+    "./matchers": {
+      "types": {
+        "import": "./dist/matchers/index.d.ts",
+        "require": "./dist/matchers/index.d.cts"
+      },
+      "import": "./dist/matchers/index.js",
+      "require": "./dist/matchers/index.cjs"
     }
   },
   "files": [

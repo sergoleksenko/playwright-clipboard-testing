@@ -1,12 +1,18 @@
 import { defineConfig } from 'tsup';
 
 export default defineConfig({
-  entry: ['src/index.ts'],
+  entry: {
+    index: 'src/index.ts',
+    constants: 'src/constants.ts',
+    'fixtures/index': 'src/fixtures/index.ts',
+    'matchers/index': 'src/matchers/index.ts',
+  },
   format: ['cjs', 'esm'],
   dts: true,
   clean: true,
   sourcemap: true,
   minify: false,
   target: 'es2022',
+  splitting: false,
   external: ['@playwright/test'],
 });
