@@ -3,7 +3,7 @@ import { defineConfig } from 'tsup';
 export default defineConfig({
   entry: {
     index: 'src/index.ts',
-    constants: 'src/constants.ts',
+    'constants/index': 'src/constants/index.ts',
     'fixtures/index': 'src/fixtures/index.ts',
     'matchers/index': 'src/matchers/index.ts',
   },

@@ -37,11 +37,11 @@
     },
     "./constants": {
       "types": {
-        "import": "./dist/constants.d.ts",
-        "require": "./dist/constants.d.cts"
+        "import": "./dist/constants/index.d.ts",
+        "require": "./dist/constants/index.d.cts"
       },
-      "import": "./dist/constants.js",
-      "require": "./dist/constants.cjs"
+      "import": "./dist/constants/index.js",
+      "require": "./dist/constants/index.cjs"
     },
     "./fixtures": {
       "types": {

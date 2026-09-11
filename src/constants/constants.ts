@@ -5,5 +5,3 @@ export const firefoxClipboardPrefs = {
   'permissions.default.clipboard-read': 1,
   'permissions.default.clipboard-write': 1,
 };
-
-export { PATTERNS } from './patterns';

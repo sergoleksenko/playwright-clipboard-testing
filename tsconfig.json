@@ -16,7 +16,7 @@
     "baseUrl": ".",
     "paths": {
       "playwright-clipboard-testing": ["./src/index.ts"],
-      "playwright-clipboard-testing/constants": ["./src/constants.ts"],
+      "playwright-clipboard-testing/constants": ["./src/constants/index.ts"],
       "playwright-clipboard-testing/fixtures": ["./src/fixtures/index.ts"],
       "playwright-clipboard-testing/matchers": ["./src/matchers/index.ts"]
     },
