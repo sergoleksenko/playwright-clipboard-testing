@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'vitest';
 
-describe('Package Exports', () => {
+describe('Package Subpath Exports', () => {
   test('should import the correct root export', async () => {
     const pkg = await import('playwright-clipboard-testing');
 
