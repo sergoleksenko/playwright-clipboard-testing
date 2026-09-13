@@ -1,10 +1,12 @@
 import { execSync } from 'node:child_process';
-import { existsSync, mkdirSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
+import { copyFileSync, existsSync, mkdirSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 
 const rootDir = process.cwd();
 const tempDir = path.resolve(rootDir, '.pack-test');
-const testFilePath = path.resolve(rootDir, 'tests/integration/exports.spec.ts');
+const sourceTestFilePath = path.resolve(rootDir, 'tests/integration/exports.spec.ts');
+const tempTestFilePath = path.resolve(tempDir, 'exports.spec.ts');
+const tempVitestConfigPath = path.resolve(tempDir, 'vitest.temp.config.mjs');
 
 try {
   console.log('🏗️ Building project...');
@@ -27,11 +29,22 @@ try {
     }),
   );
 
+  writeFileSync(
+    tempVitestConfigPath,
+    `export default ${JSON.stringify({
+      test: {
+        exclude: ['**/node_modules/**', '**/dist/**', '**/tests/e2e/**'],
+      },
+    })};`,
+  );
+
+  copyFileSync(sourceTestFilePath, tempTestFilePath);
+
   console.log('📥 Installing tarball into temporary node_modules...');
   execSync(`npm install "${tarballPath}"`, { cwd: tempDir, stdio: 'inherit' });
 
   console.log('🧪 Running Vitest against node_modules...');
-  execSync(`npx vitest run "${testFilePath}" --root "${rootDir}"`, {
+  execSync(`npx vitest run "${tempTestFilePath}" --config "${tempVitestConfigPath}"`, {
     cwd: tempDir,
     stdio: 'inherit',
   });
@@ -39,7 +52,7 @@ try {
   console.log('✅ Package subpaths successfully verified from node_modules!');
 } catch {
   console.error('❌ Package verification failed!');
-  process.exit(1);
+  process.exitCode = 1;
 } finally {
   if (existsSync(tempDir)) rmSync(tempDir, { recursive: true, force: true });
 
