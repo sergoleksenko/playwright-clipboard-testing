@@ -75,6 +75,7 @@
     "typecheck": "tsc --noEmit",
     "format": "biome format --write .",
     "serve": "serve tests/e2e/html -l 3000",
+    "test:package": "node scripts/test-package.ts",
     "test:unit": "vitest run",
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",
