@@ -96,39 +96,26 @@ test.describe('toHaveTextContent', () => {
     await expect(clipboard).toHaveTextContent(PATTERNS.UUID);
   });
 
-  test('should copy IPv4 text and verify it matches expected data with regex', async ({
+  test('should copy Email text and verify it matches expected data with regex', async ({
     clipboard,
     clipboardTestingPage,
   }) => {
     // when
-    await clipboardTestingPage.copyIPV4Button.click();
+    await clipboardTestingPage.copyEmailButton.click();
 
     // then
-    await expect(clipboard).toHaveTextContent(PATTERNS.IP.V4);
-    await expect(clipboard).toHaveTextContent(PATTERNS.IP.ANY);
+    await expect(clipboard).toHaveTextContent(PATTERNS.EMAIL);
   });
 
-  test('should copy IPv6 text and verify it matches expected data with regex', async ({
+  test('should copy Phone text and verify it matches expected data with regex', async ({
     clipboard,
     clipboardTestingPage,
   }) => {
     // when
-    await clipboardTestingPage.copyIPV6Button.click();
+    await clipboardTestingPage.copyPhoneButton.click();
 
     // then
-    await expect(clipboard).toHaveTextContent(PATTERNS.IP.V6);
-    await expect(clipboard).toHaveTextContent(PATTERNS.IP.ANY);
-  });
-
-  test('should copy HEX color text and verify it matches expected data with regex', async ({
-    clipboard,
-    clipboardTestingPage,
-  }) => {
-    // when
-    await clipboardTestingPage.copyHexButton.click();
-
-    // then
-    await expect(clipboard).toHaveTextContent(PATTERNS.HEX_COLOR);
+    await expect(clipboard).toHaveTextContent(PATTERNS.PHONE);
   });
 
   test('should copy JWT token text and verify it matches expected data with regex', async ({
@@ -153,14 +140,38 @@ test.describe('toHaveTextContent', () => {
     await expect(clipboard).toHaveTextContent(PATTERNS.BEARER);
   });
 
-  test('should copy Email text and verify it matches expected data with regex', async ({
+  test('should copy HEX color text and verify it matches expected data with regex', async ({
     clipboard,
     clipboardTestingPage,
   }) => {
     // when
-    await clipboardTestingPage.copyEmailButton.click();
+    await clipboardTestingPage.copyHexButton.click();
 
     // then
-    await expect(clipboard).toHaveTextContent(PATTERNS.EMAIL);
+    await expect(clipboard).toHaveTextContent(PATTERNS.HEX_COLOR);
+  });
+
+  test('should copy IPv4 text and verify it matches expected data with regex', async ({
+    clipboard,
+    clipboardTestingPage,
+  }) => {
+    // when
+    await clipboardTestingPage.copyIPV4Button.click();
+
+    // then
+    await expect(clipboard).toHaveTextContent(PATTERNS.IP.V4);
+    await expect(clipboard).toHaveTextContent(PATTERNS.IP.ANY);
+  });
+
+  test('should copy IPv6 text and verify it matches expected data with regex', async ({
+    clipboard,
+    clipboardTestingPage,
+  }) => {
+    // when
+    await clipboardTestingPage.copyIPV6Button.click();
+
+    // then
+    await expect(clipboard).toHaveTextContent(PATTERNS.IP.V6);
+    await expect(clipboard).toHaveTextContent(PATTERNS.IP.ANY);
   });
 });

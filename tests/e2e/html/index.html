@@ -155,12 +155,13 @@
             <div class="button-group">
                 <button type="button" id="copy-text-button" data-testid="copy-text-button">Copy Text</button>
                 <button type="button" id="copy-uuid-button" data-testid="copy-uuid-button">Copy UUID</button>
-                <button type="button" id="copy-ipv4-button" data-testid="copy-ipv4-button">Copy IPv4 Address</button>
-                <button type="button" id="copy-ipv6-button" data-testid="copy-ipv6-button">Copy IPv6 Address</button>
-                <button type="button" id="copy-hex-button" data-testid="copy-hex-button">Copy Hex Color</button>
+                <button type="button" id="copy-email-button" data-testid="copy-email-button">Copy Email</button>
+                <button type="button" id="copy-phone-button" data-testid="copy-phone-button">Copy Phone</button>
                 <button type="button" id="copy-jwt-button" data-testid="copy-jwt-button">Copy JWT</button>
                 <button type="button" id="copy-bearer-button" data-testid="copy-bearer-button">Copy Bearer Token</button>
-                <button type="button" id="copy-email-button" data-testid="copy-email-button">Copy Email</button>
+                <button type="button" id="copy-hex-button" data-testid="copy-hex-button">Copy Hex Color</button>
+                <button type="button" id="copy-ipv4-button" data-testid="copy-ipv4-button">Copy IPv4 Address</button>
+                <button type="button" id="copy-ipv6-button" data-testid="copy-ipv6-button">Copy IPv6 Address</button>
             </div>
 
             <h3 style="margin-top: 0.5rem;">toHaveJSONContent</h3>
@@ -201,16 +202,13 @@
     await copy(crypto.randomUUID());
   });
 
-  document.getElementById('copy-ipv4-button')?.addEventListener('click', async () => {
-    await copy(Array.from({ length: 4 }, () => Math.floor(Math.random() * 256)).join('.'));
+  document.getElementById('copy-email-button')?.addEventListener('click', async () => {
+    await copy(`user${Math.floor(Math.random() * 1000)}@example.com`);
   });
 
-  document.getElementById('copy-ipv6-button')?.addEventListener('click', async () => {
-    await copy(Array.from({ length: 8 }, () => Math.floor(Math.random() * 65536).toString(16)).join(':'));
-  });
-
-  document.getElementById('copy-hex-button')?.addEventListener('click', async () => {
-    await copy(`#${Math.floor(Math.random()*16777215).toString(16).padStart(6, '0')}`);
+  document.getElementById('copy-phone-button')?.addEventListener('click', async () => {
+    const randomPhone = `+1${Math.floor(Math.random() * 9000000000 + 1000000000)}`;
+    await copy(randomPhone);
   });
 
   document.getElementById('copy-jwt-button')?.addEventListener('click', async () => {
@@ -227,8 +225,16 @@
     await copy(`Bearer ${crypto.randomUUID()}`);
   });
 
-  document.getElementById('copy-email-button')?.addEventListener('click', async () => {
-    await copy(`user${Math.floor(Math.random() * 1000)}@example.com`);
+  document.getElementById('copy-hex-button')?.addEventListener('click', async () => {
+    await copy(`#${Math.floor(Math.random()*16777215).toString(16).padStart(6, '0')}`);
+  });
+
+  document.getElementById('copy-ipv4-button')?.addEventListener('click', async () => {
+    await copy(Array.from({ length: 4 }, () => Math.floor(Math.random() * 256)).join('.'));
+  });
+
+  document.getElementById('copy-ipv6-button')?.addEventListener('click', async () => {
+    await copy(Array.from({ length: 8 }, () => Math.floor(Math.random() * 65536).toString(16)).join(':'));
   });
 
   document.getElementById('copy-json-button')?.addEventListener('click', async () => {
