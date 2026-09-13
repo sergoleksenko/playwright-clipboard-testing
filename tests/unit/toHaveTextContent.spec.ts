@@ -1,5 +1,5 @@
-import { describe, expect, it } from 'vitest';
-import { clipboardMatchers } from '../../src';
+import { describe, expect, test } from 'vitest';
+import { clipboardMatchers } from '../../src/matchers/clipboardMatchers.ts';
 import { createFakeClipboard } from '../utils/createFakeClipboard.ts';
 import { createMatcherState } from '../utils/createMatcherState.ts';
 
@@ -10,7 +10,7 @@ const matcherStateNot = createMatcherState(true);
 
 describe('toHaveTextContent', () => {
   describe('when not inverted with .not', () => {
-    it.each([
+    test.each([
       { actual: 'true fake data', expected: 'true fake data', pass: true },
       { actual: 'true fake data', expected: 'false fake data', pass: false },
     ])(
@@ -36,7 +36,7 @@ describe('toHaveTextContent', () => {
       },
     );
 
-    it.each([
+    test.each([
       {
         actual: 'true fake data',
         expected: '   true fake data   ',
@@ -98,7 +98,7 @@ describe('toHaveTextContent', () => {
   });
 
   describe('when inverted with .not', () => {
-    it.each([
+    test.each([
       { actual: 'true fake data', expected: 'true fake data', pass: true },
       { actual: 'true fake data', expected: 'false fake data', pass: false },
     ])(
@@ -126,7 +126,7 @@ describe('toHaveTextContent', () => {
   });
 
   describe('when data types mismatch', () => {
-    it.each([{ actual: { data: 'object fake data' }, expected: 'string fake data' }])(
+    test.each([{ actual: { data: 'object fake data' }, expected: 'string fake data' }])(
       'should return pass=false when actual=$actual does not match expected=$expected',
       async ({ actual, expected }) => {
         // given

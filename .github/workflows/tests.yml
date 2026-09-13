@@ -32,6 +32,9 @@ jobs:
           npm run typecheck
           npm run lint
 
+      - name: Verify Package Exports
+        run: npm run test:package
+
       - name: Run tests (Unit & E2E)
         run: npm test
 

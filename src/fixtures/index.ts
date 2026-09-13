@@ -1,3 +1,4 @@
+import { ClipboardHandler } from '../utils';
 import { clipboardFixture } from './clipboardFixture';
 import { contextFixture } from './contextFixture';
 
@@ -10,4 +11,4 @@ export const clipboardFixtures = {
   clipboard: clipboardFixture,
 };
 
-export { clipboardFixture, contextFixture };
+export { ClipboardHandler, clipboardFixture, contextFixture };
