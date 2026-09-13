@@ -24,6 +24,7 @@ Testing the Clipboard API in Playwright usually requires boilerplate code to man
 - [Usage](#usage)
   - [Direct Usage](#direct-usage) 
   - [Extended Usage](#extended-usage)
+- [Subpath Exports](#subpath-exports)
 - [API](#api)
   - [Fixtures](#fixtures)
   - [ClipboardHandler](#clipboardhandler)
@@ -103,6 +104,17 @@ export const test = baseTest.extend<{ clipboard: ClipboardHandler }>(clipboardFi
 export const expect = baseExpect.extend(clipboardMatchers);
 
 ```
+
+## Subpath Exports
+
+The package provides dedicated subpath exports to import specific utilities when extending Playwright:
+
+| Import Path                              | Exports                                                                       | Description                                                                                                       |
+|:-----------------------------------------|:------------------------------------------------------------------------------|:------------------------------------------------------------------------------------------------------------------|
+| `playwright-clipboard-testing`           | `test`, `expect`                                                              | Ready-to-use Playwright `test` runner and `expect` assertion function with built-in clipboard support.            |
+| `playwright-clipboard-testing/constants` | `firefoxClipboardPrefs`, `PATTERNS`                                           | Firefox browser preferences for clipboard permissions and regex patterns for clipboard assertions.                |
+| `playwright-clipboard-testing/fixtures`  | `clipboardFixtures`, `clipboardFixture`, `contextFixture`, `ClipboardHandler` | Playwright test fixtures and `ClipboardHandler` class for extending custom test setups.                           |
+| `playwright-clipboard-testing/matchers`  | `clipboardMatchers`                                                           | Custom Playwright matchers (`toBeBlank`, `toHaveTextContent`, `toHaveJSONContent`) for extending custom `expect`. |
 
 ## API
 
