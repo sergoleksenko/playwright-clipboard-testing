@@ -14,6 +14,11 @@ export const PATTERNS = {
   EMAIL: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
 
   /**
+   * Phone numbers in E.164 format (example: +1234567890).
+   */
+  PHONE: /^\+[1-9]\d{1,14}$/,
+
+  /**
    * JWT tokens (example: header.payload.signature).
    */
   JWT: /^[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+$/,

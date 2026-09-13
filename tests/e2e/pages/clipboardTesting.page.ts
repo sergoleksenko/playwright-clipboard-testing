@@ -51,6 +51,10 @@ export class ClipboardTestingPage {
     return this.page.getByTestId('copy-email-button');
   }
 
+  get copyPhoneButton(): Locator {
+    return this.page.getByTestId('copy-phone-button');
+  }
+
   get copyJSONButton(): Locator {
     return this.page.getByTestId('copy-json-button');
   }

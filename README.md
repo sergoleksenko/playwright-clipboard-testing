@@ -194,6 +194,7 @@ The package exports pre-defined regular expression patterns for common data form
 |:------------|:-------------------------------------|:------------------------------------------|
 | `UUID`      | UUID v1–v5 format                    | `123e4567-e89b-12d3-a456-426614174000`    |
 | `EMAIL`     | Email address format                 | `user@example.com`                        |
+| `PHONE`     | Phone number in E.164 format         | `+1234567890`                             |
 | `JWT`       | JWT token format                     | `header.payload.signature`                |
 | `BEARER`    | Bearer authentication token format   | `Bearer token123`                         |
 | `HEX_COLOR` | HEX color format                     | `#FFF`, `#FFFFFF`, `#FFFFFFFF`            |
