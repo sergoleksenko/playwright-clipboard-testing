@@ -1,5 +1,5 @@
-import { describe, expect, it } from 'vitest';
-import { clipboardMatchers } from '../../src';
+import { describe, expect, test } from 'vitest';
+import { clipboardMatchers } from '../../src/matchers/clipboardMatchers.ts';
 import { createFakeClipboard } from '../utils/createFakeClipboard.ts';
 import { createMatcherState } from '../utils/createMatcherState.ts';
 
@@ -10,7 +10,7 @@ const matcherStateNot = createMatcherState(true);
 
 describe('toHaveJSONContent', () => {
   describe('when not inverted with .not', () => {
-    it.each([
+    test.each([
       { expected: { data: 'true fake data' }, pass: true },
       { expected: { data: 'false fake data' }, pass: false },
     ])(
@@ -40,7 +40,7 @@ describe('toHaveJSONContent', () => {
   });
 
   describe('when inverted with .not', () => {
-    it.each([
+    test.each([
       { expected: { data: 'true fake data' }, pass: true },
       { expected: { data: 'false fake data' }, pass: false },
     ])(
@@ -70,7 +70,7 @@ describe('toHaveJSONContent', () => {
   });
 
   describe('when data types mismatch', () => {
-    it.each([{ actual: 'string fake data', expected: { data: 'object fake data' } }])(
+    test.each([{ actual: 'string fake data', expected: { data: 'object fake data' } }])(
       'should return pass=false when actual=$actual does not match expected=$expected',
       async ({ actual, expected }) => {
         // given
@@ -92,7 +92,7 @@ describe('toHaveJSONContent', () => {
   });
 
   describe('primitive JSON types', () => {
-    it.each([
+    test.each([
       { actual: 123, expected: 123 },
       { actual: null, expected: null },
       { actual: true, expected: true },

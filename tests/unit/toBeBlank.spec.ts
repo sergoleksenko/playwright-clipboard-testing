@@ -1,5 +1,5 @@
-import { describe, expect, it } from 'vitest';
-import { clipboardMatchers } from '../../src';
+import { describe, expect, test } from 'vitest';
+import { clipboardMatchers } from '../../src/matchers/clipboardMatchers.ts';
 import { createFakeClipboard } from '../utils/createFakeClipboard.ts';
 import { createMatcherState } from '../utils/createMatcherState.ts';
 
@@ -10,7 +10,7 @@ const matcherStateNot = createMatcherState(true);
 
 describe('toBeBlank', () => {
   describe('when not inverted with .not', () => {
-    it('should return pass=true when clipboard is empty', async () => {
+    test('should return pass=true when clipboard is empty', async () => {
       const actual = '';
       const expected = '';
 
@@ -30,7 +30,7 @@ describe('toBeBlank', () => {
       expect(result.message()).not.toContain('not');
     });
 
-    it('should return pass=false when clipboard is not empty', async () => {
+    test('should return pass=false when clipboard is not empty', async () => {
       const actual = 'true fake data';
       const expected = '';
 
@@ -50,7 +50,7 @@ describe('toBeBlank', () => {
       expect(result.message()).not.toContain('not');
     });
 
-    it.each([
+    test.each([
       {
         actual: '     ',
         pass: true,
@@ -91,7 +91,7 @@ describe('toBeBlank', () => {
   });
 
   describe('when inverted with .not', () => {
-    it('should return pass=true when clipboard is empty, but format inverted error message', async () => {
+    test('should return pass=true when clipboard is empty, but format inverted error message', async () => {
       const actual = '';
       const expected = '';
 
@@ -111,7 +111,7 @@ describe('toBeBlank', () => {
       expect(result.message()).toContain('not');
     });
 
-    it('should return pass=false when clipboard is not empty, but format inverted error message', async () => {
+    test('should return pass=false when clipboard is not empty, but format inverted error message', async () => {
       const actual = 'true fake data';
       const expected = '';
 

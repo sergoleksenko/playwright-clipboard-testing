@@ -34,6 +34,30 @@
       },
       "import": "./dist/index.js",
       "require": "./dist/index.cjs"
+    },
+    "./constants": {
+      "types": {
+        "import": "./dist/constants/index.d.ts",
+        "require": "./dist/constants/index.d.cts"
+      },
+      "import": "./dist/constants/index.js",
+      "require": "./dist/constants/index.cjs"
+    },
+    "./fixtures": {
+      "types": {
+        "import": "./dist/fixtures/index.d.ts",
+        "require": "./dist/fixtures/index.d.cts"
+      },
+      "import": "./dist/fixtures/index.js",
+      "require": "./dist/fixtures/index.cjs"
+    },
+    "./matchers": {
+      "types": {
+        "import": "./dist/matchers/index.d.ts",
+        "require": "./dist/matchers/index.d.cts"
+      },
+      "import": "./dist/matchers/index.js",
+      "require": "./dist/matchers/index.cjs"
     }
   },
   "files": [
@@ -51,6 +75,7 @@
     "typecheck": "tsc --noEmit",
     "format": "biome format --write .",
     "serve": "serve tests/e2e/html -l 3000",
+    "test:package": "node scripts/test-package.ts",
     "test:unit": "vitest run",
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",

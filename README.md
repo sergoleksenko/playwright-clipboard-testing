@@ -24,6 +24,7 @@ Testing the Clipboard API in Playwright usually requires boilerplate code to man
 - [Usage](#usage)
   - [Direct Usage](#direct-usage) 
   - [Extended Usage](#extended-usage)
+- [Subpath Exports](#subpath-exports)
 - [API](#api)
   - [Fixtures](#fixtures)
   - [ClipboardHandler](#clipboardhandler)
@@ -58,7 +59,7 @@ test('should copy text to clipboard', async ({ page, clipboard, browserName }) =
 If your Playwright setup runs tests in Firefox, manually configure `firefoxUserPrefs` in your Playwright config:
 ```ts
 import { defineConfig, devices } from '@playwright/test';
-import { firefoxClipboardPrefs } from 'playwright-clipboard-testing';
+import { firefoxClipboardPrefs } from 'playwright-clipboard-testing/constants';
 
 export default defineConfig({
   projects: [
@@ -95,16 +96,25 @@ test('should copy text to clipboard', async ({ page, clipboard }) => {
 If you already have a custom test fixture file, extend Playwright's `test` and `expect` with `clipboardFixtures` and `clipboardMatchers`:
 ```ts
 import { expect as baseExpect, test as baseTest } from '@playwright/test';
-import {
-  type ClipboardHandler,
-  clipboardFixtures,
-  clipboardMatchers,
-} from 'playwright-clipboard-testing';
+import { type ClipboardHandler, clipboardFixtures } from 'playwright-clipboard-testing/fixtures';
+import { clipboardMatchers } from 'playwright-clipboard-testing/matchers';
 
 export const test = baseTest.extend<{ clipboard: ClipboardHandler }>(clipboardFixtures);
 
 export const expect = baseExpect.extend(clipboardMatchers);
+
 ```
+
+## Subpath Exports
+
+The package provides dedicated subpath exports to import specific utilities when extending Playwright:
+
+| Import Path                              | Exports                                                                       | Description                                                                                                       |
+|:-----------------------------------------|:------------------------------------------------------------------------------|:------------------------------------------------------------------------------------------------------------------|
+| `playwright-clipboard-testing`           | `test`, `expect`                                                              | Ready-to-use Playwright `test` runner and `expect` assertion function with built-in clipboard support.            |
+| `playwright-clipboard-testing/constants` | `firefoxClipboardPrefs`, `PATTERNS`                                           | Firefox browser preferences for clipboard permissions and regex patterns for clipboard assertions.                |
+| `playwright-clipboard-testing/fixtures`  | `clipboardFixtures`, `clipboardFixture`, `contextFixture`, `ClipboardHandler` | Playwright test fixtures and `ClipboardHandler` class for extending custom test setups.                           |
+| `playwright-clipboard-testing/matchers`  | `clipboardMatchers`                                                           | Custom Playwright matchers (`toBeBlank`, `toHaveTextContent`, `toHaveJSONContent`) for extending custom `expect`. |
 
 ## API
 
@@ -193,7 +203,8 @@ The package exports pre-defined regular expression patterns for common data form
 
 To use a pattern in your test, import `PATTERNS` and pass the desired pattern to `toHaveTextContent`:
 ```ts
-import { test, expect, PATTERNS } from 'playwright-clipboard-testing';
+import { expect, test } from 'playwright-clipboard-testing';
+import { PATTERNS } from 'playwright-clipboard-testing/constants';
 
 test('should copy UUID to clipboard', async ({ page, clipboard }) => {
   await page.goto('https://example.com');
