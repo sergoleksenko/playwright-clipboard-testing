@@ -110,12 +110,12 @@ export const expect = baseExpect.extend(clipboardMatchers);
 
 The package provides dedicated subpath exports to import specific utilities when extending Playwright:
 
-| Import Path                              | Exports                                                                       | Description                                                                                                                           |
-|:-----------------------------------------|:------------------------------------------------------------------------------|:--------------------------------------------------------------------------------------------------------------------------------------|
-| `playwright-clipboard-testing`           | `test`, `expect`                                                              | Ready-to-use Playwright `test` runner and `expect` assertion function with built-in clipboard support.                                |
-| `playwright-clipboard-testing/constants` | `firefoxClipboardPrefs`, `PATTERNS`                                           | Firefox browser preferences for clipboard permissions and regex patterns for clipboard assertions.                                    |
-| `playwright-clipboard-testing/fixtures`  | `clipboardFixtures`, `clipboardFixture`, `contextFixture`, `ClipboardHandler` | Playwright test fixtures and `ClipboardHandler` class for extending custom test setups.                                               |
-| `playwright-clipboard-testing/matchers`  | `clipboardMatchers`                                                           | Custom Playwright matchers (`toBeBlank`, `toHaveTextContent`, `toHaveJSONContent`, `toMatchJSONContent`) for extending custom `expect`. |
+| Import Path                              | Exports                                                                       | Description                                                                                            |
+|:-----------------------------------------|:------------------------------------------------------------------------------|:-------------------------------------------------------------------------------------------------------|
+| `playwright-clipboard-testing`           | `test`, `expect`                                                              | Ready-to-use Playwright `test` runner and `expect` assertion function with built-in clipboard support. |
+| `playwright-clipboard-testing/constants` | `firefoxClipboardPrefs`, `PATTERNS`                                           | Firefox browser preferences for clipboard permissions and regex patterns for clipboard assertions.     |
+| `playwright-clipboard-testing/fixtures`  | `clipboardFixtures`, `clipboardFixture`, `contextFixture`, `ClipboardHandler` | Playwright test fixtures and `ClipboardHandler` class for extending custom test setups.                |
+| `playwright-clipboard-testing/matchers`  | `clipboardMatchers`                                                           | Custom Playwright matchers for extending custom `expect`.                                              |
 
 ## API
 
