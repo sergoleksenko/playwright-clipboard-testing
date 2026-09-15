@@ -1,7 +1,7 @@
 import { describe, expect, test } from 'vitest';
-import { clipboardMatchers } from '../../src/matchers/clipboardMatchers.ts';
 import { createFakeClipboard } from '../utils/createFakeClipboard.ts';
 import { createMatcherState } from '../utils/createMatcherState.ts';
+import { clipboardMatchers } from './clipboardMatchers.ts';
 
 const TEST_TIMEOUT = 50;
 
@@ -11,13 +11,11 @@ const matcherStateNot = createMatcherState(true);
 describe('toHaveJSONContent', () => {
   describe('when not inverted with .not', () => {
     test.each([
-      { expected: { data: 'true fake data' }, pass: true },
-      { expected: { data: 'false fake data' }, pass: false },
+      { actual: { data: 'true fake data' }, expected: { data: 'true fake data' }, pass: true },
+      { actual: { data: 'true fake data' }, expected: { data: 'false fake data' }, pass: false },
     ])(
-      'should return pass=$pass when objects matches, and format not inverted error message',
-      async ({ expected, pass }) => {
-        const actual = { data: 'true fake data' };
-
+      'should return pass=$pass when actual=$actual and expected=$expected',
+      async ({ actual, expected, pass }) => {
         // given
         const clipboard = createFakeClipboard({ readJSON: actual });
 
@@ -41,13 +39,11 @@ describe('toHaveJSONContent', () => {
 
   describe('when inverted with .not', () => {
     test.each([
-      { expected: { data: 'true fake data' }, pass: true },
-      { expected: { data: 'false fake data' }, pass: false },
+      { actual: { data: 'true fake data' }, expected: { data: 'true fake data' }, pass: true },
+      { actual: { data: 'true fake data' }, expected: { data: 'false fake data' }, pass: false },
     ])(
-      'should return pass=$pass when objects matches, but format inverted error message',
-      async ({ expected, pass }) => {
-        const actual = { data: 'true fake data' };
-
+      'should return pass=$pass when actual=$actual and expected=$expected',
+      async ({ actual, expected, pass }) => {
         // given
         const clipboard = createFakeClipboard({ readJSON: actual });
 

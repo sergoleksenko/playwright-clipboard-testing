@@ -238,7 +238,16 @@
   });
 
   document.getElementById('copy-json-button')?.addEventListener('click', async () => {
-    await copy(JSON.stringify({ message: 'Hello, JSON!' }));
+    const data = {
+      id: 1,
+      message: 'Hello, JSON!',
+      status: 'task',
+      children: [
+        { status: 'active', id: 1, deleted: false },
+        { status: 'closed', id: 2, deleted: false },
+      ],
+    };
+    await copy(JSON.stringify(data, null, 2));
   });
 </script>
 </body>

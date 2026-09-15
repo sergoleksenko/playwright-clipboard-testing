@@ -1,3 +1,3 @@
-import { clipboardMatchers } from './clipboardMatchers';
+import { clipboardMatchers } from './clipboardMatchers.ts';
 
 export { clipboardMatchers };

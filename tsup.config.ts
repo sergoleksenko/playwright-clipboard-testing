@@ -15,4 +15,5 @@ export default defineConfig({
   target: 'es2022',
   splitting: false,
   external: ['@playwright/test'],
+  ignoreWatch: ['**/*.spec.ts', '**/*.test.ts'],
 });
