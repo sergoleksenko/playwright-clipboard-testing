@@ -7,7 +7,7 @@ import type { TimeoutMatcherOptions } from './types.ts';
 /**
  * Asserts that the clipboard content contains the expected JSON value.
  *
- * this ExpectMatcherState
+ * @this ExpectMatcherState
  * @param clipboard the clipboard utility instance
  * @param expected The expected JSON value
  * @param options matcher options.
