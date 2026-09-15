@@ -1,7 +1,11 @@
 import { type ExpectMatcherState, expect, type MatcherReturnType } from '@playwright/test';
 import type { ClipboardHandler } from '../utils';
-import { getErrorMessage, normalizeText } from '../utils/matcherUtils';
-import type { IgnoreCaseMatcherOptions, TimeoutMatcherOptions, TrimMatcherOptions } from './types';
+import { getErrorMessage, normalizeText } from '../utils/matcherUtils.ts';
+import type {
+  IgnoreCaseMatcherOptions,
+  TimeoutMatcherOptions,
+  TrimMatcherOptions,
+} from './types.ts';
 
 /**
  * Asserts that the clipboard content matches the expected text value.

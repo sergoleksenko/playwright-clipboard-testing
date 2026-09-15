@@ -1,6 +1,6 @@
 import { ClipboardHandler } from '../utils';
-import { clipboardFixture } from './clipboardFixture';
-import { contextFixture } from './contextFixture';
+import { clipboardFixture } from './clipboardFixture.ts';
+import { contextFixture } from './contextFixture.ts';
 
 /**
  * A collection of fixtures related to clipboard testing, including the clipboard fixture and context fixture.

@@ -5,21 +5,21 @@ import { getErrorMessage } from '../utils/matcherUtils.ts';
 import type { TimeoutMatcherOptions } from './types.ts';
 
 /**
- * Asserts that the clipboard content matches the expected JSON value.
+ * Asserts that the clipboard content contains the expected JSON value.
  *
- * @this ExpectMatcherState
- * @param clipboard The Clipboard utility instance.
- * @param expected The expected JSON value.
- * @param options Matcher options.
+ * this ExpectMatcherState
+ * @param clipboard the clipboard utility instance
+ * @param expected The expected JSON value
+ * @param options matcher options.
  * @returns A Promise that resolves to a MatcherReturnType object.
  */
-export async function toHaveJSONContent(
+export async function toMatchJSONContent(
   this: ExpectMatcherState,
   clipboard: ClipboardHandler,
   expected: unknown,
   options: TimeoutMatcherOptions = {},
 ) {
-  const name = 'toHaveJSONContent';
+  const name = 'toMatchJSONContent';
   let pass: boolean;
   let actual: unknown;
   let errorReason: Error | null = null;
@@ -50,7 +50,7 @@ export async function toHaveJSONContent(
 
   try {
     const expectation = this.isNot ? poll.not : poll;
-    await expectation.toEqual(expected);
+    await expectation.toMatchObject(expected as Record<string, unknown>);
     pass = true;
   } catch {
     pass = false;
