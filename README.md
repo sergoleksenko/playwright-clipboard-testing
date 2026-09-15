@@ -190,7 +190,7 @@ await expect(clipboard).not.toHaveJSONContent({ message: 'Async copied value' },
 
 ### toMatchJSONContent Matcher
 `expect(clipboard).toMatchJSONContent(expected, options?)`
-Asserts that the clipboard content contains a subset of the expected JSON object. Uses Playwright's smart polling mechanism to wait for the clipboard to update.
+Asserts that the expected JSON object is a subset of the clipboard content. Uses Playwright's smart polling mechanism to wait for the clipboard to update.
 - `expected: unknown` — Expected JSON subset object to compare against.
 - `options.timeout: number (optional, default: 10000ms)` — Time in milliseconds to wait for the clipboard content to match.
 ```ts
