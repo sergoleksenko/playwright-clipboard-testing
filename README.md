@@ -29,6 +29,7 @@ Testing the Clipboard API in Playwright usually requires boilerplate code to man
   - [Fixtures](#fixtures)
   - [ClipboardHandler](#clipboardhandler)
   - [toBeBlank Matcher](#tobeblank-matcher)
+  - [toHaveContentLength Matcher](#tohavecontentlength-matcher)
   - [toHaveTextContent Matcher](#tohavetextcontent-matcher)
   - [toHaveJSONContent Matcher](#tohavejsoncontent-matcher)
   - [toMatchJSONContent Matcher](#tomatchjsoncontent-matcher)
@@ -151,6 +152,22 @@ await expect(clipboard).toBeBlank();
 ```ts
 // assert that the clipboard is not empty with a custom timeout
 await expect(clipboard).not.toBeBlank({ timeout: 5000 });
+```
+
+### toHaveContentLength Matcher
+`expect(clipboard).toHaveContentLength(expected, options?)`
+
+Asserts that the clipboard content has the expected length. Uses Playwright's smart polling mechanism to wait for the clipboard to update.
+- `expected: number` — Expected length of the clipboard content.
+- `options.timeout: number (optional, default: 10000ms)` — Time in milliseconds to wait for the clipboard content to match.
+- `options.trim: boolean (optional, default: false)` — Trims whitespace from the clipboard content before checking its length.
+```ts
+// assert that the clipboard content has the expected length
+await expect(clipboard).toHaveContentLength(13);
+```
+```ts
+// assert that the clipboard content does not have the expected length with trim option
+await expect(clipboard).not.toHaveContentLength(10, { trim: true });
 ```
 
 ### toHaveTextContent Matcher

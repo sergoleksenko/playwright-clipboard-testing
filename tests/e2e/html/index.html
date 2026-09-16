@@ -162,6 +162,7 @@
                 <button type="button" id="copy-hex-button" data-testid="copy-hex-button">Copy Hex Color</button>
                 <button type="button" id="copy-ipv4-button" data-testid="copy-ipv4-button">Copy IPv4 Address</button>
                 <button type="button" id="copy-ipv6-button" data-testid="copy-ipv6-button">Copy IPv6 Address</button>
+                <button type="button" id="copy-text-with-newline-button" data-testid="copy-text-with-newline-button">Copy Text with Newline</button>
             </div>
 
             <h3 style="margin-top: 0.5rem;">toHaveJSONContent</h3>
@@ -235,6 +236,10 @@
 
   document.getElementById('copy-ipv6-button')?.addEventListener('click', async () => {
     await copy(Array.from({ length: 8 }, () => Math.floor(Math.random() * 65536).toString(16)).join(':'));
+  });
+
+  document.getElementById('copy-text-with-newline-button')?.addEventListener('click', async () => {
+    await copy('This is a new line.\r\n\t');
   });
 
   document.getElementById('copy-json-button')?.addEventListener('click', async () => {

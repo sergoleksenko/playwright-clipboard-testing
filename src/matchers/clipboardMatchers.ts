@@ -1,4 +1,5 @@
 import { toBeBlank } from './toBeBlank';
+import { toHaveContentLength } from './toHaveContentLength.ts';
 import { toHaveJSONContent } from './toHaveJSONContent';
 import { toHaveTextContent } from './toHaveTextContent';
 import { toMatchJSONContent } from './toMatchJSONContent.ts';
@@ -8,6 +9,7 @@ import { toMatchJSONContent } from './toMatchJSONContent.ts';
  */
 export const clipboardMatchers = {
   toBeBlank,
+  toHaveContentLength,
   toHaveJSONContent,
   toHaveTextContent,
   toMatchJSONContent,

@@ -6,7 +6,7 @@ export type TrimMatcherOptions = { trim?: boolean };
 
 declare global {
   namespace PlaywrightTest {
-    interface Matchers<R> {
+    interface Matchers<R, T = unknown> {
       /**
        * Asserts that the clipboard content is empty.
        * Uses smart polling to wait for the clipboard to be updated.
@@ -18,6 +18,22 @@ declare global {
        * await expect(clipboard).toBeBlank();
        */
       toBeBlank(options?: TimeoutMatcherOptions & TrimMatcherOptions): Promise<R>;
+
+      /**
+       * Asserts that the clipboard content has the expected length.
+       * Uses smart polling to wait for the clipboard to be updated.
+       *
+       * @param expected The expected length of the clipboard content.
+       * @param options Matcher options.
+       * @returns A Promise that resolves when the assertion completes.
+       *
+       * @example
+       * await expect(clipboard).toHaveContentLength(10);
+       */
+      toHaveContentLength(
+        expected: number,
+        options?: TimeoutMatcherOptions & TrimMatcherOptions,
+      ): Promise<R>;
 
       /**
        * Asserts that the clipboard content matches the expected text.

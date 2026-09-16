@@ -62,6 +62,11 @@ describe('toBeBlank', () => {
         options: { trim: true },
       },
       {
+        actual: '   \r\n\t  ',
+        pass: true,
+        options: { trim: true },
+      },
+      {
         actual: '   \n\t  ',
         pass: false,
         options: { trim: false },

@@ -55,6 +55,10 @@ export class ClipboardTestingPage {
     return this.page.getByTestId('copy-phone-button');
   }
 
+  get copyTextWithNewLinesButton(): Locator {
+    return this.page.getByTestId('copy-text-with-newline-button');
+  }
+
   get copyJSONButton(): Locator {
     return this.page.getByTestId('copy-json-button');
   }
