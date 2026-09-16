@@ -1,16 +1,9 @@
 import { type ExpectMatcherState, expect, type MatcherReturnType } from '@playwright/test';
 import type { ClipboardHandler } from '../utils';
-import { getErrorMessage, normalizeText } from '../utils/matcherUtils.ts';
+import { getErrorMessage } from '../utils/matchers/getErrorMessage.ts';
+import { normalizeText } from '../utils/matchers/normalizeText.ts';
 import type { TimeoutMatcherOptions, TrimMatcherOptions } from './types.ts';
 
-/**
- * Asserts that the clipboard content is blank (empty string).
- *
- * @this ExpectMatcherState
- * @param clipboard The Clipboard utility instance.
- * @param options Matcher options.
- * @returns A Promise that resolves to a MatcherReturnType object.
- */
 export async function toBeBlank(
   this: ExpectMatcherState,
   clipboard: ClipboardHandler,

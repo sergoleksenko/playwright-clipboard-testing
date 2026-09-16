@@ -1,21 +1,13 @@
 import { type ExpectMatcherState, expect, type MatcherReturnType } from '@playwright/test';
 import type { ClipboardHandler } from '../utils';
-import { getErrorMessage, normalizeText } from '../utils/matcherUtils.ts';
+import { getErrorMessage } from '../utils/matchers/getErrorMessage.ts';
+import { normalizeText } from '../utils/matchers/normalizeText.ts';
 import type {
   IgnoreCaseMatcherOptions,
   TimeoutMatcherOptions,
   TrimMatcherOptions,
 } from './types.ts';
 
-/**
- * Asserts that the clipboard content matches the expected text value.
- *
- * @this ExpectMatcherState
- * @param clipboard The Clipboard utility instance.
- * @param expected The expected text value.
- * @param options Matcher options.
- * @returns A Promise that resolves to a MatcherReturnType object.
- */
 export async function toHaveTextContent(
   this: ExpectMatcherState,
   clipboard: ClipboardHandler,

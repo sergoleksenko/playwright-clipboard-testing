@@ -1,18 +1,10 @@
 import type { ExpectMatcherState, MatcherReturnType } from '@playwright/test';
 import { expect } from '@playwright/test';
 import type { ClipboardHandler } from '../utils';
-import { getErrorMessage, normalizeText } from '../utils/matcherUtils.ts';
+import { getErrorMessage } from '../utils/matchers/getErrorMessage.ts';
+import { normalizeText } from '../utils/matchers/normalizeText.ts';
 import type { TimeoutMatcherOptions, TrimMatcherOptions } from './types.ts';
 
-/**
- * Asserts that the clipboard content has the expected length.
- *
- * @this ExpectMatcherState
- * @param clipboard The Clipboard utility instance.
- * @param expected The expected length of the clipboard content.
- * @param options Matcher options.
- * @returns A Promise that resolves to a MatcherReturnType object.
- */
 export async function toHaveContentLength(
   this: ExpectMatcherState,
   clipboard: ClipboardHandler,

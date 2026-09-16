@@ -10,9 +10,18 @@
  */
 
 import type { Page } from '@playwright/test';
+import { runInStep } from './runInStep.ts';
 
 export class ClipboardHandler {
   constructor(private readonly page: Page) {}
+
+  private async _write(data: string): Promise<void> {
+    await this.page.evaluate((value) => navigator.clipboard.writeText(value), data);
+  }
+
+  private async _read(): Promise<string> {
+    return await this.page.evaluate(() => navigator.clipboard.readText());
+  }
 
   /**
    * Reads the current text content from the browser clipboard.
@@ -22,7 +31,9 @@ export class ClipboardHandler {
    * @returns A promise that resolves to the clipboard string content.
    */
   async read(): Promise<string> {
-    return await this.page.evaluate(() => navigator.clipboard.readText());
+    return await runInStep('Clipboard "read"', async () => {
+      return await this._read();
+    });
   }
 
   /**
@@ -34,14 +45,16 @@ export class ClipboardHandler {
    * @throws {Error} If the clipboard content is not a valid JSON string.
    */
   async readJSON<T = unknown>(): Promise<T> {
-    const text = await this.read();
-    try {
-      return JSON.parse(text);
-    } catch {
-      throw new Error(
-        `[playwright-clipboard] Clipboard content is not a valid JSON: ${JSON.stringify(text)}`,
-      );
-    }
+    return await runInStep('Clipboard "readJSON"', async () => {
+      const text = await this._read();
+      try {
+        return JSON.parse(text);
+      } catch {
+        throw new Error(
+          `[playwright-clipboard] Clipboard content is not a valid JSON: ${JSON.stringify(text)}`,
+        );
+      }
+    });
   }
 
   /**
@@ -49,7 +62,9 @@ export class ClipboardHandler {
    * @param data The data to write to the clipboard.
    */
   async write(data: string): Promise<void> {
-    await this.page.evaluate((value) => navigator.clipboard.writeText(value), data);
+    await runInStep('Clipboard "write"', async () => {
+      await this._write(data);
+    });
   }
 
   /**
@@ -71,7 +86,9 @@ export class ClipboardHandler {
       throw new Error(`${errorMessage} (received undefined).`);
     }
 
-    await this.write(jsonString);
+    await runInStep('Clipboard "writeJSON"', async () => {
+      await this._write(jsonString);
+    });
   }
 
   /**
@@ -79,6 +96,8 @@ export class ClipboardHandler {
    * This effectively removes any existing content from the clipboard.
    */
   async clear(): Promise<void> {
-    await this.write('');
+    await runInStep('Clipboard "clear"', async () => {
+      await this._write('');
+    });
   }
 }

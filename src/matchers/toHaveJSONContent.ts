@@ -1,18 +1,9 @@
 import type { ExpectMatcherState, MatcherReturnType } from '@playwright/test';
 import { expect } from '@playwright/test';
 import type { ClipboardHandler } from '../utils';
-import { getErrorMessage } from '../utils/matcherUtils.ts';
+import { getErrorMessage } from '../utils/matchers/getErrorMessage.ts';
 import type { TimeoutMatcherOptions } from './types.ts';
 
-/**
- * Asserts that the clipboard content matches the expected JSON value.
- *
- * @this ExpectMatcherState
- * @param clipboard The Clipboard utility instance.
- * @param expected The expected JSON value.
- * @param options Matcher options.
- * @returns A Promise that resolves to a MatcherReturnType object.
- */
 export async function toHaveJSONContent(
   this: ExpectMatcherState,
   clipboard: ClipboardHandler,
