@@ -77,10 +77,10 @@
     "serve": "serve tests/e2e/html -l 3000",
     "test:package": "node scripts/test-package.ts",
     "test:unit": "vitest run",
+    "test:watch": "vitest",
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",
-    "test": "npm run test:unit && npm run test:e2e",
-    "test:watch": "vitest"
+    "test": "npm run test:unit && npm run test:e2e"
   },
   "devDependencies": {
     "@biomejs/biome": "2.5.10",

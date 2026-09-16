@@ -44,6 +44,12 @@ describe('toHaveTextContent', () => {
         options: { trim: false },
       },
       {
+        actual: 'true fake\r\ndata',
+        expected: 'true fake\ndata',
+        pass: false,
+        options: {},
+      },
+      {
         actual: 'true fake data',
         expected: '   true fake data   ',
         pass: true,
