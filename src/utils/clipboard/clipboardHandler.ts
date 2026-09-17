@@ -10,7 +10,7 @@
  */
 
 import type { Page } from '@playwright/test';
-import { runInStep } from './runInStep.ts';
+import { runInStep } from './runInStep';
 
 export class ClipboardHandler {
   constructor(private readonly page: Page) {}

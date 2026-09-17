@@ -1,5 +1,5 @@
-import { PATTERNS } from '../../../src/constants/patterns.ts';
-import { expect, test } from '../fixtures/baseFixtures.ts';
+import { PATTERNS } from '../../../src/constants/patterns';
+import { expect, test } from '../fixtures/baseFixtures';
 
 test.describe('toHaveTextContent', () => {
   test.beforeEach(async ({ clipboard, ui }) => {

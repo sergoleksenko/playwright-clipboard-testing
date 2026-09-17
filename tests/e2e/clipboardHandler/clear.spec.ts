@@ -1,4 +1,4 @@
-import { expect, test } from '../fixtures/baseFixtures.ts';
+import { expect, test } from '../fixtures/baseFixtures';
 
 test.describe('clear method', () => {
   test.beforeEach(async ({ clipboard, ui }) => {

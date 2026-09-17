@@ -1,5 +1,5 @@
 import { vi } from 'vitest';
-import type { ClipboardHandler } from '../index.ts';
+import type { ClipboardHandler } from '../index';
 
 export const createFakeClipboard = (
   overrides: { read?: string; readJSON?: unknown } = {},

@@ -1,4 +1,4 @@
-import { expect, test } from '../fixtures/baseFixtures.ts';
+import { expect, test } from '../fixtures/baseFixtures';
 
 test.describe('toMatchJSONContent', async () => {
   test.beforeEach(async ({ clipboard, ui }) => {

@@ -1,4 +1,4 @@
-import { expect, test } from '../fixtures/baseFixtures.ts';
+import { expect, test } from '../fixtures/baseFixtures';
 
 test.describe('toBeBlank', () => {
   test.beforeEach(async ({ clipboard, ui }) => {

@@ -1,4 +1,4 @@
-import { expect, test } from '../fixtures/baseFixtures.ts';
+import { expect, test } from '../fixtures/baseFixtures';
 
 test.describe('toHaveContentLength', () => {
   test.beforeEach(async ({ clipboard, ui }) => {

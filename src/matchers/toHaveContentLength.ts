@@ -1,9 +1,9 @@
 import type { ExpectMatcherState, MatcherReturnType } from '@playwright/test';
 import { expect } from '@playwright/test';
 import type { ClipboardHandler } from '../utils';
-import { getErrorMessage } from '../utils/matchers/getErrorMessage.ts';
-import { normalizeText } from '../utils/matchers/normalizeText.ts';
-import type { TimeoutMatcherOptions, TrimMatcherOptions } from './types.ts';
+import { getErrorMessage } from '../utils/matchers/getErrorMessage';
+import { normalizeText } from '../utils/matchers/normalizeText';
+import type { TimeoutMatcherOptions, TrimMatcherOptions } from './types';
 
 export async function toHaveContentLength(
   this: ExpectMatcherState,

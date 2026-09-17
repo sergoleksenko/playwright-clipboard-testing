@@ -1,8 +1,8 @@
 import type { ExpectMatcherState, MatcherReturnType } from '@playwright/test';
 import { expect } from '@playwright/test';
 import type { ClipboardHandler } from '../utils';
-import { getErrorMessage } from '../utils/matchers/getErrorMessage.ts';
-import type { TimeoutMatcherOptions } from './types.ts';
+import { getErrorMessage } from '../utils/matchers/getErrorMessage';
+import type { TimeoutMatcherOptions } from './types';
 
 export async function toMatchJSONContent(
   this: ExpectMatcherState,
