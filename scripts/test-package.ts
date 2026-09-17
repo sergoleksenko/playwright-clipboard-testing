@@ -35,11 +35,11 @@ try {
   writeFileSync(
     tempVitestConfigPath,
     `import { defineConfig } from 'vitest/config';
-    export default ${JSON.stringify({
+    export default defineConfig(${JSON.stringify({
       test: {
         exclude: ['**/node_modules/**', '**/dist/**', '**/tests/e2e/**'],
       },
-    })};`,
+    })});`,
   );
 
   copyFileSync(sourceTestFilePath, tempTestFilePath);
