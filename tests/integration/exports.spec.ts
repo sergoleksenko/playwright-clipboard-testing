@@ -1,5 +1,5 @@
 import { createRequire } from 'node:module';
-import { beforeEach, describe, expect, test } from 'vitest';
+import { describe, expect, test } from 'vitest';
 
 describe('Package Subpath Exports', () => {
   describe('ESM (import)', () => {
@@ -34,31 +34,35 @@ describe('Package Subpath Exports', () => {
   });
 
   describe('CommonJS (require)', () => {
-    let require: NodeJS.Require;
-
-    beforeEach(() => {
-      require = createRequire(import.meta.url);
-    });
+    const require = createRequire(import.meta.url);
 
     test('should resolves root export', () => {
-      expect(require('playwright-clipboard-testing').test).toBeDefined();
-      expect(require('playwright-clipboard-testing').expect).toBeDefined();
+      const pkg = require('playwright-clipboard-testing');
+
+      expect(pkg.test).toBeDefined();
+      expect(pkg.expect).toBeDefined();
     });
 
     test('should resolves /constants export', () => {
-      expect(require('playwright-clipboard-testing/constants').firefoxClipboardPrefs).toBeDefined();
-      expect(require('playwright-clipboard-testing/constants').PATTERNS).toBeDefined();
+      const pkg = require('playwright-clipboard-testing/constants');
+
+      expect(pkg.firefoxClipboardPrefs).toBeDefined();
+      expect(pkg.PATTERNS).toBeDefined();
     });
 
     test('should resolves /fixtures export', () => {
-      expect(require('playwright-clipboard-testing/fixtures').contextFixture).toBeDefined();
-      expect(require('playwright-clipboard-testing/fixtures').clipboardFixture).toBeDefined();
-      expect(require('playwright-clipboard-testing/fixtures').clipboardFixtures).toBeDefined();
-      expect(require('playwright-clipboard-testing/fixtures').ClipboardHandler).toBeDefined();
+      const pkg = require('playwright-clipboard-testing/fixtures');
+
+      expect(pkg.contextFixture).toBeDefined();
+      expect(pkg.clipboardFixture).toBeDefined();
+      expect(pkg.clipboardFixtures).toBeDefined();
+      expect(pkg.ClipboardHandler).toBeDefined();
     });
 
     test('should resolves /matchers export', () => {
-      expect(require('playwright-clipboard-testing/matchers').clipboardMatchers).toBeDefined();
+      const pkg = require('playwright-clipboard-testing/matchers');
+
+      expect(pkg.clipboardMatchers).toBeDefined();
     });
   });
 });
