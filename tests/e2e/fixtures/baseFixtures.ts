@@ -2,10 +2,10 @@ import { test as baseTest, expect } from '../../../src';
 import { ClipboardTestingPage } from '../pages/clipboardTesting.page.ts';
 
 export const test = baseTest.extend<{
-  clipboardTestingPage: ClipboardTestingPage;
+  ui: { clipboardTestingPage: ClipboardTestingPage };
 }>({
-  clipboardTestingPage: async ({ page }, use) => {
-    await use(new ClipboardTestingPage(page));
+  ui: async ({ page }, use) => {
+    await use({ clipboardTestingPage: new ClipboardTestingPage(page) });
   },
 });
 

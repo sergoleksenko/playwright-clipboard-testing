@@ -1,19 +1,19 @@
 import { expect, test } from '../fixtures/baseFixtures.ts';
 
 test.describe('write method', () => {
-  test.beforeEach(async ({ clipboard, clipboardTestingPage }) => {
-    await clipboardTestingPage.visit();
-    await expect(clipboardTestingPage.status).toHaveText('Idle');
+  test.beforeEach(async ({ clipboard, ui }) => {
+    await ui.clipboardTestingPage.visit();
+    await expect(ui.clipboardTestingPage.status).toHaveText('Idle');
 
     await clipboard.clear();
   });
 
-  test('should write plain text to clipboard', async ({ clipboard, clipboardTestingPage }) => {
+  test('should write plain text to clipboard', async ({ clipboard, ui }) => {
     // when
     await clipboard.write('Hello from write test');
 
     // then
-    await clipboardTestingPage.readClipboardButton.click();
-    await expect(clipboardTestingPage.output).toHaveText('Hello from write test');
+    await ui.clipboardTestingPage.readClipboardButton.click();
+    await expect(ui.clipboardTestingPage.output).toHaveText('Hello from write test');
   });
 });

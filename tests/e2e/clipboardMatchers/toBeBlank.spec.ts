@@ -1,9 +1,9 @@
 import { expect, test } from '../fixtures/baseFixtures.ts';
 
 test.describe('toBeBlank', () => {
-  test.beforeEach(async ({ clipboard, clipboardTestingPage }) => {
-    await clipboardTestingPage.visit();
-    await expect(clipboardTestingPage.status).toHaveText('Idle');
+  test.beforeEach(async ({ clipboard, ui }) => {
+    await ui.clipboardTestingPage.visit();
+    await expect(ui.clipboardTestingPage.status).toHaveText('Idle');
 
     await clipboard.clear();
   });
@@ -13,9 +13,9 @@ test.describe('toBeBlank', () => {
     await expect(clipboard).toBeBlank();
   });
 
-  test('clipboard should not be empty', async ({ clipboard, clipboardTestingPage }) => {
+  test('clipboard should not be empty', async ({ clipboard, ui }) => {
     // when
-    await clipboardTestingPage.copyTextButton.click();
+    await ui.clipboardTestingPage.copyTextButton.click();
 
     // then
     await expect(clipboard).not.toBeBlank();

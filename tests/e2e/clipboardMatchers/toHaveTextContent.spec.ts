@@ -2,30 +2,24 @@ import { PATTERNS } from '../../../src/constants/patterns.ts';
 import { expect, test } from '../fixtures/baseFixtures.ts';
 
 test.describe('toHaveTextContent', () => {
-  test.beforeEach(async ({ clipboard, clipboardTestingPage }) => {
-    await clipboardTestingPage.visit();
-    await expect(clipboardTestingPage.status).toHaveText('Idle');
+  test.beforeEach(async ({ clipboard, ui }) => {
+    await ui.clipboardTestingPage.visit();
+    await expect(ui.clipboardTestingPage.status).toHaveText('Idle');
 
     await clipboard.clear();
   });
 
-  test('should copy text and verify it matches expected data', async ({
-    clipboard,
-    clipboardTestingPage,
-  }) => {
+  test('should copy text and verify it matches expected data', async ({ clipboard, ui }) => {
     // when
-    await clipboardTestingPage.copyTextButton.click();
+    await ui.clipboardTestingPage.copyTextButton.click();
 
     // then
     await expect(clipboard).toHaveTextContent('Hello, World!');
   });
 
-  test('should copy text and verify it does not match expected data', async ({
-    clipboard,
-    clipboardTestingPage,
-  }) => {
+  test('should copy text and verify it does not match expected data', async ({ clipboard, ui }) => {
     // when
-    await clipboardTestingPage.copyTextButton.click();
+    await ui.clipboardTestingPage.copyTextButton.click();
 
     // then
     await expect(clipboard).not.toHaveTextContent('Goodbye, World!');
@@ -33,10 +27,10 @@ test.describe('toHaveTextContent', () => {
 
   test('should copy text and verify it matches expected data with trim option', async ({
     clipboard,
-    clipboardTestingPage,
+    ui,
   }) => {
     // when
-    await clipboardTestingPage.copyTextButton.click();
+    await ui.clipboardTestingPage.copyTextButton.click();
 
     // then
     await expect(clipboard).toHaveTextContent('   Hello, World!   ', { trim: true });
@@ -44,10 +38,10 @@ test.describe('toHaveTextContent', () => {
 
   test('should copy text and verify it matches expected data with ignoreCase option', async ({
     clipboard,
-    clipboardTestingPage,
+    ui,
   }) => {
     // when
-    await clipboardTestingPage.copyTextButton.click();
+    await ui.clipboardTestingPage.copyTextButton.click();
 
     // then
     await expect(clipboard).toHaveTextContent('HELLO, WORLD!', { ignoreCase: true });
@@ -55,10 +49,10 @@ test.describe('toHaveTextContent', () => {
 
   test('should copy text and verify it matches expected data with both trim and ignoreCase options', async ({
     clipboard,
-    clipboardTestingPage,
+    ui,
   }) => {
     // when
-    await clipboardTestingPage.copyTextButton.click();
+    await ui.clipboardTestingPage.copyTextButton.click();
 
     // then
     await expect(clipboard).toHaveTextContent('   HELLO, WORLD!   ', {
@@ -69,10 +63,10 @@ test.describe('toHaveTextContent', () => {
 
   test('should copy text and verify it matches expected data with regex', async ({
     clipboard,
-    clipboardTestingPage,
+    ui,
   }) => {
     // when
-    await clipboardTestingPage.copyTextButton.click();
+    await ui.clipboardTestingPage.copyTextButton.click();
 
     // then
     await expect(clipboard).toHaveTextContent(/Hello, World!/);
@@ -85,10 +79,10 @@ test.describe('toHaveTextContent', () => {
 
   test('should copy UUID text and verify it matches expected data with regex', async ({
     clipboard,
-    clipboardTestingPage,
+    ui,
   }) => {
     // when
-    await clipboardTestingPage.copyUUIDButton.click();
+    await ui.clipboardTestingPage.copyUUIDButton.click();
 
     // then
     await expect(clipboard).toHaveTextContent(/[0-9a-fA-F-]+/i);
@@ -98,10 +92,10 @@ test.describe('toHaveTextContent', () => {
 
   test('should copy Email text and verify it matches expected data with regex', async ({
     clipboard,
-    clipboardTestingPage,
+    ui,
   }) => {
     // when
-    await clipboardTestingPage.copyEmailButton.click();
+    await ui.clipboardTestingPage.copyEmailButton.click();
 
     // then
     await expect(clipboard).toHaveTextContent(PATTERNS.EMAIL);
@@ -109,10 +103,10 @@ test.describe('toHaveTextContent', () => {
 
   test('should copy Phone text and verify it matches expected data with regex', async ({
     clipboard,
-    clipboardTestingPage,
+    ui,
   }) => {
     // when
-    await clipboardTestingPage.copyPhoneButton.click();
+    await ui.clipboardTestingPage.copyPhoneButton.click();
 
     // then
     await expect(clipboard).toHaveTextContent(PATTERNS.PHONE);
@@ -120,10 +114,10 @@ test.describe('toHaveTextContent', () => {
 
   test('should copy JWT token text and verify it matches expected data with regex', async ({
     clipboard,
-    clipboardTestingPage,
+    ui,
   }) => {
     // when
-    await clipboardTestingPage.copyJWTButton.click();
+    await ui.clipboardTestingPage.copyJWTButton.click();
 
     // then
     await expect(clipboard).toHaveTextContent(PATTERNS.JWT);
@@ -131,10 +125,10 @@ test.describe('toHaveTextContent', () => {
 
   test('should copy Bearer token text and verify it matches expected data with regex', async ({
     clipboard,
-    clipboardTestingPage,
+    ui,
   }) => {
     // when
-    await clipboardTestingPage.copyBearerButton.click();
+    await ui.clipboardTestingPage.copyBearerButton.click();
 
     // then
     await expect(clipboard).toHaveTextContent(PATTERNS.BEARER);
@@ -142,10 +136,10 @@ test.describe('toHaveTextContent', () => {
 
   test('should copy HEX color text and verify it matches expected data with regex', async ({
     clipboard,
-    clipboardTestingPage,
+    ui,
   }) => {
     // when
-    await clipboardTestingPage.copyHexButton.click();
+    await ui.clipboardTestingPage.copyHexButton.click();
 
     // then
     await expect(clipboard).toHaveTextContent(PATTERNS.HEX_COLOR);
@@ -153,10 +147,10 @@ test.describe('toHaveTextContent', () => {
 
   test('should copy IPv4 text and verify it matches expected data with regex', async ({
     clipboard,
-    clipboardTestingPage,
+    ui,
   }) => {
     // when
-    await clipboardTestingPage.copyIPV4Button.click();
+    await ui.clipboardTestingPage.copyIPV4Button.click();
 
     // then
     await expect(clipboard).toHaveTextContent(PATTERNS.IP.V4);
@@ -165,10 +159,10 @@ test.describe('toHaveTextContent', () => {
 
   test('should copy IPv6 text and verify it matches expected data with regex', async ({
     clipboard,
-    clipboardTestingPage,
+    ui,
   }) => {
     // when
-    await clipboardTestingPage.copyIPV6Button.click();
+    await ui.clipboardTestingPage.copyIPV6Button.click();
 
     // then
     await expect(clipboard).toHaveTextContent(PATTERNS.IP.V6);
