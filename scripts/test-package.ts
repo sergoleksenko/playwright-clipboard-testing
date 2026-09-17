@@ -2,11 +2,14 @@ import { execSync } from 'node:child_process';
 import { copyFileSync, existsSync, mkdirSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 
+const tempDirName = 'pack-test';
+const testFileName = 'exports.spec.ts';
+
 const rootDir = process.cwd();
-const tempDir = path.resolve(rootDir, '.pack-test');
-const sourceTestFilePath = path.resolve(rootDir, 'tests/integration/exports.spec.ts');
-const tempTestFilePath = path.resolve(tempDir, 'exports.spec.ts');
-const tempVitestConfigPath = path.resolve(tempDir, 'vitest.temp.config.mjs');
+const tempDir = path.resolve(rootDir, `.${tempDirName}`);
+const sourceTestFilePath = path.resolve(rootDir, `tests/integration/${testFileName}`);
+const tempTestFilePath = path.resolve(tempDir, testFileName);
+const tempVitestConfigPath = path.resolve(tempDir, 'vitest.temp.config.ts');
 
 try {
   console.log('🏗️ Building project...');
@@ -23,7 +26,7 @@ try {
   writeFileSync(
     path.join(tempDir, 'package.json'),
     JSON.stringify({
-      name: 'pack-test',
+      name: tempDirName,
       type: 'module',
       private: true,
     }),
@@ -31,7 +34,8 @@ try {
 
   writeFileSync(
     tempVitestConfigPath,
-    `export default ${JSON.stringify({
+    `import { defineConfig } from 'vitest/config';
+    export default ${JSON.stringify({
       test: {
         exclude: ['**/node_modules/**', '**/dist/**', '**/tests/e2e/**'],
       },
