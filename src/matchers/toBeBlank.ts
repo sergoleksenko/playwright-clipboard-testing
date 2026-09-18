@@ -4,6 +4,14 @@ import { getErrorMessage } from '../utils/matchers/getErrorMessage';
 import { normalizeText } from '../utils/matchers/normalizeText';
 import type { TimeoutMatcherOptions, TrimMatcherOptions } from './types';
 
+/**
+ * Asserts that the clipboard content is blank (empty string).
+ *
+ * @this ExpectMatcherState
+ * @param clipboard The Clipboard utility instance.
+ * @param options Matcher options.
+ * @returns A Promise that resolves to a MatcherReturnType object.
+ */
 export async function toBeBlank(
   this: ExpectMatcherState,
   clipboard: ClipboardHandler,

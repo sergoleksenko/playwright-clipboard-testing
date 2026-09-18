@@ -5,6 +5,15 @@ import { getErrorMessage } from '../utils/matchers/getErrorMessage';
 import { normalizeText } from '../utils/matchers/normalizeText';
 import type { TimeoutMatcherOptions, TrimMatcherOptions } from './types';
 
+/**
+ * Asserts that the clipboard content has the expected length.
+ *
+ * @this ExpectMatcherState
+ * @param clipboard The Clipboard utility instance.
+ * @param expected The expected length of the clipboard content.
+ * @param options Matcher options.
+ * @returns A Promise that resolves to a MatcherReturnType object.
+ */
 export async function toHaveContentLength(
   this: ExpectMatcherState,
   clipboard: ClipboardHandler,

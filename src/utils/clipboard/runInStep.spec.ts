@@ -9,7 +9,9 @@ describe('runInStep', () => {
 
   describe('fallback branch - outside of Playwright test runner', () => {
     test('should execute the callback directly when no test is running', async () => {
-      const infoSpy = vi.spyOn(pwTest, 'info').mockReturnValue(null as unknown as TestInfo);
+      const infoSpy = vi.spyOn(pwTest, 'info').mockImplementation(() => {
+        throw new Error('test.info() can only be called while test is running');
+      });
 
       // given
       const mockFn = vi.fn().mockResolvedValue('fallback-result');
@@ -24,7 +26,9 @@ describe('runInStep', () => {
     });
 
     test('should rethrow errors from the callback when no test is running', async () => {
-      const infoSpy = vi.spyOn(pwTest, 'info').mockReturnValue(null as unknown as TestInfo);
+      const infoSpy = vi.spyOn(pwTest, 'info').mockImplementation(() => {
+        throw new Error('test.info() can only be called while test is running');
+      });
 
       // given
       const mockFn = vi.fn().mockRejectedValue(new Error('Clipboard permission denied'));

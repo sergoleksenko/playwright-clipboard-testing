@@ -4,6 +4,15 @@ import { getErrorMessage } from '../utils/matchers/getErrorMessage';
 import { normalizeText } from '../utils/matchers/normalizeText';
 import type { IgnoreCaseMatcherOptions, TimeoutMatcherOptions, TrimMatcherOptions } from './types';
 
+/**
+ * Asserts that the clipboard content matches the expected text value.
+ *
+ * @this ExpectMatcherState
+ * @param clipboard The Clipboard utility instance.
+ * @param expected The expected text value.
+ * @param options Matcher options.
+ * @returns A Promise that resolves to a MatcherReturnType object.
+ */
 export async function toHaveTextContent(
   this: ExpectMatcherState,
   clipboard: ClipboardHandler,
