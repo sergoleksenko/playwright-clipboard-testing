@@ -1,7 +1,7 @@
 import { describe, expect, test } from 'vitest';
-import { createFakeClipboard } from '../utils/createFakeClipboard.ts';
-import { createMatcherState } from '../utils/createMatcherState.ts';
-import { clipboardMatchers } from './clipboardMatchers.ts';
+import { createFakeClipboard } from '../utils/tests/createFakeClipboard';
+import { createMatcherState } from '../utils/tests/createMatcherState';
+import { clipboardMatchers } from './clipboardMatchers';
 
 const TEST_TIMEOUT = 50;
 
