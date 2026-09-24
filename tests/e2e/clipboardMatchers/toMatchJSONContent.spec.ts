@@ -1,19 +1,16 @@
-import { expect, test } from '../fixtures/baseFixtures.ts';
+import { expect, test } from '../fixtures/baseFixtures';
 
 test.describe('toMatchJSONContent', async () => {
-  test.beforeEach(async ({ clipboard, clipboardTestingPage }) => {
-    await clipboardTestingPage.visit();
-    await expect(clipboardTestingPage.status).toHaveText('Idle');
+  test.beforeEach(async ({ clipboard, ui }) => {
+    await ui.clipboardTestingPage.visit();
+    await expect(ui.clipboardTestingPage.status).toHaveText('Idle');
 
     await clipboard.clear();
   });
 
-  test('should copy JSON and verify it contains expected data', async ({
-    clipboard,
-    clipboardTestingPage,
-  }) => {
+  test('should copy JSON and verify it contains expected data', async ({ clipboard, ui }) => {
     // when
-    await clipboardTestingPage.copyJSONButton.click();
+    await ui.clipboardTestingPage.copyJSONButton.click();
 
     // then
     await expect(clipboard).toMatchJSONContent({
@@ -28,10 +25,10 @@ test.describe('toMatchJSONContent', async () => {
 
   test('should copy JSON and verify it does not contain expected data', async ({
     clipboard,
-    clipboardTestingPage,
+    ui,
   }) => {
     // when
-    await clipboardTestingPage.copyJSONButton.click();
+    await ui.clipboardTestingPage.copyJSONButton.click();
 
     // then
     await expect(clipboard).not.toMatchJSONContent({

@@ -1,3 +1,3 @@
-import { ClipboardHandler } from './clipboardHandler.ts';
+import { ClipboardHandler } from './clipboard/clipboardHandler';
 
 export { ClipboardHandler };

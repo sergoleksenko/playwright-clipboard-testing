@@ -1,4 +1,4 @@
-import { firefoxClipboardPrefs } from './constants.ts';
-import { PATTERNS } from './patterns.ts';
+import { firefoxClipboardPrefs } from './constants';
+import { PATTERNS } from './patterns';
 
 export { firefoxClipboardPrefs, PATTERNS };

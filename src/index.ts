@@ -1,1 +1,1 @@
-export { expect, test } from './baseFixtures.ts';
+export { expect, test } from './baseFixtures';

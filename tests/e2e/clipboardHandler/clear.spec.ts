@@ -1,9 +1,9 @@
-import { expect, test } from '../fixtures/baseFixtures.ts';
+import { expect, test } from '../fixtures/baseFixtures';
 
 test.describe('clear method', () => {
-  test.beforeEach(async ({ clipboard, clipboardTestingPage }) => {
-    await clipboardTestingPage.visit();
-    await expect(clipboardTestingPage.status).toHaveText('Idle');
+  test.beforeEach(async ({ clipboard, ui }) => {
+    await ui.clipboardTestingPage.visit();
+    await expect(ui.clipboardTestingPage.status).toHaveText('Idle');
 
     await clipboard.clear();
   });

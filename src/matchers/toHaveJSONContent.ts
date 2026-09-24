@@ -1,8 +1,8 @@
 import type { ExpectMatcherState, MatcherReturnType } from '@playwright/test';
 import { expect } from '@playwright/test';
 import type { ClipboardHandler } from '../utils';
-import { getErrorMessage } from '../utils/matcherUtils.ts';
-import type { TimeoutMatcherOptions } from './types.ts';
+import { getErrorMessage } from '../utils/matchers/getErrorMessage';
+import type { TimeoutMatcherOptions } from './types';
 
 /**
  * Asserts that the clipboard content matches the expected JSON value.
