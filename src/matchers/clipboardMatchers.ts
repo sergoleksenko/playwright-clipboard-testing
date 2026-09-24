@@ -6,25 +6,40 @@ import { toHaveJSONContent } from './toHaveJSONContent';
 import { toHaveTextContent } from './toHaveTextContent';
 import { toMatchJSONContent } from './toMatchJSONContent';
 
-type PlaywrightMatcher = (
-  this: ExpectMatcherState,
-  clipboard: ClipboardHandler,
-  // biome-ignore lint/suspicious/noExplicitAny: Playwright matchers accept arbitrary receiver and arguments
-  ...args: any[]
-) => Promise<MatcherReturnType>;
+/**
+ * Define the type of the clipboard matchers for TypeScript.
+ */
+export type ClipboardMatchers = {
+  toBeBlank(this: ExpectMatcherState, clipboard: ClipboardHandler): Promise<MatcherReturnType>;
+  toHaveContentLength(
+    this: ExpectMatcherState,
+    clipboard: ClipboardHandler,
+    expected: number,
+  ): Promise<MatcherReturnType>;
+  toHaveJSONContent(
+    this: ExpectMatcherState,
+    clipboard: ClipboardHandler,
+    expected: unknown,
+  ): Promise<MatcherReturnType>;
+  toHaveTextContent(
+    this: ExpectMatcherState,
+    clipboard: ClipboardHandler,
+    expected: string | RegExp,
+  ): Promise<MatcherReturnType>;
+  toMatchJSONContent(
+    this: ExpectMatcherState,
+    clipboard: ClipboardHandler,
+    expected: unknown,
+  ): Promise<MatcherReturnType>;
+};
 
 /**
  * Export an object containing all the custom clipboard matchers for Playwright.
  */
-export const clipboardMatchers: Record<string, PlaywrightMatcher> = {
+export const clipboardMatchers: ClipboardMatchers = {
   toBeBlank,
   toHaveContentLength,
   toHaveJSONContent,
   toHaveTextContent,
   toMatchJSONContent,
 };
-
-/**
- * Export the type of the clipboard matchers for TypeScript.
- */
-export type ClipboardMatchers = typeof clipboardMatchers;
