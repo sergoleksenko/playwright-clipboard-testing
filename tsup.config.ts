@@ -8,7 +8,7 @@ export default defineConfig({
     'matchers/index': 'src/matchers/index.ts',
   },
   format: ['cjs', 'esm'],
-  dts: true,
+  dts: false,
   clean: true,
   sourcemap: true,
   minify: false,
