@@ -18,7 +18,7 @@ export async function toMatchJSONContent(
   clipboard: ClipboardHandler,
   expected: unknown,
   options: TimeoutMatcherOptions = {},
-) {
+): Promise<MatcherReturnType> {
   const name = 'toMatchJSONContent';
   let pass: boolean;
   let actual: unknown;
@@ -58,13 +58,11 @@ export async function toMatchJSONContent(
 
   if (this.isNot) pass = !pass;
 
-  const matcherReturn: MatcherReturnType = {
+  return {
     message: getErrorMessage.call(this, name, expected, actual, errorReason),
     pass,
     name,
     expected,
     actual,
   };
-
-  return matcherReturn;
 }

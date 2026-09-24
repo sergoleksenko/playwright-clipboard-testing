@@ -18,7 +18,7 @@ export async function toHaveTextContent(
   clipboard: ClipboardHandler,
   expected: string | RegExp,
   options: TimeoutMatcherOptions & IgnoreCaseMatcherOptions & TrimMatcherOptions = {},
-) {
+): Promise<MatcherReturnType> {
   const name = 'toHaveTextContent';
   let pass: boolean;
   let actual: string | undefined;
@@ -66,13 +66,11 @@ export async function toHaveTextContent(
 
   if (this.isNot) pass = !pass;
 
-  const matcherReturn: MatcherReturnType = {
+  return {
     message: getErrorMessage.call(this, name, expected, actual, errorReason),
     pass,
     name,
     expected,
     actual,
   };
-
-  return matcherReturn;
 }

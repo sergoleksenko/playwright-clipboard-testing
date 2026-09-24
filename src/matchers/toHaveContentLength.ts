@@ -19,7 +19,7 @@ export async function toHaveContentLength(
   clipboard: ClipboardHandler,
   expected: number,
   options: TimeoutMatcherOptions & TrimMatcherOptions = {},
-) {
+): Promise<MatcherReturnType> {
   const name = 'toHaveContentLength';
   let pass: boolean;
   let actual: string | undefined;
@@ -57,13 +57,11 @@ export async function toHaveContentLength(
 
   if (this.isNot) pass = !pass;
 
-  const matcherReturn: MatcherReturnType = {
+  return {
     message: getErrorMessage.call(this, name, expected, actual?.length, errorReason),
     pass,
     name,
     expected,
     actual: actual?.length,
   };
-
-  return matcherReturn;
 }

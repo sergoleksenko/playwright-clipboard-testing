@@ -1,6 +1,6 @@
 {
   "name": "playwright-clipboard-testing",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "description": "Playwright fixture and custom matchers for clipboard testing and assertions.",
   "author": "Sergii Oleksenko <serg.oleksenko@gmail.com>",
   "license": "MIT",
@@ -26,6 +26,19 @@
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
+  "typesVersions": {
+    "*": {
+      "constants": [
+        "./dist/constants/index.d.ts"
+      ],
+      "fixtures": [
+        "./dist/fixtures/index.d.ts"
+      ],
+      "matchers": [
+        "./dist/matchers/index.d.ts"
+      ]
+    }
+  },
   "exports": {
     ".": {
       "types": {
@@ -68,7 +81,7 @@
   },
   "sideEffects": false,
   "scripts": {
-    "build": "tsup",
+    "build": "tsup && tsc -p tsconfig.build.json && node -e \"fs.cpSync('dist/index.d.ts', 'dist/index.d.cts'); fs.cpSync('dist/constants/index.d.ts', 'dist/constants/index.d.cts'); fs.cpSync('dist/fixtures/index.d.ts', 'dist/fixtures/index.d.cts'); fs.cpSync('dist/matchers/index.d.ts', 'dist/matchers/index.d.cts');\"",
     "dev": "tsup --watch",
     "lint": "biome check .",
     "lint:fix": "biome check --write .",
@@ -84,6 +97,7 @@
   },
   "devDependencies": {
     "@biomejs/biome": "2.5.10",
+    "@microsoft/api-extractor": "^7.59.2",
     "@playwright/test": "^1.63.0",
     "@types/node": "^26.4.1",
     "serve": "^14.2.6",

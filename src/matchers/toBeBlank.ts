@@ -16,7 +16,7 @@ export async function toBeBlank(
   this: ExpectMatcherState,
   clipboard: ClipboardHandler,
   options: TimeoutMatcherOptions & TrimMatcherOptions = {},
-) {
+): Promise<MatcherReturnType> {
   const name = 'toBeBlank';
   let pass: boolean;
   let actual: string | undefined;
@@ -56,13 +56,11 @@ export async function toBeBlank(
 
   if (this.isNot) pass = !pass;
 
-  const matcherReturn: MatcherReturnType = {
+  return {
     message: getErrorMessage.call(this, name, expected, actual, errorReason),
     pass,
     name,
     expected,
     actual,
   };
-
-  return matcherReturn;
 }
