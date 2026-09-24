@@ -33,8 +33,7 @@ jobs:
       - name: Run tests (Unit & E2E)
         run: npm test
 
-      - name: Build package
-        run: npm run build
-
-      - name: Publish to npm
-        run: npm publish --provenance --access public
+      - name: Build & Publish to npm
+        run: |
+          npm run build
+          npm publish --provenance --access public
