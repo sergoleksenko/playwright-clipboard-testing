@@ -1,10 +1,10 @@
 import { type ClipboardMatchers, clipboardMatchers } from './clipboardMatchers';
+import type { IgnoreCaseMatcherOptions, TimeoutMatcherOptions, TrimMatcherOptions } from './types';
 
-export * from './toBeBlank';
-export * from './toHaveContentLength';
-export * from './toHaveJSONContent';
-export * from './toHaveTextContent';
-export * from './toMatchJSONContent';
-
-export type { ClipboardMatchers };
+export type {
+  ClipboardMatchers,
+  IgnoreCaseMatcherOptions,
+  TimeoutMatcherOptions,
+  TrimMatcherOptions,
+};
 export { clipboardMatchers };

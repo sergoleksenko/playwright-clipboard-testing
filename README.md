@@ -111,12 +111,12 @@ export const expect = baseExpect.extend(clipboardMatchers);
 
 The package provides dedicated subpath exports to import specific utilities when extending Playwright:
 
-| Import Path                              | Exports                                                                       | Description                                                                                            |
-|:-----------------------------------------|:------------------------------------------------------------------------------|:-------------------------------------------------------------------------------------------------------|
-| `playwright-clipboard-testing`           | `test`, `expect`                                                              | Ready-to-use Playwright `test` runner and `expect` assertion function with built-in clipboard support. |
-| `playwright-clipboard-testing/constants` | `firefoxClipboardPrefs`, `PATTERNS`                                           | Firefox browser preferences for clipboard permissions and regex patterns for clipboard assertions.     |
-| `playwright-clipboard-testing/fixtures`  | `clipboardFixtures`, `clipboardFixture`, `contextFixture`, `ClipboardHandler` | Playwright test fixtures and `ClipboardHandler` class for extending custom test setups.                |
-| `playwright-clipboard-testing/matchers`  | `clipboardMatchers`                                                           | Custom Playwright matchers for extending custom `expect`.                                              |
+| Import Path                              | Description                                                                                                                |
+|:-----------------------------------------|:---------------------------------------------------------------------------------------------------------------------------|
+| `playwright-clipboard-testing`           | Pre-configured `test` runner and `expect` assertion function with built-in clipboard support.                              |
+| `playwright-clipboard-testing/fixtures`  | `clipboardFixtures` for extending custom `test` setups, along with the `ClipboardHandler` utility class and related types. |
+| `playwright-clipboard-testing/matchers`  | `clipboardMatchers` object and its `ClipboardMatchers` type definition for extending custom Playwright `expect`.           |
+| `playwright-clipboard-testing/constants` | `firefoxClipboardPrefs` for browser contexts and regular expression `PATTERNS` used by matchers.                           |
 
 ## API
 
@@ -187,7 +187,7 @@ await expect(clipboard).toHaveTextContent('Hello, World!');
 await expect(clipboard).toHaveTextContent(/Hello, World!/i);
 ```
 ```ts
-// assert that the clipboard is not containing the expected text with a custom timeout
+// assert that the clipboard does not contain the expected text with a custom timeout
 await expect(clipboard).not.toHaveTextContent('Async copied value', { timeout: 5000 });
 ```
 
@@ -201,7 +201,7 @@ Asserts that the clipboard content matches the expected JSON value. Uses Playwri
 await expect(clipboard).toHaveJSONContent({ message: 'Hello, World!' });
 ```
 ```ts
-// assert that the clipboard is not containing the expected JSON data with a custom timeout
+// assert that the clipboard does not contain the expected JSON data with a custom timeout
 await expect(clipboard).not.toHaveJSONContent({ message: 'Async copied value' }, { timeout: 5000 });
 ```
 
@@ -215,7 +215,7 @@ Asserts that the expected JSON object is a subset of the clipboard content. Uses
 await expect(clipboard).toMatchJSONContent({ status: 'success' });
 ```
 ```ts
-// assert that the clipboard is not containing a subset of the expected JSON data with a custom timeout
+// assert that the clipboard does not contain a subset of the expected JSON data with a custom timeout
 await expect(clipboard).not.toMatchJSONContent({ status: 'failed' }, { timeout: 5000 });
 ```
 
