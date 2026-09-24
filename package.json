@@ -81,7 +81,7 @@
   },
   "sideEffects": false,
   "scripts": {
-    "build": "tsup && tsc -p tsconfig.build.json && node -e \"fs.cpSync('dist/index.d.ts', 'dist/index.d.cts'); fs.cpSync('dist/constants/index.d.ts', 'dist/constants/index.d.cts'); fs.cpSync('dist/fixtures/index.d.ts', 'dist/fixtures/index.d.cts'); fs.cpSync('dist/matchers/index.d.ts', 'dist/matchers/index.d.cts');\"",
+    "build": "tsup && tsc -p tsconfig.build.json && node scripts/copy-cts.ts",
     "dev": "tsup --watch",
     "lint": "biome check .",
     "lint:fix": "biome check --write .",
