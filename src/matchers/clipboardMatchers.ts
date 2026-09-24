@@ -1,11 +1,17 @@
-import type { ExpectMatcherState } from '@playwright/test';
+import type { ExpectMatcherState, MatcherReturnType } from '@playwright/test';
+import type { ClipboardHandler } from '../utils';
 import { toBeBlank } from './toBeBlank';
 import { toHaveContentLength } from './toHaveContentLength';
 import { toHaveJSONContent } from './toHaveJSONContent';
 import { toHaveTextContent } from './toHaveTextContent';
 import { toMatchJSONContent } from './toMatchJSONContent';
 
-type PlaywrightMatcher = (this: ExpectMatcherState, receiver: any, ...args: any[]) => any;
+type PlaywrightMatcher = (
+  this: ExpectMatcherState,
+  clipboard: ClipboardHandler,
+  // biome-ignore lint/suspicious/noExplicitAny: Playwright matchers accept arbitrary receiver and arguments
+  ...args: any[]
+) => Promise<MatcherReturnType>;
 
 /**
  * Export an object containing all the custom clipboard matchers for Playwright.

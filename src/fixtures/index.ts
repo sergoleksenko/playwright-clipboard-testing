@@ -11,4 +11,5 @@ export const clipboardFixtures = {
   clipboard: clipboardFixture,
 };
 
+export type { BrowserName } from './types';
 export { ClipboardHandler, clipboardFixture, contextFixture };
