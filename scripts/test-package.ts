@@ -16,7 +16,7 @@ try {
   execSync('npm run build', { stdio: 'inherit' });
 
   console.log('📦 Packing tarball...');
-  const packOutput = execSync('npm pack --json', { encoding: 'utf-8' });
+  const packOutput = execSync('npm pack --json --ignore-scripts', { encoding: 'utf-8' });
   const tarballName = JSON.parse(packOutput)[0].filename;
   const tarballPath = path.resolve(rootDir, tarballName);
 
