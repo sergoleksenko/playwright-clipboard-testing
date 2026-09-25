@@ -81,7 +81,8 @@
   },
   "sideEffects": false,
   "scripts": {
-    "build": "tsup && tsc -p tsconfig.build.json && node scripts/copy-cts.ts",
+    "build": "tsup",
+    "prepack": "npm run build",
     "dev": "tsup --watch",
     "lint": "biome check .",
     "lint:fix": "biome check --write .",
