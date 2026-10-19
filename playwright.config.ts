@@ -48,6 +48,7 @@ export default defineConfig({
           firefoxUserPrefs: firefoxClipboardPrefs,
         },
       },
+      default: false,
     },
   ],
 
